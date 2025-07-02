@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+*{
+  font-family: 'Inter', sans-serif;
+}
+
+:root{
+  --brown:#c78500,
+  --green:#00c965
+}
+  
+.pixel-box {
+  color: white;
+  padding: 5px ;
+  font-family: sans-serif;
+  font-size: 24px;
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Orange slanted border */
+.pixel-box::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: -20px; /* move to right edge */
+  width: 50px;
+  height: 100%;
+  background-color: #c18726; /* gold/orange color */
+  transform: skewX(-15deg); /* slant the shape */
+  z-index: 1;
+}
+
+/* Text styling */
+.logo-text {
+  position: relative;
+  z-index: 2; /* place above the slant */
+  color: #4ae56e; /* match green text */
+}
+
+/* Optional: mimic "PIM" text color */
+.logo-text::after {
+  content: 'PIM';
+  color: #c18726;
+  margin-left: 5px;
+}
