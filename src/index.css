@@ -11,37 +11,49 @@
   
 .pixel-box {
   color: white;
-  padding: 5px ;
-  font-family: sans-serif;
-  font-size: 24px;
+  font-size: 8px;
   display: inline-block;
   position: relative;
   overflow: hidden;
 }
 
-/* Orange slanted border */
 .pixel-box::after {
   content: '';
   position: absolute;
-  top: 0;
-  right: -20px; /* move to right edge */
-  width: 50px;
+  top: 2px;
+  right: -3px; 
+  width: 7px;
   height: 100%;
-  background-color: #c18726; /* gold/orange color */
-  transform: skewX(-15deg); /* slant the shape */
+  background-color: #c18726; 
+  transform: skewX(-4deg); 
   z-index: 1;
 }
 
-/* Text styling */
-.logo-text {
-  position: relative;
-  z-index: 2; /* place above the slant */
-  color: #4ae56e; /* match green text */
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-/* Optional: mimic "PIM" text color */
-.logo-text::after {
-  content: 'PIM';
-  color: #c18726;
-  margin-left: 5px;
+.custom-table .ant-table-thead > tr > th {
+  background-color: #e8e5e5;
+}
+
+.ant-modal-content{
+  padding:0 !important;
+}
+.ant-modal-title{
+  background-color:  #575657;
+  padding: 10px 2px;
+}
+.ant-modal-close-x{
+  margin-bottom: 8px;
+  color: white;
+}
+.ant-modal-body{
+  margin: -15px 0;
+}
+
+.ant-modal-title-product{
+  background-color: none;
 }

@@ -3,11 +3,23 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom'; 
 import App from './App';
 import './index.css';
+import { FilterProvider } from './context/FilterContext';
+import { ColumnProvider } from './context/ColumnContext';
+import { ViewProvider } from './context/ViewContext';
+import { ModalProvider } from './context/ModalContext';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter> 
+    <FilterProvider>
+      <ColumnProvider>
+      <ViewProvider>
+        <ModalProvider>
       <App />
+        </ModalProvider>
+      </ViewProvider>
+      </ColumnProvider>
+      </FilterProvider>
     </BrowserRouter>
   </React.StrictMode>
 );
