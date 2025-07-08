@@ -43,7 +43,6 @@ const ProductConfigurationPage = () => {
             className="text-gray-500 hover:text-red-500 transition-colors duration-200"
             aria-label="Delete selected items"
             onClick={() => {
-              // handle delete here (optional)
               console.log("Delete selected", selectedRowKeys);
             }}
           >

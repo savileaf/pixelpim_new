@@ -9,9 +9,7 @@
 } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { useFilterContext } from "../context/FilterContext";
-import {useColumns} from "../context/ColumnContext"
 import { useViewContext } from "../context/ViewContext";
-import { useModalContext } from "../context/ModalContext";
 import { Tooltip } from "antd";
 
 interface TopbarProps {
@@ -19,11 +17,16 @@ interface TopbarProps {
   
 }
 
+
+
 const Topbar : React.FC<TopbarProps> = ({ onCustomizeColumnsClick }) => {
   const { isFilterVisible, toggleFilter } = useFilterContext();   
-  const { columns: columnConfig } = useColumns();
-  const {openCustomizeColumns} = useModalContext()
-  const {viewMode, setViewMode} = useViewContext();
+  // const { columns: columnConfig } = useColumns();
+  // const {openCustomizeColumns} = useModalContext()
+  const {  setViewMode } = useViewContext() as {
+  viewMode: string;
+  setViewMode: (mode: string) => void;
+};
 
 
 

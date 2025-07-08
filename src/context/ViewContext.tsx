@@ -1,10 +1,17 @@
-// ViewContext.js
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState,type ReactNode } from 'react';
 
-const ViewContext = createContext();
+// 1. Define the type
+interface ViewContextType {
+  viewMode: 'list' | 'grid';
+  setViewMode: (mode: 'list' | 'grid') => void;
+}
 
-export const ViewProvider = ({ children }) => {
-  const [viewMode, setViewMode] = useState('list'); // 'list' or 'grid'
+// 2. Provide a default context (can be undefined initially)
+const ViewContext = createContext<ViewContextType | undefined>(undefined);
+
+// 3. Define the provider with typing for props
+export const ViewProvider = ({ children }: { children: ReactNode }) => {
+  const [viewMode, setViewMode] = useState<'list' | 'grid'>('list');
 
   return (
     <ViewContext.Provider value={{ viewMode, setViewMode }}>
@@ -13,4 +20,10 @@ export const ViewProvider = ({ children }) => {
   );
 };
 
-export const useViewContext = () => useContext(ViewContext);
+export const useViewContext = () => {
+  const context = useContext(ViewContext);
+  if (!context) {
+    throw new Error('useViewContext must be used within a ViewProvider');
+  }
+  return context;
+};

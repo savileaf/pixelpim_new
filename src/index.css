@@ -57,3 +57,26 @@
 .ant-modal-title-product{
   background-color: none;
 }
+
+.create-group-modal{
+  background-color: #AEACAC !important;
+}
+.custom-product-table .ant-table-thead > tr > th {
+  background-color: #eeeeee;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.custom-product-table .ant-table-tbody > tr > td {
+  border-bottom: 1px solid #f0f0f0;
+  padding: 12px 16px;
+}
+
+.custom-product-table .ant-table {
+  border: 1px solid #e8e8e8;
+  border-radius: 4px;
+}
+
+.custom-table-row:hover > td {
+  background-color: #fafafa !important;
+}

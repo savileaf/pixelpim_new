@@ -1,7 +1,7 @@
 import { useFilterContext } from "../context/FilterContext";
 
 const FilterData =() =>{
-      const { isFilterVisible, toggleFilter } = useFilterContext();
+      const {  toggleFilter } = useFilterContext();
     
     return(
         <div className="w-[15rem]">

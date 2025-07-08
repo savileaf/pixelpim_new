@@ -9,7 +9,7 @@ interface SectionItem {
 
 const sections: SectionItem[] = [
   {
-    title: "Products",
+    title: "Product",
     items: ["Property", "Families", "Categories", "Relationships", "Table views"],
   },
   {
@@ -26,7 +26,7 @@ const ProductsSidebar: React.FC = () => {
   const location = useLocation();
 
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
-    Products: true,
+    Product: true,
     Assets: true,
     General: true,
   });

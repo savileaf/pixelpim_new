@@ -1,0 +1,127 @@
+header{
+    height: 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 80px ;
+    border-bottom: 1px solid #BEBEBE;
+    font-family: "IBM Plex Serif";
+}
+
+header .page-name {
+    font-weight: 600;
+    font-size: 24px;
+    line-height: normal;
+    color: #000000;
+}
+header button {
+    color:#8B8B8B ;
+    font-size: 14px;
+    background: none;
+    border: none;
+    font-family: "IBM Plex Serif";
+}
+
+
+.addsubcategory{
+	background: #575657;
+	border-radius: 2px;	
+	padding: 22px 18px;
+	width: 332px;
+}
+.addsubcategory-title{
+	font-family: Inter;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: normal;
+	color: #ffffff;
+	margin-bottom: 16px;
+}
+
+.btn{
+	display: flex;
+	gap: 12px;
+}
+.btn button{
+	width: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 8px;
+	height: 32px;
+	background-color: #605e5e;
+	font-family: Inter;
+	font-size: 12px;
+	color: #d0d0d0;
+	border: 1px solid #fff;
+	border-radius: 4px;
+}
+
+
+.category-name{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 24px;
+}
+
+.category-name input{
+    display: flex;
+    flex-direction: column;
+    padding: 10px 12px;
+    font-size: 12px;
+    color: #514F53;
+    background: transparent;
+    border: 1px solid #898989;
+    border-radius: 2px;
+}
+
+.category-tree-box{
+    margin-top: 18px;
+}
+
+.category-title{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+.category-title p{
+    font-family: Inter;
+    font-weight: normal;
+    font-size: 12px;
+    color: #1b0c31;
+}
+
+.subcategory{
+    /* display: flex; */
+    align-items: center;
+    gap: 12px;
+    margin-left: 24px;
+    margin-bottom: 12px;
+}
+.subcategory input{
+    font-family: Inter;
+    font-size: 11px;
+    color: #1b0c31;
+    background: #d4d4d4;
+    border-radius: 2px;
+    width: fit-content;
+    border: none;
+    outline: none;
+    padding: 0 2px 0 12px;
+}
+.product-count{
+    border: 1px solid #D4D4D4;
+    border-radius: 2px;
+    padding: 4px 8px;
+    font-size: 10px;
+    color: #1B0C31;
+    font-weight: bold;
+}
+.cancel-btn2{
+    font-family: "IBM Plex Serif";
+    font-weight: 500;
+    font-size: 16px;
+    line-height: normal;
+    color: #8b8b8b;
+}

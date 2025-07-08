@@ -39,25 +39,34 @@ const defaultData: DataType[] = [
 
 interface CustomTableProps {
   dataSource?: DataType[];
+  columns?: ColumnsType<DataType>;
   isModalVisible?: boolean;
   setIsModalVisible?: (visible: boolean) => void;
   isFilterVisible?: boolean;
   showImage?: boolean;
   headerBgColor?: string;
+  selectedRowKeys?: React.Key[];
+  setSelectedRowKeys?: (keys: React.Key[]) => void;
 }
 
 const CustomTable: React.FC<CustomTableProps> = ({
   dataSource,
+  columns: propColumns,
   isModalVisible = false,
   setIsModalVisible = () => {},
   isFilterVisible = false,
   showImage = true,
   headerBgColor,
+  selectedRowKeys: parentSelectedRowKeys,
+  setSelectedRowKeys: parentSetSelectedRowKeys,
 }) => {
   const { columns: contextColumns } = useColumns();
   const [sortOption, setSortOption] = useState<string>();
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  const [localSelectedRowKeys, setLocalSelectedRowKeys] = useState<React.Key[]>([]);
+
+  const selectedKeys = parentSelectedRowKeys ?? localSelectedRowKeys;
+  const updateSelectedKeys = parentSetSelectedRowKeys ?? setLocalSelectedRowKeys;
 
   const data = dataSource ?? defaultData;
 
@@ -71,18 +80,13 @@ const CustomTable: React.FC<CustomTableProps> = ({
   const sortMenu = (
     <Menu onClick={handleMenuClick}>
       <Menu.Item key="Ascending">Ascending</Menu.Item>
-      <Menu.Item key="Descending">descending</Menu.Item>
+      <Menu.Item key="Descending">Descending</Menu.Item>
       <Menu.Item key="Oldest">Oldest</Menu.Item>
       <Menu.Item key="Newest">Newest</Menu.Item>
     </Menu>
   );
 
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: (selectedKeys: React.Key[]) => {
-      setSelectedRowKeys(selectedKeys);
-    },
-  };
+ 
 
   const getColumnRender = (key: string) => {
     switch (key) {
@@ -95,9 +99,18 @@ const CustomTable: React.FC<CustomTableProps> = ({
     }
   };
 
-  // Generate table columns from context
+  const dynamicColumns = propColumns ||
+    contextColumns
+      .filter(col => col.visible)
+      .map(col => ({
+        title: col.name,
+        dataIndex: col.key,
+        key: col.key,
+        className: "font-normal text-[12px] text-[#2d2b2b]",
+        render: getColumnRender(col.key),
+      }));
+
   const tableColumns: ColumnsType<DataType> = [
-    // Combined Sort and Checkbox Column
     {
       title: (
         <Dropdown
@@ -119,70 +132,64 @@ const CustomTable: React.FC<CustomTableProps> = ({
       render: (_, record) => (
         <div className="flex items-center justify-center">
           <Checkbox
-            checked={selectedRowKeys.includes(record.key)}
+            checked={selectedKeys.includes(record.key)}
             onChange={(e) => {
               if (e.target.checked) {
-                setSelectedRowKeys([...selectedRowKeys, record.key]);
+                updateSelectedKeys([...selectedKeys, record.key]);
               } else {
-                setSelectedRowKeys(selectedRowKeys.filter((k) => k !== record.key));
+                updateSelectedKeys(selectedKeys.filter((k) => k !== record.key));
               }
             }}
           />
         </div>
       ),
     },
-    // Optional Image Column
-    ...(showImage ? [{
-      title: <FaImage size={18} />,
-      dataIndex: 'image',
-      key: 'image',
-      width: 60,
-      render: (image?: string) => 
-        image ? (
-          <img src={image} alt="Product" className="w-8 h-8 object-cover rounded shadow" />
-        ) : (
-          "-"
-        ),
-    }] : []),
-    // Dynamic Columns from Context
-    ...contextColumns
-      .filter(col => col.visible)
-      .map(col => ({
-        title: col.name,
-        dataIndex: col.key,
-        key: col.key,
-        className: "font-normal text-[12px] text-[#2d2b2b]",
-        render: getColumnRender(col.key),
-      })),
+    ...(showImage
+      ? [{
+          title: <FaImage size={18} />,
+          dataIndex: 'image',
+          key: 'image',
+          width: 60,
+          render: (image?: string) =>
+            image ? (
+              <img src={image} alt="Product" className="w-8 h-8 object-cover rounded shadow" />
+            ) : (
+              "-"
+            ),
+        }]
+      : []),
+    ...dynamicColumns,
   ];
 
   return (
     <div className="px-4 py-2 w-full overflow-hidden">
-      <div className="flex gap-4 w-full">
-        <div className={`${isFilterVisible ? "w-[calc(100%-16rem)]" : "w-full"}`}>
-          <AntTable
-            columns={tableColumns}
-            dataSource={data}
-            pagination={false}
-            className="w-full custom-table"
-            rowClassName={() => "no-select-highlight"}
-            rowKey="key"
-            style={
-              headerBgColor
-                ? ({ "--custom-table-header-bg": headerBgColor } as React.CSSProperties)
-                : undefined
-            }
+      <div className="flex flex-col gap-4 w-full">
+        <div className="flex gap-4 w-full">
+          <div className={`${isFilterVisible ? "w-[calc(100%-16rem)]" : "w-full"}`}>
+            <AntTable
+              columns={tableColumns}
+              dataSource={data}
+              pagination={false}
+              className="w-full custom-table"
+              rowClassName={() => "no-select-highlight"}
+              rowKey="key"
+              style={
+                headerBgColor
+                  ? ({ "--custom-table-header-bg": headerBgColor } as React.CSSProperties)
+                  : undefined
+              }
+            />
+            {isFilterVisible && (
+              <div className="mt-12">
+                <FilterData />
+              </div>
+            )}
+          </div>
+          <CustomiseColumnModal
+            visible={isModalVisible}
+            onCancel={() => setIsModalVisible(false)}
           />
-          {isFilterVisible && (
-            <div className="mt-12">
-              <FilterData />
-            </div>
-          )}
         </div>
-        <CustomiseColumnModal 
-          visible={isModalVisible} 
-          onCancel={() => setIsModalVisible(false)} 
-        />
       </div>
     </div>
   );

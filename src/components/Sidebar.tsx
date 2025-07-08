@@ -8,14 +8,15 @@ import {
   FaQuestionCircle 
 } from "react-icons/fa";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link , useLocation } from "react-router-dom";
 const Sidebar = () => {
+   const location = useLocation();
     const menuItems = [
-    { name: "Products", icon: <FaThLarge />, active: true , link:"/"},
+    { name: "Products", icon: <FaThLarge />,  link:"/"},
     { name: "Digital Assets", icon: <FaImage /> },
     { name: "Brand Portals", icon: <FaDesktop /> },
     { name: "Channels", icon: <FaGlobe /> },
-    { name: "Product Configuration", icon: <FaCog /> , link:"/product/attribute"  },
+    { name: "Product Configuration", icon: <FaCog /> , link:"/product/property"  },
   ];
 
   const resources = [
@@ -35,11 +36,12 @@ const Sidebar = () => {
 
     <div className=" text-white w-[13rem] p-2 text-[14px] mt-3 font-regular flex flex-col space-y-19">
       <div className="space-y-2">
-        {menuItems.map(({ name, icon, active, link }) => {
+        {menuItems.map(({ name, icon, link }) => {
+          const isActive = link && location.pathname === link;
   const content = (
     <div
       className={`flex items-center gap-2 px-2 py-1 rounded ${
-        active ? "bg-[#27C26C] text-[#003217]" : "hover:bg-[#064f2c]"
+        isActive ? "bg-[#27C26C] text-[#003217]" : "hover:bg-[#064f2c]"
       }`}
     >
       <span className="text-[14px]">{icon}</span>
