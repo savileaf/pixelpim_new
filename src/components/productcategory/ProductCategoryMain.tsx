@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useResetProductTopbar, useSetProductTopbar } from "../../context/ProductTopbarContext";
-import CustomTable from "../CustomTable";
+import { Link } from "react-router-dom";
 
 const ProductCategoryMain = () => {
     const setTopbar = useSetProductTopbar();
@@ -27,8 +27,12 @@ const ProductCategoryMain = () => {
           };
         }, []);
   return (
-    <div>
-      <CustomTable/>
+    <div className="p-8">
+      <Link to="/edit/product/category">
+        <button>
+            Edit category
+        </button>
+         </Link>
     </div>
   )
 }

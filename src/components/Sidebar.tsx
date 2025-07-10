@@ -16,7 +16,7 @@ const Sidebar = () => {
     { name: "Digital Assets", icon: <FaImage /> ,link:"/assets/main" },
     { name: "Brand Portals", icon: <FaDesktop /> },
     { name: "Channels", icon: <FaGlobe /> },
-    { name: "Product Configuration", icon: <FaCog /> , link:"/product/property"  },
+    { name: "Product Configuration", icon: <FaCog /> , link:"/product/attribute"  },
   ];
 
   const resources = [

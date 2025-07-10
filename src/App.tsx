@@ -13,6 +13,7 @@ import AssetsMain from "./components/assests/AssetsMain"
 import ViewGroupPage from "./components/assests/ViewGroupPage"
 import EditProductFamily from "./components/productconfig/EditProductFamily"
 import ProductCategoryMain from "./components/productcategory/ProductCategoryMain"
+import EditCategory from "./components/category/EditCategory"
 
 const App = () => {
   return (
@@ -41,6 +42,7 @@ const App = () => {
     <Route path="/category/edit" element={<EditGroup/>}/>
     <Route path="/group/edit" element={<EditGroup/>}/>
     <Route path="/productfamily/edit" element={<EditProductFamily/>}/>
+    <Route path="/edit/product/category" element={<EditCategory/>}/>
     </Routes>
   )
 }
