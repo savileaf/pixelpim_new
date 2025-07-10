@@ -16,7 +16,7 @@ interface TopbarConfig {
 }
 
 const defaultTopbarConfig: TopbarConfig = {
-  createButtonLabel: "CREATE PROPERTY",
+  createButtonLabel: "CREATE ATTRIBUTE",
   createButtonWidth: 150,
   showCreateButton: true,
   showFilter: true,

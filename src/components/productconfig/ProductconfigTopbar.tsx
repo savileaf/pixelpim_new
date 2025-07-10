@@ -25,10 +25,10 @@ interface ProductconfigTopbarProps {
 const ProductconfigTopbar: FC<ProductconfigTopbarProps> = ({
   showCreateButton = true,
   onCreateClick,
-  createButtonLabel = "CREATE PROPERTY",
+  createButtonLabel = "CREATE ATTRIBUTE",
 
   showViewButton = true,
-  viewButtonLabel = "View Property Group",
+  viewButtonLabel = "View Attribute Group",
   viewButtonLink = "/product/viewproperty",
 
   showFilter = true,

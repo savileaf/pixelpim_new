@@ -10,7 +10,7 @@ interface SectionItem {
 const sections: SectionItem[] = [
   {
     title: "Product",
-    items: ["Property", "Families", "Categories", "Relationships", "Table views"],
+    items: ["Attribute", "Families", "Categories", "Relationships", "Table views"],
   },
   {
     title: "Assets",

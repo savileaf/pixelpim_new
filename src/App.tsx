@@ -32,7 +32,7 @@ const App = () => {
       <ProductsConfigLayout/>
       </ProductTopbarProvider>
   }>
-    <Route path="/product/property" element={<ProductConfigurationPage/>}/>
+    <Route path="/product/attribute" element={<ProductConfigurationPage/>}/>
     <Route path="/product/viewproperty" element={<ViewProperty/>}/>
     <Route path="/product/families" element={<ProductFamilies/>}/>
     <Route path="/product/categories" element={<ProductCategoryMain/>}/>
