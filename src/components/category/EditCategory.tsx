@@ -5,7 +5,7 @@ import { TbCategoryPlus } from "react-icons/tb";
 import { MdArrowForwardIos } from "react-icons/md";
 import { AiOutlinePlus } from "react-icons/ai";
 import { IoMdArrowDropright } from "react-icons/io";
-import "./editCategory.css";
+import "./editcategory.css";
 
 // Types
 interface Subcategory {
