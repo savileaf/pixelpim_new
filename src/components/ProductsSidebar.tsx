@@ -14,7 +14,7 @@ const sections: SectionItem[] = [
   },
   {
     title: "Assets",
-    items: ["Categories"],
+    items: ["Category"],
   },
   {
     title: "General",

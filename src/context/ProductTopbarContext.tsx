@@ -3,6 +3,7 @@ import { createContext, useContext, useState,type ReactNode } from "react";
 
 interface TopbarConfig {
   createButtonLabel?: string;
+  createButtonWidth?:number,
   showCreateButton?: boolean;
   showViewButton?: boolean;
   showFilter?: boolean;
@@ -16,6 +17,7 @@ interface TopbarConfig {
 
 const defaultTopbarConfig: TopbarConfig = {
   createButtonLabel: "CREATE PROPERTY",
+  createButtonWidth: 150,
   showCreateButton: true,
   showFilter: true,
   filterOptions: ["Option A", "Option B"],

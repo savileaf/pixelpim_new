@@ -8,11 +8,11 @@ import ProductConfigurationPage from "./pages/ProductConfigurationPage"
 import ViewProperty from "./components/productconfig/ViewProperty"
 import ProductFamilies from "./components/productconfig/ProductFamilies"
 import { ProductTopbarProvider } from "./context/ProductTopbarContext"
-import EditCategory from "./components/category/EditCategory"
 import EditGroup from "./components/category/EditGroup"
 import AssetsMain from "./components/assests/AssetsMain"
 import ViewGroupPage from "./components/assests/ViewGroupPage"
 import EditProductFamily from "./components/productconfig/EditProductFamily"
+import ProductCategoryMain from "./components/productcategory/ProductCategoryMain"
 
 const App = () => {
   return (
@@ -35,9 +35,10 @@ const App = () => {
     <Route path="/product/property" element={<ProductConfigurationPage/>}/>
     <Route path="/product/viewproperty" element={<ViewProperty/>}/>
     <Route path="/product/families" element={<ProductFamilies/>}/>
+    <Route path="/product/categories" element={<ProductCategoryMain/>}/>
     </Route>
 
-    <Route path="/category/edit" element={<EditCategory/>}/>
+    <Route path="/category/edit" element={<EditGroup/>}/>
     <Route path="/group/edit" element={<EditGroup/>}/>
     <Route path="/productfamily/edit" element={<EditProductFamily/>}/>
     </Routes>
