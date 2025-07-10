@@ -125,7 +125,7 @@ const ViewProperty = () => {
     <div className="mt-2">
       <CustomTable dataSource={customData} columns={customColumns} showImage={false} />
 
-      <CreateGroupModal open={isModalVisible} onClose={closeCreateGroupModal} />
+      <CreateGroupModal open={isModalVisible} onClose={closeCreateGroupModal} onSave={()=>console.log("Group saved")} />
     </div>
   );
 };

@@ -7,6 +7,7 @@ import { FilterProvider } from './context/FilterContext';
 import { ColumnProvider } from './context/ColumnContext';
 import { ViewProvider } from './context/ViewContext';
 import { ModalProvider } from './context/ModalContext';
+import { GroupProvider } from './context/GroupDataContext';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -14,9 +15,11 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <FilterProvider>
       <ColumnProvider>
       <ViewProvider>
+          <GroupProvider>
         <ModalProvider>
       <App />
         </ModalProvider>
+          </GroupProvider>
       </ViewProvider>
       </ColumnProvider>
       </FilterProvider>

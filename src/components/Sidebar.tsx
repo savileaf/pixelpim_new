@@ -13,7 +13,7 @@ const Sidebar = () => {
    const location = useLocation();
     const menuItems = [
     { name: "Products", icon: <FaThLarge />,  link:"/"},
-    { name: "Digital Assets", icon: <FaImage /> },
+    { name: "Digital Assets", icon: <FaImage /> ,link:"/assets/main" },
     { name: "Brand Portals", icon: <FaDesktop /> },
     { name: "Channels", icon: <FaGlobe /> },
     { name: "Product Configuration", icon: <FaCog /> , link:"/product/property"  },

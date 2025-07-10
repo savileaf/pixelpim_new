@@ -6,20 +6,61 @@
   FaList,
   FaFilter,
   FaSlidersH,
+  FaRegFolderOpen
 } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { useFilterContext } from "../context/FilterContext";
 import { useViewContext } from "../context/ViewContext";
 import { Tooltip } from "antd";
+import { Link } from "react-router-dom";
 
 interface TopbarProps {
-  onCustomizeColumnsClick: () => void;
-  
+  showselectButton?:boolean;
+  onSelectClick?: ()=> void;
+  createSelectLabel?: string;
+onCustomizeColumnsClick?: () => void;  
+  viewGroupButton?: boolean;
+  onViewGroupClick?: () => void;
+  viewGroupButtonLabel?: string;
+  viewGroupButtonLink?: string;
+
+  customLeftSection?: React.ReactNode;
+
+
+  groupFilesButton?: boolean;
+  onGroupFilesClick?: () => void;
+  groupFilesButtonLabel?: string;
+  groupFilesButtonLink?: string;
+
+  importDataLabel?:string;
+  exportDataLabel?:string;
+
+  searchButtonLabel?:string;
+
+  showCustomizeColumns?: boolean;
+  inputButtonWidth?:number;
 }
 
 
 
-const Topbar : React.FC<TopbarProps> = ({ onCustomizeColumnsClick }) => {
+const Topbar : React.FC<TopbarProps> = ({ 
+  onCustomizeColumnsClick,
+  // showselectButton = true,
+  // onSelectClick,
+  createSelectLabel = "Select Family",
+
+  viewGroupButton=false,
+  onViewGroupClick,
+
+  // groupFilesButton=false,
+  showCustomizeColumns=true,
+  searchButtonLabel= "Search Product by SKU or Product Name",
+  inputButtonWidth=64,
+  customLeftSection=false,
+
+
+
+ }) => {
   const { isFilterVisible, toggleFilter } = useFilterContext();   
   // const { columns: columnConfig } = useColumns();
   // const {openCustomizeColumns} = useModalContext()
@@ -36,11 +77,40 @@ const Topbar : React.FC<TopbarProps> = ({ onCustomizeColumnsClick }) => {
         <div className="flex flex-wrap items-center justify-between gap-2 p-4">
           {/* Left section */}
           <div className="flex flex-wrap items-center gap-3">
-            <select className="border border-gray-300 px-4 py-1.5 rounded w-[14rem] font-semibold text-[14px] text-[#1b0c31] focus:outline-none">
-              <option value="">SELECT FAMILY</option>
+            {
+              customLeftSection ? (customLeftSection) :(
+                <select className="border border-gray-300 px-4 py-1.5 rounded w-[14rem] font-semibold text-[14px] text-[#1b0c31] focus:outline-none">
+              <option value="">{createSelectLabel}</option>
               <option value="family1">Family 1</option>
               <option value="family2">Family 2</option>
             </select>
+              )
+            }
+
+            {/* Conditional view group button */}
+            {
+              viewGroupButton && (
+                 <Link to="/assets/opengroup">
+                  <button className="flex items-center gap-2 w-full border border-gray-200 px-3 py-1.5 rounded font-medium text-[12px] text-[#676767] hover:bg-yellow-50">
+                    <FaRegFolderOpen className="text-yellow-500" height={5}/>
+                    Open Group
+                </button>
+                 </Link>
+
+              )
+            }
+
+             {
+              viewGroupButton && (
+                <div>
+                  <button className="flex items-center gap-2 w-full border border-gray-200 px-3 py-1.5 rounded font-medium text-[12px] text-[#676767] hover:bg-yellow-50" onClick={onViewGroupClick}>
+                    <FaRegFolderOpen className="text-yellow-500"/>
+                    Group Files
+                </button>
+            </div>
+
+              )
+            }
 
             <div className="w-[9rem] bg-[#f1f0f0]">
               <button className="flex items-center gap-2 w-full border border-gray-200 px-3 py-1.5 rounded font-medium text-[12px] text-[#676767] hover:bg-yellow-50">
@@ -58,21 +128,25 @@ const Topbar : React.FC<TopbarProps> = ({ onCustomizeColumnsClick }) => {
 
             {/* Search */}
             <div className="flex items-center border rounded overflow-hidden">
-              <div className="bg-[#676767] text-white p-2">
+              <div className="bg-[#676767] text-white p-1.5">
                 <FaSearch height={5}/>
               </div>
               <input
                 type="text"
-                placeholder="Search Product by SKU or Product Name"
-                className="px-3 py-1 text-sm outline-none w-64 font-normal text-[12px] text-[#9d9d9d]"
+                placeholder={searchButtonLabel}
+                className={`w-${inputButtonWidth} px-3 py-1 text-sm outline-none font-normal text-[12px] text-[#9d9d9d]`}
               />
             </div>
 
             {/* Customize Columns */}
-            <button className="flex items-center gap-3 border px-3 py-1.5 rounded font-medium text-[12px] text-[#676767] hover:bg-yellow-50" onClick={onCustomizeColumnsClick}>
+            {
+              showCustomizeColumns && onCustomizeColumnsClick &&(
+                <button className="flex items-center gap-3 border px-3 py-1.5 rounded font-medium text-[12px] text-[#676767] hover:bg-yellow-50" onClick={onCustomizeColumnsClick}>
               <FaSlidersH className="text-yellow-500" height={13}/>
               Customize Columns
             </button>
+              )
+            }
 
             <div className="flex text-gray-600 ml-1">
               <button className="p-1 hover:bg-gray-200 rounded" onClick={()=>setViewMode("list")}>

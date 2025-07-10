@@ -1,0 +1,190 @@
+.edit-product-family{
+    padding: 0 0 56px;
+}
+
+header{
+    height: 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 80px ;
+    border-bottom: 1px solid #BEBEBE;
+    font-family: "IBM Plex Serif";
+}
+
+header .page-name {
+    font-weight: 600;
+    font-size: 24px;
+    line-height: normal;
+    color: #000000;
+}
+header button {
+    color:#8B8B8B ;
+    font-size: 14px;
+    background: none;
+    border: none;
+    font-family: "IBM Plex Serif";
+}
+
+.edit-productfamily-box {
+    background: #f2f2f2;
+    padding: 32px;
+    margin: 32px 0 0;
+    width: 720px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.productfamily-name{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 24px;
+}
+.productfamily-name label{
+    margin-bottom: 8px;
+    font-family: Inter;
+    font-weight: normal;
+    font-size: 14px;
+    color: #302E2E;
+}
+.all-attributes-search, .attributes-box-left-inputsearch, .attributes-box-right-inputsearch{
+    padding: 0 12px;
+    background: #fff;
+    border-radius: 2px;
+    height: 28px;
+    border: 1px solid #929292;
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.productfamily-name input {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 12px;
+    font-size: 12px;
+    color: #514F53;
+    background: transparent;
+    border: 1px solid #898989;
+    border-radius: 2px;
+}
+
+.attributes-box {
+    border: 1px solid #898989;
+    padding: 0 18px;
+    overflow: auto;
+}
+
+.attribute-item{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.7rem;
+    border-bottom: 1px solid #d5d5d5;
+    padding: 0 4px 6px;
+}
+.attribute-item div{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.attribute-item span{
+    font-size: 12px;
+    color: #1b0c31;
+    flex-grow: 1;
+}
+.attribute-item label{
+    font-size: 12px;
+    color: #69676B;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.attribute-item label:nth-child(2){
+    margin-right: 16px;
+}
+.bulk-action{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.bulk-action p {
+    font-size: 12px;
+    background: #00800021;
+    padding: 4px 8px;
+    border-radius: 24px;
+    color: #008000;
+}
+.bulk-action button{
+    background: none;
+    border: none;
+    margin-top: 2;
+}
+.all-attributes{
+    padding-bottom: 32px;
+    border: solid #898989;
+    border-width: 0 1px 1px;
+    padding: 0 18px 24px;
+    overflow: auto;
+    /* position: relative; */
+}
+.allattributes-box-title{
+    font-size: 14px;
+    color: #adaab3;
+    margin:18px 0 8px;
+}
+.add-attribute-btn{
+    width: 100%;
+    padding: 6px 12px;
+    border: none;
+    background: #383838;
+    border-radius: 2px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: "Inter",sans-serif ;
+}
+
+.add-attribute-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.sort-clear{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap:16px ;
+    margin-bottom: 18px;
+}
+.selection-count{
+    flex-grow: 1;
+}
+.selection-count span{
+    font-size: 12px;
+    background: #00800021;
+    padding: 3.5px 8px;
+    border-radius: 24px;
+    color: #008000;
+}
+.sort-clear button{
+    font-size: 11px;
+    background: #79797921;
+    border: 1px solid #999999;
+    padding: 2px 6px;
+    color: #a0a0a0;
+    border-radius: 2px;
+}
+.sortpopup {
+    position: absolute;
+    top: 28px;
+    left: 0;
+    background: #fff;
+    border: 1px solid #adadad;
+    border-radius: 2px;
+    z-index: 10;
+    width: 120px;
+    box-shadow: '0px 2px 6px rgba(0,0,0,0.15)';
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 12px;
+}
