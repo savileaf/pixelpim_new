@@ -47,18 +47,22 @@ interface CustomTableProps {
   headerBgColor?: string;
   selectedRowKeys?: React.Key[];
   setSelectedRowKeys?: (keys: React.Key[]) => void;
+  rowHeight?: number;
+   onRow?: (record: DataType, index?: number) => React.HTMLAttributes<HTMLElement>;
 }
 
 const CustomTable: React.FC<CustomTableProps> = ({
   dataSource,
   columns: propColumns,
   isModalVisible = false,
-  setIsModalVisible = () => {},
+  setIsModalVisible = () => { },
   isFilterVisible = false,
   showImage = true,
   headerBgColor,
   selectedRowKeys: parentSelectedRowKeys,
   setSelectedRowKeys: parentSetSelectedRowKeys,
+  rowHeight,
+  onRow
 }) => {
   const { columns: contextColumns } = useColumns();
   const [sortOption, setSortOption] = useState<string>();
@@ -86,7 +90,7 @@ const CustomTable: React.FC<CustomTableProps> = ({
     </Menu>
   );
 
- 
+
 
   const getColumnRender = (key: string) => {
     switch (key) {
@@ -146,23 +150,23 @@ const CustomTable: React.FC<CustomTableProps> = ({
     },
     ...(showImage
       ? [{
-          title: <FaImage size={18} />,
-          dataIndex: 'image',
-          key: 'image',
-          width: 60,
-          render: (image?: string) =>
-            image ? (
-              <img src={image} alt="Product" className="w-8 h-8 object-cover rounded shadow" />
-            ) : (
-              "-"
-            ),
-        }]
+        title: <FaImage size={18} />,
+        dataIndex: 'image',
+        key: 'image',
+        width: 60,
+        render: (image?: string) =>
+          image ? (
+            <img src={image} alt="Product" className="w-8 h-8 object-cover rounded shadow" />
+          ) : (
+            "-"
+          ),
+      }]
       : []),
     ...dynamicColumns,
   ];
 
   return (
-    <div className="px-4 py-2 w-full overflow-hidden">
+    <div className="py-2 w-full overflow-hidden">
       <div className="flex flex-col gap-4 w-full">
         <div className="flex gap-4 w-full">
           <div className={`${isFilterVisible ? "w-[calc(100%-16rem)]" : "w-full"}`}>
@@ -173,11 +177,22 @@ const CustomTable: React.FC<CustomTableProps> = ({
               className="w-full custom-table"
               rowClassName={() => "no-select-highlight"}
               rowKey="key"
+              onRow={onRow}
               style={
                 headerBgColor
                   ? ({ "--custom-table-header-bg": headerBgColor } as React.CSSProperties)
                   : undefined
               }
+              // ADJUST THE HEIGHT OF THE ROW HEIGHT
+              components={{
+                body: {
+                  row: (props) => (
+                    <tr {...props} style={{ ...props.style, height: `${rowHeight}px` }}>
+                      {props.children}
+                    </tr>
+                  ),
+                },
+              }}
             />
             {isFilterVisible && (
               <div className="mt-12">

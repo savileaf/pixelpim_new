@@ -9,6 +9,7 @@ import ViewAttributeModal from "./ViewAttributeModal";
 import { Button, Dropdown, Menu } from "antd";
 import { MoreOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import { useAttributeModal } from "../../context/AttributeContext";
 
 
 
@@ -16,6 +17,7 @@ const ProductFamilies = () => {
   const setTopbar = useSetProductTopbar();
   const resetTopbar = useResetProductTopbar();
   const [search, setSearch] = useState("");
+  const { openModal, addAttribute } = useAttributeModal();
   const [isProductModalOpen, setIsProductModalOpen] = useState(false)
   const [isAttributeModalOpen, setIsAttributeModalOpen] = useState(false)
 
@@ -107,7 +109,7 @@ const ProductFamilies = () => {
 
           <span className="border-r border-solid border-[#ded2df] w-[1.2rem]">{text}</span>
           <Tooltip title="View All Attributes" placement="bottom">
-            <IoEyeOutline onClick={() => setIsAttributeModalOpen(true)} />
+            <IoEyeOutline onClick={openModal} />
 
           </Tooltip>
         </div>
@@ -175,10 +177,7 @@ const ProductFamilies = () => {
         isOpen={isProductModalOpen}
         onClose={() => setIsProductModalOpen(false)}
       />
-      <ViewAttributeModal
-        isOpen={isAttributeModalOpen}
-        onClose={() => setIsAttributeModalOpen(false)}
-      />
+      <ViewAttributeModal/>
     </div>
   )
 };

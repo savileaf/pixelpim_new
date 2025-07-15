@@ -1,24 +1,17 @@
 import React from 'react';
-import { Modal, Table } from 'antd';
+import { Modal, Table, Button } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import { CloseOutlined } from '@ant-design/icons';
+import { CloseOutlined, DeleteOutlined } from '@ant-design/icons';
+import { useAttributeModal } from '../../context/AttributeContext';
 
 interface ProductRow {
   key: React.Key;
   attributeName: string;
 }
 
-interface ViewProductModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  data?: ProductRow[];
-}
+const ViewAttributeModal: React.FC = () => {
+  const { isOpen, data, closeModal, deleteAttribute } = useAttributeModal();
 
-const ViewAttributeModal: React.FC<ViewProductModalProps> = ({
-  isOpen,
-  data: propData,
-  onClose
-}) => {
   const columns: ColumnsType<ProductRow> = [
     {
       title: 'ATTRIBUTE NAME',
@@ -26,31 +19,29 @@ const ViewAttributeModal: React.FC<ViewProductModalProps> = ({
       key: 'attributeName',
       render: (text: string) => <span>{text}</span>,
     },
-    
+    {
+      title: 'ACTION',
+      key: 'action',
+      render: (_, record) => (
+        <Button
+          danger
+          icon={<DeleteOutlined />}
+          onClick={() => deleteAttribute(record.key)}
+          size="small"
+        />
+      ),
+    },
   ];
 
- const data: ProductRow[] = propData || [
-  { key: "1", attributeName: "Price" },
-  { key: "2", attributeName: "Currency" },
-  { key: "3", attributeName: "Color" },
-  { key: "4", attributeName: "Size" },
-  { key: "5", attributeName: "Material" },
-  { key: "6", attributeName: "Weight" },
-  { key: "7", attributeName: "Dimensions" },
-  { key: "8", attributeName: "Brand" },
-  { key: "9", attributeName: "Model Number" },
-
-];
   return (
     <Modal
       open={isOpen}
-      width={300}
-      style={{top:"10%"}}
+      width={400}
+      style={{ top: "20%" , left:"10%" }}
       footer={null}
-      onCancel={onClose}
+      onCancel={closeModal}
       closable={true}
       closeIcon={<CloseOutlined style={{ color: 'black', fontSize: 16 }} />}
-
     >
       <Table
         columns={columns}

@@ -9,6 +9,7 @@ interface ReusableAssetsTopbarProps {
   customLeftSection?: React.ReactNode;
   searchButtonLabel?: string;
   inputButtonWidth?: number;
+  
 }
 
 const AssetsTopbar = ({

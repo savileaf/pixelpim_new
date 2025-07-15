@@ -57,7 +57,7 @@ const AssetsMain = () => {
     <div>
       <AssetsTopbar />
 
-      <div className="flex flex-row">
+      <div className="flex flex-row p-4">
         {viewMode === "list" ? (
           <CustomTable dataSource={customData} columns={customColumns} showImage={false} />
         ) : (

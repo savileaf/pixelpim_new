@@ -8,6 +8,7 @@ import { ColumnProvider } from './context/ColumnContext';
 import { ViewProvider } from './context/ViewContext';
 import { ModalProvider } from './context/ModalContext';
 import { GroupProvider } from './context/GroupDataContext';
+import { AttributeModalProvider } from './context/AttributeContext';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -17,7 +18,10 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <ViewProvider>
           <GroupProvider>
         <ModalProvider>
+          <AttributeModalProvider>
       <App />
+
+          </AttributeModalProvider>
         </ModalProvider>
           </GroupProvider>
       </ViewProvider>

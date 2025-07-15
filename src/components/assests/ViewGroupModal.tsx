@@ -4,8 +4,6 @@ import { FaTimes } from "react-icons/fa";
 interface ViewGroupModalProps {
   onClose: () => void;
   onCreateGroup: (groupName: string) => void;
-  variant?: 'default' | 'edit';
-  status?: 'default' | 'success';
 }
 
 const ViewGroupModal = ({ onClose, onCreateGroup }: ViewGroupModalProps) => {
