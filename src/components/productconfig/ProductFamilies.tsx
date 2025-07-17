@@ -182,7 +182,7 @@ const ProductFamilies = () => {
   }, [search]);
 
   return (
-    <div className="flex flex-col px-4">
+    <div className="flex flex-col p-2">
       <CustomTable dataSource={customData} columns={customColumns} showImage={false} />
       <ViewProductModal
         isOpen={isProductModalOpen}
