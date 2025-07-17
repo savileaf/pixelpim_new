@@ -120,7 +120,7 @@ header button {
     border-radius: 4px;
 }
 
-.subcategory-input {
+/* .subcategory-input {
     font-family: Inter;
     font-size: 12px;
     color: #1B0C31;
@@ -130,7 +130,7 @@ header button {
     border: none;
     outline: none;
     padding: 8px 12px;
-}
+} */
 
 
 .popup-overlay {

@@ -2,11 +2,12 @@
 
 *{
   font-family: 'Inter', sans-serif;
+  box-sizing: border-box;
 }
 
 :root{
-  --brown:#c78500,
-  --green:#00c965
+  --brown:#c78500;
+  --green:#00c965;
 }
   
 .pixel-box {
@@ -16,17 +17,33 @@
   position: relative;
   overflow: hidden;
 }
-
 .pixel-box::after {
   content: '';
   position: absolute;
-  top: 2px;
+  top: 0px;
   right: -3px; 
   width: 7px;
   height: 100%;
-  background-color: #c18726; 
-  transform: skewX(-4deg); 
+  background-color: #CC922F; 
+  transform: skewX(-5deg); 
   z-index: 1;
+}
+.sidebar-link{
+  font-family: 'Roboto Condensed', 'sans-serif';
+  letter-spacing: 0.2px;
+}
+.sidebar-resources{
+  font-family: 'Roboto Condensed', 'sans-serif';
+  letter-spacing: 0.2px;
+}
+.select-family{
+  font-family: 'Anaheim', 'sans-serif';
+}
+
+
+.s-resources-link{
+  font-family: 'Roboto Condensed', 'sans-serif';
+  letter-spacing: 0.2px;
 }
 
 .truncate {

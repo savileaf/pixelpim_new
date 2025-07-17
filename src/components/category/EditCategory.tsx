@@ -6,6 +6,7 @@ import { MdArrowForwardIos } from "react-icons/md";
 import { AiOutlinePlus } from "react-icons/ai";
 import { IoMdArrowDropright } from "react-icons/io";
 import "./editcategory.css";
+import MirrorInput from "./MirrorInput";
 
 // Types
 interface Subcategory {
@@ -135,37 +136,87 @@ const EditCategory: React.FC = () => {
 
 
   // Recursive render for subcategories
-  const renderSubcategories = (subs: Subcategory[], level: number = 1) =>
-    subs.map((sub) => {
-      const isCollapsed = collapsedSubcategories.has(sub.id);
-      const hasSubcategories = sub.subcategories && sub.subcategories.length > 0;  // Check if it has subcategories
+  // const renderSubcategories = (subs: Subcategory[], level: number = 1) =>
+  //   subs.map((sub) => {
+  //     const isCollapsed = collapsedSubcategories.has(sub.id);
+  //     const hasSubcategories = sub.subcategories && sub.subcategories.length > 0;  // Check if it has subcategories
 
-      return (
-        <div key={sub.id} style={{ marginLeft: `1.5rem`, marginTop: "1rem" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-            {/* Always show the icon, but rotate only if there are subcategories */}
-            <MdArrowForwardIos
-              size={12}
-              style={{
-                cursor: hasSubcategories ? "pointer" : "default",  // Only clickable if it has subcategories
-                transform: hasSubcategories && isCollapsed ? "rotate(90deg)" : "rotate(0deg)",  // Rotate only if has subcategories
-                transition: "transform 0.2s",
-              }}
-              onClick={() => hasSubcategories && toggleCollapseSubcategory(sub.id)}  // Only toggle if it has subcategories
-            />
-            <input
+  //     return (
+  //       <div key={sub.id} style={{ marginLeft: `1.5rem`, marginTop: "1rem" }}>
+  //         <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+  //           {/* Always show the icon, but rotate only if there are subcategories */}
+  //           <MdArrowForwardIos
+  //             size={12}
+  //             style={{
+  //               cursor: hasSubcategories ? "pointer" : "default",  // Only clickable if it has subcategories
+  //               transform: hasSubcategories && isCollapsed ? "rotate(90deg)" : "rotate(0deg)",  // Rotate only if has subcategories
+  //               transition: "transform 0.2s",
+  //             }}
+  //             onClick={() => hasSubcategories && toggleCollapseSubcategory(sub.id)}  // Only toggle if it has subcategories
+  //           />
+  //           <input
+  //             className="subcategory-input"
+  //             type="text"
+  //             value={sub.name}
+  //             onChange={(e) => updateSubcategoryName(sub.id, e.target.value)}
+  //           />
+  //           <input
+  //             className="subcategory-input"
+  //             type="text"
+  //             value={sub.name}
+  //             onChange={(e) => updateSubcategoryName(sub.id, e.target.value)}
+  //             // Replacing this input with the MirrorInput
+  //             renderInput={(inputProps) => (
+  //               <MirrorInput {...inputProps} />
+  //             )}
+  //           />
+  //           <AiOutlinePlus onClick={() => openAddSubPopup(sub.id, sub.name)} />
+  //         </div>
+  //         {/* Only render subcategories if they're not collapsed */}
+  //         {!isCollapsed && sub.subcategories && renderSubcategories(sub.subcategories, level + 1)}
+  //       </div>
+  //     );
+  // });
+
+
+const renderSubcategories = (subs: Subcategory[], level: number = 1) =>
+  subs.map((sub) => {
+    const isCollapsed = collapsedSubcategories.has(sub.id);
+    const hasSubcategories = sub.subcategories && sub.subcategories.length > 0;
+
+    return (
+      <div key={sub.id} className="mt-4 ml-6">
+        <div className="flex items-center gap-3">
+          <MdArrowForwardIos
+            size={12}
+            style={{
+              cursor: hasSubcategories ? "pointer" : "default",
+              transform: hasSubcategories && isCollapsed ? "rotate(90deg)" : "rotate(0deg)",
+              transition: "transform 0.2s",
+            }}
+            onClick={() => hasSubcategories && toggleCollapseSubcategory(sub.id)}
+          />
+          {/* <input
               className="subcategory-input"
               type="text"
               value={sub.name}
               onChange={(e) => updateSubcategoryName(sub.id, e.target.value)}
-            />
-            <AiOutlinePlus onClick={() => openAddSubPopup(sub.id, sub.name)} />
-          </div>
-          {/* Only render subcategories if they're not collapsed */}
-          {!isCollapsed && sub.subcategories && renderSubcategories(sub.subcategories, level + 1)}
+            /> */}
+
+          {/* Use MirrorInput here to adjust width */}
+          <MirrorInput
+            value={sub.name}
+            onChange={(e) => updateSubcategoryName(sub.id, e.target.value)}
+          />
+          <AiOutlinePlus onClick={() => openAddSubPopup(sub.id, sub.name)} />
         </div>
-      );
+
+        {/* Render nested subcategories if not collapsed */}
+        {!isCollapsed && sub.subcategories && renderSubcategories(sub.subcategories, level + 1)}
+      </div>
+    );
   });
+
 
 
   // Open Add Subcategory Popup

@@ -1,13 +1,14 @@
 import {
   FaDownload,
-  FaUpload,
   FaSearch,
-  FaTh,
   FaList,
   FaFilter,
   FaSlidersH,
   FaRegFolderOpen
 } from "react-icons/fa";
+import { TfiLayoutGrid2 } from "react-icons/tfi";
+import { TfiExport } from "react-icons/tfi";
+import { TfiImport } from "react-icons/tfi";
 import { MdDelete } from "react-icons/md";
 import { useFilterContext } from "../context/FilterContext";
 import { useViewContext } from "../context/ViewContext";
@@ -54,7 +55,7 @@ const Topbar: React.FC<TopbarProps> = ({
   // groupFilesButton=false,
   showCustomizeColumns = true,
   searchButtonLabel = "Search Product by SKU or Product Name",
-  inputButtonWidth = 64,
+  inputButtonWidth = 110,
   customLeftSection = false,
 
 
@@ -67,17 +68,16 @@ const Topbar: React.FC<TopbarProps> = ({
     viewMode: string;
     setViewMode: (mode: string) => void;
   };
-  const [openImportModal, setOpenImportModal] = useState(false)
+  // const [openImportModal, setOpenImportModal] = useState(false)
 
   return (
     <div className="w-full h-cover">
-      <nav className="flex flex-row w-full">
-        <div className="flex flex-wrap items-center justify-between gap-2 p-4">
+      <nav className="flex flex-row w-full mb-[18px]">
+        <div className="w-full flex flex-wrap items-center justify-between gap-2">
           {/* Left section */}
-          <div className="flex flex-wrap items-center gap-3">
-            {
-              customLeftSection ? (customLeftSection) : (
-                <select className="border border-gray-300 px-4 py-1.5 rounded w-[14rem] text-[14px] text-[#1b0c31] focus:outline-none">
+          <div className="w-full flex flex-wrap items-center justify-between gap-3">
+            { customLeftSection ? (customLeftSection) : (
+                <select className="select-family border border-[#C3BECA] px-2 py-[2px] uppercase font-semibold w-[258px] text-[18px] text-[#1B0C31] focus:outline-none">
                   <option value="">{createSelectLabel}</option>
                   <option value="family1">Family 1</option>
                   <option value="family2">Family 2</option>
@@ -86,8 +86,7 @@ const Topbar: React.FC<TopbarProps> = ({
             }
 
             {/* Conditional view group button */}
-            {
-              viewGroupButton && (
+            { viewGroupButton && (
                 <Link to="/assets/opengroup">
                   <button className="flex items-center gap-2 w-full border border-gray-200 px-3 py-1.5 rounded font-medium text-[12px] text-[#676767] hover:bg-yellow-50">
                     <FaRegFolderOpen className="text-yellow-500" height={5} />
@@ -98,8 +97,7 @@ const Topbar: React.FC<TopbarProps> = ({
               )
             }
 
-            {
-              viewGroupButton && (
+            { viewGroupButton && (
                 <div>
                   <button className="flex items-center gap-2 w-full border border-gray-200 px-3 py-1.5 rounded font-medium text-[12px] text-[#676767] hover:bg-yellow-50" onClick={onViewGroupClick}>
                     <FaRegFolderOpen className="text-yellow-500" />
@@ -110,53 +108,53 @@ const Topbar: React.FC<TopbarProps> = ({
               )
             }
 
-            <div className="w-[9rem] bg-[#f1f0f0]">
+            <div className="w-fit bg-[#f1f0f0]">
              <Link to="/importdata">
-              <button className="flex items-center gap-2 w-full border border-gray-200 px-3 py-1.5 rounded font-medium text-[12px] text-[#676767] hover:bg-yellow-50" onClick={openImportModal}>
-                <FaDownload className="text-yellow-500" />
+              <button className="flex items-center gap-3 w-full border border-[#C3BECA] pr-[18px] pl-[16px] py-1.5 font-medium text-[12px] text-[#676767] hover:bg-yellow-50" >
+                <TfiImport className="text-[#FFC562]" size={13}/>
                 Import Data
               </button>
              </Link>
             </div>
 
-            <div className="w-[9rem] bg-[#f1f0f0]">
-              <button className="flex items-center w-full gap-2 border border-gray-200 px-3 py-1.5 rounded font-normal text-[12px] text-[#9d9d9d] hover:bg-yellow-50">
-                <FaUpload className="text-yellow-500" height={5} />
+            <div className="w-fit bg-[#f1f0f0]">
+              <button className="flex items-center w-full gap-3 border border-[#C3BECA] pr-[18px] pl-[16px] py-1.5 font-medium text-[12px] text-[#676767] hover:bg-yellow-50">
+                <TfiExport className="text-[#FFC562]" size={12} />
                 Export Data
               </button>
             </div>
 
             {/* Search */}
-            <div className="flex items-center border rounded overflow-hidden">
-              <div className="bg-[#676767] text-white p-1.5">
+            <div className="flex items-center border border-[#C3BECA] overflow-hidden w-[250px] h-8">
+              <div className="bg-[#676767] text-white h-full w-[30px] flex justify-center items-center">
                 <FaSearch height={5} />
               </div>
               <input
                 type="text"
                 placeholder={searchButtonLabel}
-                className={`w-${inputButtonWidth} px-3 py-1 text-sm outline-none font-normal text-[12px] text-[#9d9d9d]`}
+                className={`w-${inputButtonWidth} px-3 text-sm outline-none font-normal text-[12px] text-[#9d9d9d]`}
               />
             </div>
 
             {/* Customize Columns */}
             {
               showCustomizeColumns && onCustomizeColumnsClick && (
-                <button className="flex items-center gap-3 border px-3 py-1.5 rounded font-medium text-[12px] text-[#676767] hover:bg-yellow-50" onClick={onCustomizeColumnsClick}>
-                  <FaSlidersH className="text-yellow-500" height={13} />
+                <button className="flex items-center gap-3 border border-[#C3BECA] px-4 h-8 font-medium text-[12px] text-[#676767] hover:bg-yellow-50" onClick={onCustomizeColumnsClick}>
+                  <FaSlidersH className="text-[#FFC562]" height={13} />
                   Customize Columns
                 </button>
               )
             }
 
             <div className="flex text-gray-600 ml-1">
-              <button className="p-1 hover:bg-gray-200 rounded" onClick={() => setViewMode("list")}>
+              <button className="mr-[10px] hover:bg-gray-200 rounded" onClick={() => setViewMode("list")}>
                 <Tooltip title="List View">
                   <FaList />
                 </Tooltip>
               </button>
-              <button className="p-1 hover:bg-gray-200 rounded" onClick={() => setViewMode("grid")}>
+              <button className="hover:bg-gray-200 rounded" onClick={() => setViewMode("grid")}>
                 <Tooltip title="Grid View">
-                  <FaTh />
+                  <TfiLayoutGrid2 />
                 </Tooltip>
               </button>
             </div>
@@ -164,7 +162,7 @@ const Topbar: React.FC<TopbarProps> = ({
         </div>
       </nav>
 
-      <div className="flex flex-row justify-between items-center mr-6 mb-2 px-8">
+      <div className="flex flex-row justify-between items-center mr-6 mb-2">
         <div className="flex items-center gap-4">
           <label className="flex items-center gap-1 font-normal text-[12px] text-[#676767] rounded-md cursor-pointer mr-2">
             <input
@@ -188,7 +186,7 @@ const Topbar: React.FC<TopbarProps> = ({
         <hr className="w-[70%] text-[#576757]" />
 
         <button
-          className="flex items-center gap-1 font-normal text-[12px] text-[#676767] px-2 py-1 text-gray-700 hover:bg-yellow-50 border border-gray-200 rounded"
+          className="flex items-center gap-1 font-normal text-[12px] text-[#676767] px-2 py-1 hover:bg-yellow-50 border border-gray-200 rounded"
           onClick={toggleFilter}
         >
           <FaFilter className="text-yellow-500" height={3.5} />
