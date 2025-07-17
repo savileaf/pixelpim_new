@@ -9,15 +9,15 @@ interface SectionItem {
 
 const sections: SectionItem[] = [
   {
-    title: "Product",
+    title: "PRODUCT",
     items: ["Attribute", "Families", "Categories", "Relationships", "Table views"],
   },
   {
-    title: "Assets",
+    title: "ASSETS",
     items: ["Category"],
   },
   {
-    title: "General",
+    title: "GENERAL",
     items: ["Connections"],
   },
 ];
@@ -43,15 +43,15 @@ const ProductsSidebar: React.FC = () => {
   };
 
   return (
-    <aside className="w-[12rem] h-screen bg-gray-50 shadow-md border-r border-gray-200 text-sm font-medium">
-      <nav className="pt-4 px-3">
+    <aside className="pt-6 px-5 w-[162px] flex-none basis-[162px] min-h-[600px] h-screen bg-[#F1F0F0] text-sm font-medium">
+      <nav className="">
         {sections.map(({ title, items }) => (
-          <div key={title}>
+          <div key={title} className="pb-5">
             <div
-              className="flex justify-between items-center cursor-pointer py-2 text-gray-700 hover:text-black"
+              className="flex justify-between items-center cursor-pointer pb-2 text-[#484848] hover:text-black"
               onClick={() => toggleSection(title)}
             >
-              <span className="uppercase text-xs tracking-wide font-semibold">
+              <span className="uppercase text-sm tracking-wide font-semibold setting-sidebar-link ">
                 {title}
               </span>
               <FaChevronDown
@@ -63,17 +63,17 @@ const ProductsSidebar: React.FC = () => {
             </div>
 
             {openSections[title] && (
-              <ul className="pl-3 border-l border-gray-300 ml-1">
+              <ul className="border-l border-[#C2C5C8]">
                 {items.map((item) => (
-                  <li key={item}>
+                  <li key={item} className="pb-1.5">
                     <Link
                       to={`/${title.toLowerCase()}/${item
                         .toLowerCase()
                         .replace(/\s/g, "-")}`}
-                      className={`block py-1.5 px-2 rounded-sm ${
+                      className={`block py-1 px-4 setting-sidebar-link font-medium ${
                         isActive(item)
-                          ? "text-blue-600 border-l-2 border-blue-600 pl-2 bg-blue-50"
-                          : "text-gray-700 hover:bg-gray-100"
+                          ? "text-[#2ECC71] border-l-2 border-[#2ECC71]"
+                          : "text-[#626568] hover:bg-gray-100"
                       }`}
                     >
                       {item}

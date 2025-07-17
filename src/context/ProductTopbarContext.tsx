@@ -20,7 +20,7 @@ const defaultTopbarConfig: TopbarConfig = {
   createButtonWidth: 150,
   showCreateButton: true,
   showFilter: true,
-  filterOptions: ["Filter O","Option B", "Option B"],
+  filterOptions: ["Filter Options","Option B", "Option B"],
   showSearch: true,
   searchPlaceholder: "Search Attribute",
 };

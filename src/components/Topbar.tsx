@@ -77,7 +77,7 @@ const Topbar: React.FC<TopbarProps> = ({
       <nav className="flex flex-row w-full mb-[18px]">
         <div className="w-full flex flex-wrap items-center justify-between gap-2">
           {/* Left section */}
-          <div className="w-full flex flex-wrap items-center justify-between gap-3">
+          <div className="w-full flex flex-wrap items-center gap-5">
             { customLeftSection ? (customLeftSection) : (
                 <select className="select-family border border-[#C3BECA] px-2 py-[2px] uppercase font-semibold w-[258px] text-[18px] text-[#1B0C31] focus:outline-none">
                   <option value="">{createSelectLabel}</option>
@@ -125,7 +125,7 @@ const Topbar: React.FC<TopbarProps> = ({
             </div>
 
             {/* Search */}
-            <div className="flex items-center border border-[#C3BECA] overflow-hidden w-[250px] h-8">
+            <div className="flex items-center border border-[#C3BECA] overflow-hidden flex-grow h-8">
               <div className="bg-[#676767] text-white h-full w-[30px] flex justify-center items-center">
                 <FaSearch height={5} />
               </div>

@@ -7,20 +7,20 @@ import { useProductTopbar } from "../context/ProductTopbarContext"
 const ProductsConfigLayout = () => {
   const topbarConfig = useProductTopbar();
   return (
-     <div className="flex flex-row w-full h-screen">
+    <div className="flex flex-row w-full h-screen">
       <div className="flex flex-row">
-        <Sidebar/>
-      <ProductsSidebar/>
+        <Sidebar />
+        <ProductsSidebar />
       </div>
-      <div className="flex-1 flex flex-col ">
+      <div className="flex-1 flex flex-col p-5">
         <div className="w-full">
-    <ProductconfigTopbar {...topbarConfig}/>
+          <ProductconfigTopbar {...topbarConfig} />
 
         </div>
-    <div className="flex-1 overflow-auto w-full">
-      <Outlet/>
-    </div>
-  </div>
+        <div className="flex-1 overflow-hidden w-full">
+          <Outlet />
+        </div>
+      </div>
     </div>
   )
 }
