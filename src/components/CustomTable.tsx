@@ -7,6 +7,7 @@ import FilterData from "./FilterData";
 import CustomiseColumnModal from "./CustomiseColumnModal";
 import { useColumns } from "../context/ColumnContext";
 import type { ColumnsType } from "antd/es/table";
+import {useNavigate} from "react-router-dom";
 
 interface DataType {
   key: string;
@@ -21,7 +22,7 @@ interface DataType {
 const defaultData: DataType[] = [
   {
     key: "1",
-    image: "../src/assets/Image.png",
+    image: "/images/download.png",
     product_name: "Wireless Mouse",
     product_description: "Ergonomic wireless mouse with long battery life.",
     sku: "WM123",
@@ -29,7 +30,7 @@ const defaultData: DataType[] = [
   },
   {
     key: "2",
-    image: "../src/assets/Image.png",
+    image: "/images/keyboard.jpg",
     product_name: "Gaming Keyboard",
     product_description: "Mechanical keyboard with RGB lights.",
     sku: "GK456",
@@ -68,6 +69,7 @@ const CustomTable: React.FC<CustomTableProps> = ({
   const [sortOption, setSortOption] = useState<string>();
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [localSelectedRowKeys, setLocalSelectedRowKeys] = useState<React.Key[]>([]);
+  const navigate = useNavigate();
 
   const selectedKeys = parentSelectedRowKeys ?? localSelectedRowKeys;
   const updateSelectedKeys = parentSetSelectedRowKeys ?? setLocalSelectedRowKeys;
@@ -95,7 +97,14 @@ const CustomTable: React.FC<CustomTableProps> = ({
   const getColumnRender = (key: string) => {
     switch (key) {
       case 'product_name':
-        return (text: string) => <TruncateWithTooltip text={text} maxWidth={200} />;
+        return (text: string, record: DataType) => (
+        <span
+          className="cursor-pointer"
+          onClick={() => navigate(`/productdetails/basic-info`)} 
+        >
+          <TruncateWithTooltip text={text} maxWidth={200} />
+        </span>
+      );
       case 'product_description':
         return (text: string) => <TruncateWithTooltip text={text} maxWidth={300} />;
       default:
@@ -112,6 +121,7 @@ const CustomTable: React.FC<CustomTableProps> = ({
         key: col.key,
         className: "font-normal text-[12px] text-[#2d2b2b]",
         render: getColumnRender(col.key),
+      
       }));
 
   const tableColumns: ColumnsType<DataType> = [
@@ -132,7 +142,7 @@ const CustomTable: React.FC<CustomTableProps> = ({
       dataIndex: 'key',
       key: 'checkbox',
       width: 60,
-      fixed: 'left' as const,
+      // fixed: 'left' as const,
       render: (_, record) => (
         <div className="flex items-center justify-center">
           <Checkbox
@@ -156,7 +166,7 @@ const CustomTable: React.FC<CustomTableProps> = ({
         width: 60,
         render: (image?: string) =>
           image ? (
-            <img src={image} alt="Product" className="w-8 h-8 object-cover rounded shadow" />
+            <img src={image} alt="Product" className="w-full h-8 object-cover rounded shadow" />
           ) : (
             "-"
           ),
@@ -177,6 +187,7 @@ const CustomTable: React.FC<CustomTableProps> = ({
               className="w-full custom-table"
               rowClassName={() => "no-select-highlight"}
               rowKey="key"
+              scroll={{y:420 , x:"max-content"}}
               onRow={onRow}
               style={
                 headerBgColor
@@ -185,6 +196,7 @@ const CustomTable: React.FC<CustomTableProps> = ({
               }
               // ADJUST THE HEIGHT OF THE ROW HEIGHT
               components={{
+                
                 body: {
                   row: (props) => (
                     <tr {...props} style={{ ...props.style, height: `${rowHeight}px` }}>

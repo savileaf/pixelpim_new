@@ -118,7 +118,7 @@ const categories = [
       title: "Category NAME",
       dataIndex: "category_name",
       key: "category_name",
-      width: 360,
+      width: 330,
       render: (text:string)=>{
         return(
           <div className="flex items-center justify-between">
@@ -229,7 +229,7 @@ const customData = categoriesList.map((category, index) => ({
   }));
 
   return (
-    <div>
+    <div className="px-4">
       <CustomTable dataSource={customData} columns={customColumns} showImage={false} />
       {isCreateModalOpen && (
         <CreateCategoryModal

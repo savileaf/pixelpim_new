@@ -9,13 +9,16 @@ import { ViewProvider } from './context/ViewContext';
 import { ModalProvider } from './context/ModalContext';
 import { GroupProvider } from './context/GroupDataContext';
 import { AttributeModalProvider } from './context/AttributeContext';
+import { ImportDataProvider } from './context/ImportDataContext';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter> 
+     <ImportDataProvider>
+
     <FilterProvider>
       <ColumnProvider>
-      <ViewProvider>
+       <ViewProvider>
           <GroupProvider>
         <ModalProvider>
           <AttributeModalProvider>
@@ -27,6 +30,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       </ViewProvider>
       </ColumnProvider>
       </FilterProvider>
+     </ImportDataProvider>
+
     </BrowserRouter>
   </React.StrictMode>
 );

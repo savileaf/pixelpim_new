@@ -1,11 +1,35 @@
-import { FaFilePdf, FaSearch, FaShare, FaSortAmountDown } from "react-icons/fa";
+import { FaFileAlt, FaFileExcel, FaFilePdf, FaFileWord, FaSearch, FaShare, FaSortAmountDown } from "react-icons/fa";
 import { FiDownload, FiEdit2, FiPlus, FiShare, FiTrash2 } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import CustomTable from "../CustomTable";
 import { useState } from "react";
 import { Tooltip } from "antd";
+import { BiSolidFilePdf } from "react-icons/bi";
+import { IoMdImage } from "react-icons/io";
+import { MdTextSnippet } from "react-icons/md";
 
+const getFileIcon = (fileName: string) => {
+  const ext = fileName.split(".").pop()?.toLowerCase();
 
+  switch (ext) {
+    case "pdf":
+      return <BiSolidFilePdf className="text-red-500" size={20}/>;
+    case "xls":
+    case "xlsx":
+      return <FaFileExcel className="text-green-600" size={20}/>;
+    case "jpg":
+    case "jpeg":
+    case "png":
+      return <IoMdImage className="text-[#002d74]" size={20}/>;
+    case "doc":
+    case "docx":
+      return <FaFileWord className="text-[#1b5cb9]" size={20}/>
+      case "txt":
+      return <MdTextSnippet className="text-[#079b94]" size={20}/>;
+    default:
+      return <FaFileAlt className="text-gray-500" size={20}/>;
+  }
+};
 
 
 const ProductDetailsCategory = () => {
@@ -15,17 +39,17 @@ const ProductDetailsCategory = () => {
   [
   {
     key: "1",
-    file_name: "Vintage SweatShirt",
+    file_name: "Vintage SweatShirt.pdf",
     size: "2mb",
   },
   {
     key: "2",
-    file_name: "Vintage SweatShirt",
+    file_name: "Vintage SweatShirt.xls",
     size: "2mb",
   },
   {
     key: "3",
-    file_name: "Vintage SweatShirt",
+    file_name: "Vintage SweatShirt.png",
     size: "2mb",
   },
 ]
@@ -37,10 +61,11 @@ const ProductDetailsCategory = () => {
       dataIndex: "file_name",
       key: "file_name",
       width: 300,
+     
       render: (text: string) => (
         <div className="flex items-center gap-2">
-          <FaFilePdf color="red" />
-          <span>{text}</span>
+          {getFileIcon(text)}
+        <span>{text}</span>
         </div>
       ),
     },
@@ -83,7 +108,7 @@ const ProductDetailsCategory = () => {
 
 
   return (
-    <div className="w-full h-screen bg-[#f2f0f0] p-4">
+    <div className="w-full h-screen bg-[#f2f0f0] px-4 py-2">
       <div>
         <Link to="/">
           <button
@@ -99,7 +124,7 @@ const ProductDetailsCategory = () => {
       <div className="flex flex-row  mt-4 w-full gap-2">
         {/* image section */}
         <div className=" p-2 flex flex-col gap-4 w-[18rem] max-w-[18rem]">
-          <img src="/placeholder.png" alt="product" className="border-0" />
+          <img src="/images/placeholder.png" alt="product" className="border-0" />
           <div className="w-[8rem]">
             <button className="rounded-3xl px-4 py-2 bg-[#cc922f] text-white">
               Add Image
@@ -109,14 +134,14 @@ const ProductDetailsCategory = () => {
 
 
         {/* form section */}
-        <div className="w-[36rem] min-w-[36rem] p-2 space-y-4">
-          <div className="flex justify-between">
+        <div className="w-[33rem] min-w-[33rem] p-2 space-y-4">
+          <div className="flex gap-2">
             <div className='py-[1.5] px-2 w-[10rem] bg-white border border-gray-200 flex items-center justify-center gap-2 font-semibold text-[#9d9d9d]'>
-              <FiPlus size={22} color='#2ecc71' />
+              <FiPlus size={20} color='#2ecc71' />
               Add Attribute
             </div>
 
-            <div className="h-[1.9rem] flex items-center border border-gray-400 rounded overflow-hidden w-[15rem]">
+            <div className="h-[1.9rem] flex items-center border border-gray-400 rounded overflow-hidden w-[13rem]">
               <div className="bg-[#676767] text-white p-[8.6px]">
                 <FaSearch size={14} />
               </div>

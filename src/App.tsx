@@ -56,7 +56,6 @@ const App = () => {
     <Route path="/productfamily/edit" element={<EditProductFamily/>}/>
     <Route path="/edit/product/category" element={<EditCategory/>}/>
     <Route path="/add/product" element={<AddProduct/>}/> 
-    <Route path="/importdata" element={<ImportData/>}/>
     </Routes>
   )
 }

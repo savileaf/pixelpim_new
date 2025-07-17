@@ -72,7 +72,7 @@ const categories = [
 
 const ProductDetailsCategories = () => {
   return (
-    <div className="w-full h-screen bg-[#f2f0f0] p-4">
+    <div className="w-full h-screen max-h-[100vh] bg-[#f2f0f0] p-4">
           <div>
             <Link to="/">
               <button
@@ -88,7 +88,7 @@ const ProductDetailsCategories = () => {
           <div className="flex flex-row  mt-4 w-full gap-2">
             {/* image section */}
             <div className=" p-2 flex flex-col gap-4 w-[18rem] min-w-[18rem]">
-              <img src="/placeholder.png" alt="product" />
+              <img src="/images/placeholder.png" alt="product" />
               <div className="w-[8rem]">
                 <button className="rounded-3xl px-4 py-2 bg-[#cc922f] text-white">
                   Add Image

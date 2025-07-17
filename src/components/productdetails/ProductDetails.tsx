@@ -24,7 +24,7 @@ const ProductDetails:React.FC<ProductDetailsProps> = ({
     navigator.clipboard.writeText(productLink);
   };
   return (
-    <div className="w-full h-screen bg-[#f2f0f0] p-4">
+    <div className="w-full h-screen bg-[#f2f0f0] px-4 py-2">
       <div>
         <Link to="/">
           <button
@@ -44,7 +44,7 @@ const ProductDetails:React.FC<ProductDetailsProps> = ({
       
         <div className="">
           <img
-            src="/jeans.png"  
+            src="/images/jeans.png"  
             alt="Jeans"
             className="w-full h-auto rounded-lg shadow-md"
           />
@@ -53,7 +53,7 @@ const ProductDetails:React.FC<ProductDetailsProps> = ({
         <div className=" grid grid-cols-2 gap-2">
           <div className="relative overflow-hidden">
             <img
-              src="/jeans.png" // Placeholder for thumbnail 1
+              src="/images/jeans.png" // Placeholder for thumbnail 1
               alt="Thumbnail 1"
               className="w-full h-auto object-cover"
             />
@@ -62,7 +62,7 @@ const ProductDetails:React.FC<ProductDetailsProps> = ({
           {/* Thumbnail 2 */}
           <div className="relative overflow-hidden">
             <img
-              src="/jeans.png" // Placeholder for thumbnail 2
+              src="/images/jeans.png" // Placeholder for thumbnail 2
               alt="Thumbnail 2"
               className="w-full h-auto object-cover"
             />
@@ -71,7 +71,7 @@ const ProductDetails:React.FC<ProductDetailsProps> = ({
           {/* Thumbnail 3 */}
           <div className="relative overflow-hidden">
             <img
-              src="/jeans.png" // Placeholder for thumbnail 3
+              src="/images/jeans.png" // Placeholder for thumbnail 3
               alt="Thumbnail 3"
               className="w-full h-auto object-cover"
             />
@@ -79,7 +79,7 @@ const ProductDetails:React.FC<ProductDetailsProps> = ({
 
           <div className="relative overflow-hidden group">
             <img
-              src="/jeans.png" 
+              src="/images/jeans.png" 
               alt="View All"
               className="w-full h-auto object-cover "
             />
@@ -98,7 +98,7 @@ const ProductDetails:React.FC<ProductDetailsProps> = ({
       </div>
     </div>
      {/* form section */}
-    <div className="w-[36rem] min-w-[36rem] p-2 space-y-4 mt-6">
+    <div className="w-[33rem] min-w-[33rem] p-2 space-y-4 mt-6">
       {/* Product Name */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">Product Name</label>

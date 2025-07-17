@@ -8,8 +8,9 @@ import ViewProductModal from "./ViewProductModal";
 import ViewAttributeModal from "./ViewAttributeModal";
 import { Button, Dropdown, Menu } from "antd";
 import { MoreOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { Link , useNavigate } from "react-router-dom";
 import { useAttributeModal } from "../../context/AttributeContext";
+
 
 
 
@@ -20,6 +21,8 @@ const ProductFamilies = () => {
   const { openModal, addAttribute } = useAttributeModal();
   const [isProductModalOpen, setIsProductModalOpen] = useState(false)
   const [isAttributeModalOpen, setIsAttributeModalOpen] = useState(false)
+  const navigate = useNavigate();
+
 
 
   const handleMenuClick = (key: string, record: any) => {
@@ -81,12 +84,20 @@ const ProductFamilies = () => {
       dataIndex: "family_name",
       key: "family_name",
       width: 300,
+      render: (text: string) => (
+    <span
+      onClick={() => navigate(`/productfamily/edit`)}
+      className="cursor-pointer"
+    >
+      {text}
+    </span>
+  ),
     },
     {
       title: "PRODUCTS",
       dataIndex: "products",
       key: "products",
-      width: 150,
+      width: 120,
       render: (text: string) => (
         <div className="flex items-center gap-1 w-[3rem] border border-[#ded2df] border-solid justify-center">
 
@@ -103,7 +114,7 @@ const ProductFamilies = () => {
       title: "ATTRIBUTES",
       dataIndex: "attributes",
       key: "attributes",
-      width: 150,
+      width: 120,
       render: (text: string) => (
         <div className="flex items-center gap-1 w-[3rem] border border-[#ded2df] border-solid justify-center">
 
@@ -131,13 +142,13 @@ const ProductFamilies = () => {
                 label: (
                   <Link to="/productfamily/edit" className="flex items-center gap-2">
                     <FaEdit />
-                    <span>Edit Group</span>
+                    <span>Edit Family</span>
                   </Link>
                 ),
               },
               { label: "Visibility", key: "visibility", icon: <span>👁️</span> },
-              { label: "Import Group Data", key: "import" },
-              { label: "Delete Group", key: "delete", danger: true },
+              { label: "Import Family Data", key: "import" },
+              { label: "Delete Family", key: "delete", danger: true },
             ]}
           />
         );
@@ -162,7 +173,7 @@ const ProductFamilies = () => {
       searchPlaceholder: "Search Family",
       searchValue: search,
       onSearchChange: setSearch,
-      searchBarWidth: 550,
+      searchBarWidth: 540,
     });
 
     return () => {
@@ -171,7 +182,7 @@ const ProductFamilies = () => {
   }, [search]);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col px-4">
       <CustomTable dataSource={customData} columns={customColumns} showImage={false} />
       <ViewProductModal
         isOpen={isProductModalOpen}

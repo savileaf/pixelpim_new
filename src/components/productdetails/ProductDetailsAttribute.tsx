@@ -26,7 +26,7 @@ const AttributeInputBox: React.FC<AttributeInputBoxProps> = ({ content }) => {
 const ProductDetailsAttribute = () => {
   return (
     <div className="p-2 w-full">
-        <div className='mt-2 ms-2'>
+        <div className='ms-2'>
                 <Link to="/">
                   <button
                     className="px-6 py-2 text-gray-800 font-medium bg-[#e6e6e6]"
@@ -38,12 +38,12 @@ const ProductDetailsAttribute = () => {
                   </button>
                 </Link>
               </div>
-        <div className='flex gap-4 p-2'>
+        <div className='flex gap-4'>
         <div className="p-2 flex items-center justify-center w-[18rem] max-w-[18rem]">
       <div className=" overflow-hidden w-full flex flex-col gap-3">
         <div className="">
           <img
-            src="/jeans.png"  
+            src="/images/jeans.png"  
             alt="Jeans"
             className="w-full h-auto rounded-lg shadow-md"
           />
@@ -52,7 +52,7 @@ const ProductDetailsAttribute = () => {
         <div className=" grid grid-cols-2 gap-2">
           <div className="relative overflow-hidden">
             <img
-              src="/jeans.png" // Placeholder for thumbnail 1
+              src="/images/jeans.png" // Placeholder for thumbnail 1
               alt="Thumbnail 1"
               className="w-full h-auto object-cover"
             />
@@ -61,7 +61,7 @@ const ProductDetailsAttribute = () => {
           {/* Thumbnail 2 */}
           <div className="relative overflow-hidden">
             <img
-              src="/jeans.png" // Placeholder for thumbnail 2
+              src="/images/jeans.png" // Placeholder for thumbnail 2
               alt="Thumbnail 2"
               className="w-full h-auto object-cover"
             />
@@ -70,7 +70,7 @@ const ProductDetailsAttribute = () => {
           {/* Thumbnail 3 */}
           <div className="relative overflow-hidden">
             <img
-              src="/jeans.png" // Placeholder for thumbnail 3
+              src="/images/jeans.png" // Placeholder for thumbnail 3
               alt="Thumbnail 3"
               className="w-full h-auto object-cover"
             />
@@ -78,7 +78,7 @@ const ProductDetailsAttribute = () => {
 
           <div className="relative overflow-hidden group">
             <img
-              src="/jeans.png" 
+              src="/images/jeans.png" 
               alt="View All"
               className="w-full h-auto object-cover "
             />
@@ -97,14 +97,14 @@ const ProductDetailsAttribute = () => {
       </div>
     </div>
     {/* FORM SECTION */}
-       <div className="w-[36rem] flex flex-col gap-4 p-2">
+       <div className="w-[33rem] flex flex-col gap-4 p-2">
         <div className="flex gap-3">
-            <div className='py-1 w-[10rem] bg-white border border-gray-200 flex items-center justify-center gap-2 font-semibold text-[#9d9d9d]'>
+            <div className='py-1 w-[9rem] bg-white border border-gray-200 flex items-center justify-center gap-2 font-semibold text-[#9d9d9d]'>
                     <FiPlus size={22} color='#2ecc71'/>
                     Add Attribute
             </div>
             
-             <div className="flex items-center border border-gray-400 rounded overflow-hidden w-[15rem]">
+             <div className="flex items-center border border-gray-400 rounded overflow-hidden w-[13rem]">
                           <div className="bg-[#676767] text-white p-[7px]">
                             <FaSearch size={18} />
                           </div>
@@ -122,7 +122,7 @@ const ProductDetailsAttribute = () => {
         </div>
  {/* ATRRIBUTES FORM SECTION */}
         <div className="flex items-start justify-center">
-      <div className="w-full max-w-2xl">
+      <div className="w-full">
         {/* Size Attribute Block */}
         <div className="relative mb-4"> {/* Added mb-6 for spacing between blocks */}
           <MdCancel className="w-5 h-5 text-gray-400 cursor-pointer hover:text-gray-600 absolute -top-2 right-0 transform translate-x-1/2 -translate-y-1/2" />

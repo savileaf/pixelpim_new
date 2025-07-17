@@ -37,7 +37,7 @@ const ProductconfigTopbar: FC<ProductconfigTopbarProps> = ({
   showSearch = true,
   searchPlaceholder = "Search Attribute",
   searchValue = "",
-  searchBarWidth = 370,
+  searchBarWidth = 350,
   onSearchChange = () => {},
 }) => {
   return (

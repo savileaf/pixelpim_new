@@ -1,6 +1,7 @@
 // src/pages/AddProduct.tsx
 import React, { useState } from 'react';
 import  AttributeSelector  from './AttributeSelector';
+import { Link } from 'react-router-dom';
 
 
 const AddProduct: React.FC = () => {
@@ -30,7 +31,10 @@ const AddProduct: React.FC = () => {
       <section className='pb-13'>
         <header>
           <p className='text-2xl font-bold'>Add Product</p>
+          <Link to="/"> 
           <button className='!text-base'>Cancel</button>
+          
+          </Link>
         </header>
 
         <div className="w-[560px] mt-8 mx-auto p-8 bg-[#f2f2f2]">

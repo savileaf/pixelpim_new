@@ -51,13 +51,15 @@ const ProductConfigurationPage = () => {
         </div>
       )}
 
-      <CustomTable
+      <div className="px-4">
+        <CustomTable
         dataSource={customData}
         columns={customColumns}
         showImage={false}
         selectedRowKeys={selectedRowKeys}
         setSelectedRowKeys={setSelectedRowKeys}
       />
+      </div>
     </div>
   );
 };

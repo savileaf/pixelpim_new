@@ -9,11 +9,12 @@ import {
 import { TfiLayoutGrid2 } from "react-icons/tfi";
 import { TfiExport } from "react-icons/tfi";
 import { TfiImport } from "react-icons/tfi";
-import { MdDelete } from "react-icons/md";
+import { MdDelete, MdDeleteOutline } from "react-icons/md";
 import { useFilterContext } from "../context/FilterContext";
 import { useViewContext } from "../context/ViewContext";
 import { Tooltip } from "antd";
 import { Link } from "react-router-dom";
+import { useImportData } from "../context/ImportDataContext";
 
 interface TopbarProps {
   showselectButton?: boolean;
@@ -44,6 +45,7 @@ interface TopbarProps {
 
 
 const Topbar: React.FC<TopbarProps> = ({
+  
   onCustomizeColumnsClick,
   // showselectButton = true,
   // onSelectClick,
@@ -64,11 +66,11 @@ const Topbar: React.FC<TopbarProps> = ({
   const { isFilterVisible, toggleFilter } = useFilterContext();
   // const { columns: columnConfig } = useColumns();
   // const {openCustomizeColumns} = useModalContext()
-  const { setViewMode } = useViewContext() as {
+  const { viewMode,setViewMode } = useViewContext() as {
     viewMode: string;
     setViewMode: (mode: string) => void;
   };
-  // const [openImportModal, setOpenImportModal] = useState(false)
+  const { openImportModal } = useImportData();
 
   return (
     <div className="w-full h-cover">
@@ -109,12 +111,10 @@ const Topbar: React.FC<TopbarProps> = ({
             }
 
             <div className="w-fit bg-[#f1f0f0]">
-             <Link to="/importdata">
-              <button className="flex items-center gap-3 w-full border border-[#C3BECA] pr-[18px] pl-[16px] py-1.5 font-medium text-[12px] text-[#676767] hover:bg-yellow-50" >
+              <button className="flex items-center gap-3 w-full border border-[#C3BECA] pr-[18px] pl-[16px] py-1.5 font-medium text-[12px] text-[#676767] hover:bg-yellow-50" onClick={openImportModal}>
                 <TfiImport className="text-[#FFC562]" size={13}/>
                 Import Data
               </button>
-             </Link>
             </div>
 
             <div className="w-fit bg-[#f1f0f0]">
@@ -147,12 +147,12 @@ const Topbar: React.FC<TopbarProps> = ({
             }
 
             <div className="flex text-gray-600 ml-1">
-              <button className="mr-[10px] hover:bg-gray-200 rounded" onClick={() => setViewMode("list")}>
+              <button className={`mr-[10px] hover:bg-gray-200 rounded ${viewMode === "list" ? "text-blue-500" : ""}`} onClick={() => setViewMode("list")}>
                 <Tooltip title="List View">
                   <FaList />
                 </Tooltip>
               </button>
-              <button className="hover:bg-gray-200 rounded" onClick={() => setViewMode("grid")}>
+              <button className={`hover:bg-gray-200 rounded ${viewMode === "grid" ? "text-blue-500" : ""}`} onClick={() => setViewMode("grid")}>
                 <Tooltip title="Grid View">
                   <TfiLayoutGrid2 />
                 </Tooltip>
@@ -174,11 +174,11 @@ const Topbar: React.FC<TopbarProps> = ({
           <div className="flex flex-row items-center gap-3">
 
             <Tooltip title="Download ">
-              <FaDownload />
+              <TfiImport />
             </Tooltip>
             <Tooltip title="Delete">
 
-              <MdDelete />
+              <MdDeleteOutline size={20} />
             </Tooltip>
 
           </div>

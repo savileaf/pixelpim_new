@@ -1,9 +1,13 @@
 import { IoCheckmarkDoneCircle } from "react-icons/io5"
 import { WiDirectionUpRight } from "react-icons/wi"
+import { Link } from "react-router-dom"
 const ProductGridComponent = () => {
   return (
                <div className="w-[16rem] h-cover flex flex-col border border-solid border-gray-200">
-                   <img src="/product_image1.png" alt="product"/>
+                <Link to="/productdetails/basic-info">
+                   <img src="/images/product_image1.png" alt="product"/>
+                
+                </Link>
    
                    <div className="flex flex-col px-3 py-2 gap-3">
                        <div>
