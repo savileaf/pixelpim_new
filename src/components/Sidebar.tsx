@@ -24,7 +24,7 @@ const Sidebar = () => {
     { name: "Help & Support", icon: <FaQuestionCircle size={12}/> },
   ];
   return (
-    <div className="w-[13rem] bg-[#003F1B] min-h-[600px] h-screen flex flex-col items-between">
+    <div className="w-[13rem] bg-[#003F1B] h-full flex flex-col items-between">
       <div className="flex flex-col">
         <div className="pixel-box border-b-[6px] border-solid border-[#CC922F] h-[4.4rem]">
           <div className="flex flex-row items-center justify-center gap-4 w-full h-full">
@@ -34,7 +34,7 @@ const Sidebar = () => {
         </div>
       </div>
 
-      <div className=" text-white w-[13rem] px-3 pt-[14px] text-[14px] font-regular flex flex-col space-y-19">
+      <div className=" text-white w-[13rem] px-3 py-[14px] text-[14px] flex-grow font-regular flex flex-col justify-between space-y-19">
         <div className="space-y-2">
           {menuItems.map(({ name, icon, link }) => {
             const isActive = link && location.pathname === link;

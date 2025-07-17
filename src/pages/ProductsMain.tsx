@@ -17,11 +17,11 @@ const ProductsMain = () => {
   const { viewMode } = useViewContext();
 
   return (
-    <div className="w-full h-screen flex flex-col">
+    <div className="w-full flex flex-col">
       <Topbar onCustomizeColumnsClick={openCustomizeColumns} />
 
       <div className="flex flex-1 overflow-hidden">
-        <div className="flex-1 overflow-auto p-4">
+        <div className="flex-1 overflow-auto">
           {viewMode === "list" ? (
             <CustomTable rowHeight={30}/>
           ) : (

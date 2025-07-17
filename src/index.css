@@ -36,10 +36,13 @@
   font-family: 'Roboto Condensed', 'sans-serif';
   letter-spacing: 0.2px;
 }
-.select-family{
+.setting-sidebar-link{
+  font-family: 'Roboto Condensed', 'sans-serif';
+  letter-spacing: 0.2px;
+}
+.select-family, .add-attribute{
   font-family: 'Anaheim', 'sans-serif';
 }
-
 
 .s-resources-link{
   font-family: 'Roboto Condensed', 'sans-serif';
