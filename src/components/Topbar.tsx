@@ -16,6 +16,7 @@ import { Link } from "react-router-dom";
 import { useImportData } from "../context/ImportDataContext";
 
 interface TopbarProps {
+   selectedRowKeys?: [];
   showselectButton?: boolean;
   onSelectClick?: () => void;
   createSelectLabel?: string;
@@ -39,6 +40,9 @@ interface TopbarProps {
 
   showCustomizeColumns?: boolean;
   inputButtonWidth?: number;
+  onSelectAllClick?: (checked: boolean) => void;
+  onToggleSelectAll: () => void;
+  ALL_KEYS:string[]
 }
 
 
@@ -58,7 +62,9 @@ const Topbar: React.FC<TopbarProps> = ({
   searchButtonLabel = "Search Product by SKU or Product Name",
   inputButtonWidth = 110,
   customLeftSection = false,
-
+   selectedRowKeys = [],
+onToggleSelectAll,
+ALL_KEYS=[]
 
 
 }) => {
@@ -89,7 +95,7 @@ const Topbar: React.FC<TopbarProps> = ({
             {/* Conditional view group button */}
             { viewGroupButton && (
                 <Link to="/assets/opengroup">
-                  <button className="flex items-center gap-2 w-full border border-gray-200 px-3 py-1.5 rounded font-medium text-[12px] text-[#676767] hover:bg-yellow-50">
+                  <button className="flex items-center gap-2 w-full border-[#C3BECA] px-3 py-1.5 rounded font-medium text-[12px] text-[#676767] hover:bg-yellow-50">
                     <FaRegFolderOpen className="text-yellow-500" height={5} />
                     View Files
                   </button>
@@ -100,7 +106,7 @@ const Topbar: React.FC<TopbarProps> = ({
 
             { viewGroupButton && (
                 <div>
-                  <button className="flex items-center gap-2 w-full border border-gray-200 px-3 py-1.5 rounded font-medium text-[12px] text-[#676767] hover:bg-yellow-50" onClick={onViewGroupClick}>
+                  <button className="flex items-center gap-2 w-full border-[#C3BECA] px-3 py-1.5 rounded font-medium text-[12px] text-[#676767] hover:bg-yellow-50" onClick={onViewGroupClick}>
                     <FaRegFolderOpen className="text-yellow-500" />
                     Group Files
                   </button>
@@ -161,37 +167,41 @@ const Topbar: React.FC<TopbarProps> = ({
         </div>
       </nav>
 
-      <div className="flex flex-row justify-between items-center mr-6 mb-2">
-        <div className="flex items-center gap-4">
-          <label className="flex items-center gap-1 font-normal text-[12px] text-[#676767] rounded-md cursor-pointer mr-2">
-            <input
-              type="checkbox"
-              className="form-checkbox h-3 w-3 text-blue-600 rounded"
-            />
-            Select All
-          </label>
-          <div className="flex flex-row items-center gap-3">
-
-            <Tooltip title="Download ">
-              <TfiImport />
-            </Tooltip>
-            <Tooltip title="Delete">
-
-              <MdDeleteOutline size={20} />
-            </Tooltip>
-
-          </div>
-        </div>
-        <hr className="w-[70%] text-[#576757]" />
-
-        <button
-          className="flex items-center gap-1 font-normal text-[12px] text-[#676767] px-2 py-1 hover:bg-yellow-50 border border-gray-200 rounded"
-          onClick={toggleFilter}
-        >
-          <FaFilter className="text-yellow-500" height={3.5} />
-          {isFilterVisible ? "Hide Filter" : "Show Filter"}
-        </button>
+    <div className="flex justify-between items-center px-0.5 mb-2">
+  {selectedRowKeys.length > 0 ? (
+    <div className="flex items-center gap-4">
+      <label className="flex items-center gap-1 font-normal text-[12px] text-[#676767] rounded-md cursor-pointer mr-2">
+        <input
+          type="checkbox"
+          className="form-checkbox h-4 w-4 text-blue-600 rounded"
+          checked={selectedRowKeys.length === ALL_KEYS.length}
+          onChange={onToggleSelectAll}
+        />
+        Select All
+      </label>
+      <div className="flex flex-row items-center gap-3">
+        <Tooltip title="Download">
+          <TfiImport />
+        </Tooltip>
+        <Tooltip title="Delete">
+          <MdDeleteOutline size={20} />
+        </Tooltip>
       </div>
+    </div>
+  ) : (
+    <div />
+  )}
+
+  <button
+    className="flex items-center gap-1 font-normal text-[12px] text-[#676767] px-2 py-1 hover:bg-yellow-50 border border-gray-200 rounded"
+    onClick={toggleFilter}
+  >
+    <FaFilter className="text-yellow-500" height={3.5} />
+    {isFilterVisible ? "Hide Filter" : "Show Filter"}
+  </button>
+</div>
+
+
     </div>
   );
 };

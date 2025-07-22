@@ -4,6 +4,7 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import { GoSortDesc } from "react-icons/go";
 import './attribute-setting.css';
 import './editgroup.css';
+import { Link } from 'react-router-dom';
 
 interface Attribute {
   id: number;
@@ -169,7 +170,10 @@ const EditGroup: React.FC = () => {
     <section className='attribute-setting'>
       <header>
         <p className='page-name'>Edit Attribute Group</p>
+        <Link to="/product/categories">
         <button className='cancel-btn2'>Cancel</button>
+        
+        </Link>
       </header>
       <div className='attribute-edit-box'>
         <div className='category-name'>

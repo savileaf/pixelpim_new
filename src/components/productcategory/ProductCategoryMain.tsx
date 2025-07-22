@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { FaEdit, FaExternalLinkAlt } from "react-icons/fa";
 import { ProductCategoryTree } from "./ProductCategoryTree";
 import CreateCategoryModal from "./CreateCategoryModal";
+import { MdOutlineToggleOff, MdOutlineToggleOn } from "react-icons/md";
 
 // Define the category node type for your data
 type CategoryNodeType = {
@@ -68,10 +69,6 @@ const calculateTotalProducts = (node: CategoryNodeType): number => {
   }, 0);
 };
 
-// Handler for menu clicks
-const handleMenuClick = (key: string, record: any) => {
-  console.log(`Action: ${key}`, record);
-};
 
 const ProductCategoryMain = () => {
   const setTopbar = useSetProductTopbar();
@@ -79,6 +76,8 @@ const ProductCategoryMain = () => {
 
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [categoriesList, setCategoriesList] = useState<CategoryNodeType[]>(categories);
+  const [visibilityState, setVisibilityState] = useState<Record<string, boolean>>({});
+
 
   useEffect(() => {
     setTopbar({
@@ -99,6 +98,18 @@ const ProductCategoryMain = () => {
       resetTopbar();
     };
   }, []);
+
+  // Handler for menu clicks
+const handleMenuClick = (key: string, record: any) => {
+  if (key === "visibility") {
+    setVisibilityState(prev => ({
+      ...prev,
+      [record.key]: !prev[record.key], // toggle specific row
+    }));
+  }
+
+  // handle other actions if needed
+};
 
   const handleCreateCategory = (groupName: string) => {
     const newCategory: CategoryNodeType = {
@@ -136,44 +147,55 @@ const ProductCategoryMain = () => {
       key: "total_products",
       width: 100,
     },
-    {
-      title: "",
-      key: "actions",
-      width: 10,
-      render: (_: any, record: any) => {
-        const menu = (
-          <Menu
-            onClick={({ key }) => handleMenuClick(key, record)}
-            className="font-normal text-[11px] text-[#828282]"
-            items={[
-              {
-                label: (
-                  <Link to={`/edit/product/category`} className="flex items-center gap-1">
-                    <FaEdit />
-                    Edit Group
-                  </Link>
-                ),
-                key: "edit",
-              },
-              { label: "Visibility", key: "visibility", icon: <span>👁️</span> },
-              { label: "Import Group Data", key: "import" },
-              { label: "Delete Group", key: "delete", danger: true },
-            ]}
-          />
-        );
+   {
+  title: "",
+  key: "actions",
+  width: 10,
+  render: (_: any, record: any) => {
+    const isVisible = visibilityState[record.key]; // <-- Get visibility per row
 
-        return (
-          <Dropdown overlay={menu} trigger={["click"]}>
-            <Button type="text" icon={<MoreOutlined />} />
-          </Dropdown>
-        );
-      },
-    },
+    const menu = (
+      <Menu
+        onClick={({ key }) => handleMenuClick(key, record)}
+        className="font-normal text-[11px] text-[#828282]"
+        items={[
+          {
+            key: "edit",
+            label: (
+              <Link to="/category/edit" className="flex items-center gap-2">
+                <FaEdit />
+                <span>Edit Category</span>
+              </Link>
+            ),
+          },
+          {
+            label: "Visibility",
+            key: "visibility",
+            icon: isVisible ? (
+              <MdOutlineToggleOn size={18} />
+            ) : (
+              <MdOutlineToggleOff size={18}  />
+            ),
+          },
+          { label: "Import Family Data", key: "import" },
+          { label: "Delete Family", key: "delete", danger: true },
+        ]}
+      />
+    );
+
+    return (
+      <Dropdown overlay={menu} trigger={["click"]}>
+        <Button type="text" icon={<MoreOutlined />} />
+      </Dropdown>
+    );
+  },
+}
+
   ];
 
   return (
     <div className="p-2">
-      <CustomTable dataSource={customData} columns={customColumns} showImage={false} scroll={{y:450}}/>
+      <CustomTable dataSource={customData} columns={customColumns} showImage={false} scroll={{y:450 , x:"max-content"}}/>
       {isCreateModalOpen && (
         <CreateCategoryModal
           isOpen={isCreateModalOpen}

@@ -5,6 +5,7 @@ import { MoreOutlined } from "@ant-design/icons";
 import { FaEdit } from "react-icons/fa";
 import CreateGroupModal from "./CreateGroupModal"; 
 import { Link } from "react-router-dom";
+import { MdOutlineToggleOff, MdOutlineToggleOn } from "react-icons/md";
 
 // Sample data
 const customData = [
@@ -51,10 +52,17 @@ const ViewProperty = () => {
 
   const openCreateGroupModal = () => setIsModalVisible(true);
   const closeCreateGroupModal = () => setIsModalVisible(false);
+  const [visibilityState, setVisibilityState] = useState<Record<string, boolean>>({});
+
 
   const handleMenuClick = (key: string, record: any) => {
-    console.log(`Action: ${key}`, record);
-  };
+  if (key === "visibility") {
+    setVisibilityState(prev => ({
+      ...prev,
+      [record.key]: !prev[record.key], // toggle specific row
+    }));
+  }
+};
 
   const customColumns = [
     {
@@ -87,38 +95,49 @@ const ViewProperty = () => {
       width: 300,
     },
     {
-      title: "",
-      key: "actions",
-      width: 20,
-      render: (_: any, record: any) => {
-        const menu = (
-          <Menu
-            onClick={({ key }) => handleMenuClick(key, record)}
-            className="font-normal text-[11px] text-[#828282]"
-            items={[
-              {
-                label: (
-                  <Link to={`/category/edit`} className="flex items-center gap-1">
-                    <FaEdit />
-                    Edit Group
-                  </Link>
-                ),
-                key: "edit",
-              },
-              { label: "Visibility", key: "visibility", icon: <span>👁️</span> },
-              { label: "Import Group Data", key: "import" },
-              { label: "Delete Group", key: "delete", danger: true },
-            ]}
-          />
-        );
+  title: "",
+  key: "actions",
+  width: 10,
+  render: (_: any, record: any) => {
+    const isVisible = visibilityState[record.key]; // <-- Get visibility per row
 
-        return (
-          <Dropdown overlay={menu} trigger={["click"]}>
-            <Button type="text" icon={<MoreOutlined />} />
-          </Dropdown>
-        );
-      },
-    },
+    const menu = (
+      <Menu
+        onClick={({ key }) => handleMenuClick(key, record)}
+        className="font-normal text-[11px] text-[#828282]"
+        items={[
+          {
+            key: "edit",
+            label: (
+              <Link to="/productfamily/edit" className="flex items-center gap-2">
+                <FaEdit />
+                <span>Edit Family</span>
+              </Link>
+            ),
+          },
+          {
+            label: "Visibility",
+            key: "visibility",
+            icon: isVisible ? (
+              <MdOutlineToggleOn size={18} />
+            ) : (
+              <MdOutlineToggleOff size={18}  />
+            ),
+          },
+          { label: "Import Family Data", key: "import" },
+          { label: "Delete Family", key: "delete", danger: true },
+        ]}
+      />
+    );
+
+    return (
+      <Dropdown overlay={menu} trigger={["click"]}>
+        <Button type="text" icon={<MoreOutlined />} />
+      </Dropdown>
+    );
+  },
+}
+
   ];
 
   

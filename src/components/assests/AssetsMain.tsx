@@ -1,6 +1,7 @@
+import { useState } from "react";
 import { useFilterContext } from "../../context/FilterContext";
 import { useViewContext } from "../../context/ViewContext";
-import { useGroupModals } from "../../hooks/useGroupModals"; // ✅ import the hook
+import { useGroupModals } from "../../hooks/useGroupModals";
 import CustomTable from "../CustomTable";
 import FilterData from "../FilterData";
 import GridView from "../GridView";
@@ -13,27 +14,19 @@ import { IoMdImage } from "react-icons/io";
 import { MdTextSnippet } from "react-icons/md";
 import { BiSolidFilePdf } from "react-icons/bi";
 
-
 const getFileIcon = (fileName: string) => {
   const ext = fileName.split(".").pop()?.toLowerCase();
-
   switch (ext) {
-    case "pdf":
-      return <BiSolidFilePdf className="text-red-500" size={22}/>;
+    case "pdf": return <BiSolidFilePdf className="text-red-500" size={22} />;
     case "xls":
-    case "xlsx":
-      return <FaFileExcel className="text-green-600" size={18}/>;
+    case "xlsx": return <FaFileExcel className="text-green-600" size={18} />;
     case "jpg":
     case "jpeg":
-    case "png":
-      return <IoMdImage className="text-[#002d74]" size={18}/>;
+    case "png": return <IoMdImage className="text-[#002d74]" size={18} />;
     case "doc":
-    case "docx":
-      return <FaFileWord className="text-[#1b5cb9]" size={18}/>
-      case "txt":
-      return <MdTextSnippet className="text-[#079b94]" size={18}/>;
-    default:
-      return <FaFileAlt className="text-gray-500" size={18}/>;
+    case "docx": return <FaFileWord className="text-[#1b5cb9]" size={18} />;
+    case "txt": return <MdTextSnippet className="text-[#079b94]" size={18} />;
+    default: return <FaFileAlt className="text-gray-500" size={18} />;
   }
 };
 
@@ -42,69 +35,19 @@ const AssetsMain = () => {
   const { isFilterVisible } = useFilterContext();
   const { addGroup } = useGroupContext();
 
-  // ✅ Use group modal hook
   const {
     isGroupModalOpen,
     isCreateGroupModalOpen,
-    // openGroupModal,
     closeGroupModal,
     handleGroupNameSubmit,
     handleCreateGroup,
   } = useGroupModals();
 
   const customData = [
-    {
-      key: "1",
-      file_name: "Vintage SweatShirt.doc",
-      upload_date: "2025/03/03",
-      size: "2mb",
-      
-    },
-      {
-    key: "2",
-    file_name: "Lookbook.xlsx",
-    upload_date: "2025/04/10",
-    size: "1.5mb",
-  },
-  {
-    key: "3",
-    file_name: "product-image.jpg",
-    upload_date: "2025/04/12",
-    size: "3mb",
-  },
-  {
-      key: "4",
-      file_name: "Product Details.pdf",
-      upload_date: "2025/03/03",
-      size: "2mb",
-      
-    },
-    {
-      key: "5",
-      file_name: "Fashionweek.doc",
-      upload_date: "2025/03/03",
-      size: "2mb",
-      
-    },{
-      key: "6",
-      file_name: "Most viewed products.doc",
-      upload_date: "2025/03/03",
-      size: "2mb",
-      
-    },
-    {
-      key: "7",
-      file_name: "Fashionweek.doc",
-      upload_date: "2025/03/03",
-      size: "2mb",
-      
-    },{
-      key: "8",
-      file_name: "Most viewed products.doc",
-      upload_date: "2025/03/03",
-      size: "2mb",
-      
-    },
+    { key: "1", file_name: "Vintage SweatShirt.doc", upload_date: "2025/03/03", size: "2mb" },
+    { key: "2", file_name: "Lookbook.xlsx", upload_date: "2025/04/10", size: "1.5mb" },
+    { key: "3", file_name: "product-image.jpg", upload_date: "2025/04/12", size: "3mb" },
+    { key: "4", file_name: "Product Details.pdf", upload_date: "2025/03/03", size: "2mb" },
   ];
 
   const customColumns = [
@@ -116,7 +59,7 @@ const AssetsMain = () => {
       render: (text: string) => (
         <div className="flex items-center gap-2">
           {getFileIcon(text)}
-        <span>{text}</span>
+          <span>{text}</span>
         </div>
       ),
     },
@@ -124,13 +67,40 @@ const AssetsMain = () => {
     { title: "SIZE", dataIndex: "size", key: "size", width: 100 },
   ];
 
+  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+
+  const ALL_KEYS = customData.map((item) => item.key);
+
+  const handleToggleSelectAll = () => {
+    setSelectedRowKeys((prev) =>
+      prev.length === ALL_KEYS.length ? [] : ALL_KEYS
+    );
+  };
+
   return (
     <div>
-      <AssetsTopbar />
+      <AssetsTopbar
+        selectedRowKeys={selectedRowKeys}
+        onToggleSelectAll={() => {
+          if (selectedRowKeys.length === ALL_KEYS.length) {
+            setSelectedRowKeys([]);
+          } else {
+            setSelectedRowKeys(ALL_KEYS);
+          }
+        }}
+        ALL_KEYS={ALL_KEYS}
+      />
 
-      <div className="flex flex-row p-4">
+      <div className="flex flex-row">
         {viewMode === "list" ? (
-          <CustomTable dataSource={customData} columns={customColumns} showImage={false} scroll={{y:390}}/>
+          <CustomTable
+            dataSource={customData}
+            columns={customColumns}
+            showImage={false}
+            scroll={{ y: 390 }}
+             selectedRowKeys={selectedRowKeys}
+        setSelectedRowKeys={setSelectedRowKeys}
+          />
         ) : (
           <GridView />
         )}
@@ -141,7 +111,6 @@ const AssetsMain = () => {
         )}
       </div>
 
-      {/* ✅ Group Name Modal */}
       {isGroupModalOpen && (
         <ViewGroupModal
           onClose={closeGroupModal}
@@ -149,11 +118,10 @@ const AssetsMain = () => {
         />
       )}
 
-      {/* ✅ Attribute Modal */}
       <CreateGroupModal
         open={isCreateGroupModalOpen}
         onClose={() => {}}
-        onSave={(data) => handleCreateGroup(data, addGroup)} 
+        onSave={(data) => handleCreateGroup(data, addGroup)}
       />
     </div>
   );

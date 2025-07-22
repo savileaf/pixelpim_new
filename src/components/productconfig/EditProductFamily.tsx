@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { RxCross1 } from 'react-icons/rx';
 import { GoSortDesc } from 'react-icons/go';
 import './editproductfamily.css';
+import { Link } from 'react-router-dom';
 
 interface Attribute {
     id: number;
@@ -158,7 +159,9 @@ const EditProductFamily: React.FC = () => {
         <section className="edit-product-family">
             <header>
                 <p className="page-name">Edit Product Family</p>
+                <Link to="/product/families">
                 <button className="cancel-btn2">Cancel</button>
+                </Link>
             </header>
 
             <div className="edit-productfamily-box">

@@ -2,18 +2,24 @@ import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import Topbar from "../Topbar";
 import ViewGroupModal from "./ViewGroupModal";
-import AssetsModal from "./AssetsModal"; // ✅ ensure this path is correct
+import AssetsModal from "./AssetsModal";
 
 interface ReusableAssetsTopbarProps {
   customLeftSection?: React.ReactNode;
   searchButtonLabel?: string;
   inputButtonWidth?: number;
+  selectedRowKeys: string[];
+  onToggleSelectAll: () => void;
+  ALL_KEYS: string[];
 }
 
 const AssetsTopbar = ({
   customLeftSection,
   searchButtonLabel = "Search Files",
   inputButtonWidth = 50,
+  selectedRowKeys,
+  onToggleSelectAll,
+  ALL_KEYS,
 }: ReusableAssetsTopbarProps) => {
   const [isGroupModalOpen, setIsGroupModalOpen] = useState(false);
   const [isAssetsModalOpen, setIsAssetsModalOpen] = useState(false);
@@ -33,7 +39,6 @@ const AssetsTopbar = ({
   const handleSaveAssets = (groupName: string, selectedAssets: any[]) => {
     console.log("Saving assets for group:", groupName);
     console.log("Selected assets:", selectedAssets);
-    // TODO: Add logic to save group and its assets
     handleAssetsModalClose();
   };
 
@@ -53,6 +58,9 @@ const AssetsTopbar = ({
         showCustomizeColumns={false}
         searchButtonLabel={searchButtonLabel}
         inputButtonWidth={inputButtonWidth}
+        selectedRowKeys={selectedRowKeys}
+        onToggleSelectAll={onToggleSelectAll}
+        ALL_KEYS={ALL_KEYS}
       />
 
       {isGroupModalOpen && (

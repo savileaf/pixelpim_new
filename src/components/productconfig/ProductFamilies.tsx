@@ -10,6 +10,7 @@ import { Button, Dropdown, Menu } from "antd";
 import { MoreOutlined } from "@ant-design/icons";
 import { Link , useNavigate } from "react-router-dom";
 import { useAttributeModal } from "../../context/AttributeContext";
+import { MdOutlineToggleOff, MdOutlineToggleOn } from "react-icons/md";
 
 
 
@@ -22,12 +23,19 @@ const ProductFamilies = () => {
   const [isProductModalOpen, setIsProductModalOpen] = useState(false)
   // const [isAttributeModalOpen, setIsAttributeModalOpen] = useState(false)
   const navigate = useNavigate();
-
+// FOR THE ICONS TO TOGGLE VISIBILITY 
+  const [visibilityState, setVisibilityState] = useState<Record<string, boolean>>({});
 
 
   const handleMenuClick = (key: string, record: any) => {
-    console.log(`Action: ${key}`, record);
-  };
+  if (key === "visibility") {
+    setVisibilityState(prev => ({
+      ...prev,
+      [record.key]: !prev[record.key], // toggle specific row
+    }));
+  }
+
+};
 
 
   const customData = [
@@ -128,38 +136,49 @@ const ProductFamilies = () => {
 
     },
     {
-      title: "",
-      key: "actions",
-      width: 10,
-      render: (_: any, record: any) => {
-        const menu = (
-          <Menu
-            onClick={({ key }) => handleMenuClick(key, record)}
-            className="font-normal text-[11px] text-[#828282]"
-            items={[
-              {
-                key: "edit",
-                label: (
-                  <Link to="/productfamily/edit" className="flex items-center gap-2">
-                    <FaEdit />
-                    <span>Edit Family</span>
-                  </Link>
-                ),
-              },
-              { label: "Visibility", key: "visibility", icon: <span>👁️</span> },
-              { label: "Import Family Data", key: "import" },
-              { label: "Delete Family", key: "delete", danger: true },
-            ]}
-          />
-        );
+  title: "",
+  key: "actions",
+  width: 10,
+  render: (_: any, record: any) => {
+    const isVisible = visibilityState[record.key]; // <-- Get visibility per row
 
-        return (
-          <Dropdown overlay={menu} trigger={["click"]}>
-            <Button type="text" icon={<MoreOutlined />} />
-          </Dropdown>
-        );
-      },
-    },
+    const menu = (
+      <Menu
+        onClick={({ key }) => handleMenuClick(key, record)}
+        className="font-normal text-[11px] text-[#828282]"
+        items={[
+          {
+            key: "edit",
+            label: (
+              <Link to="/productfamily/edit" className="flex items-center gap-2">
+                <FaEdit />
+                <span>Edit Family</span>
+              </Link>
+            ),
+          },
+          {
+            label: "Visibility",
+            key: "visibility",
+            icon: isVisible ? (
+              <MdOutlineToggleOn size={18}  />
+            ) : (
+              <MdOutlineToggleOff size={18}  />
+            ),
+          },
+          { label: "Import Family Data", key: "import" },
+          { label: "Delete Family", key: "delete", danger: true },
+        ]}
+      />
+    );
+
+    return (
+      <Dropdown overlay={menu} trigger={["click"]}>
+        <Button type="text" icon={<MoreOutlined />} />
+      </Dropdown>
+    );
+  },
+}
+
   ]
 
   useEffect(() => {

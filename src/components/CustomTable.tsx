@@ -40,7 +40,7 @@ const defaultData: DataType[] = [
     varients: "5",
   },
   {
-    key: "1",
+    key: "3",
     image: "/images/mouse.jpg",
     product_name: "Wireless Mouse",
     product_description: "Ergonomic wireless mouse with long battery life.",
@@ -48,7 +48,7 @@ const defaultData: DataType[] = [
     varients: "3",
   },
   {
-    key: "2",
+    key: "4",
     image: "/images/keyboard.jpg",
     product_name: "Gaming Keyboard",
     product_description: "Mechanical keyboard with RGB lights.",
@@ -56,7 +56,7 @@ const defaultData: DataType[] = [
     varients: "5",
   },
   {
-    key: "1",
+    key: "5",
     image: "/images/mouse.jpg",
     product_name: "Wireless Mouse",
     product_description: "Ergonomic wireless mouse with long battery life.",
@@ -64,7 +64,7 @@ const defaultData: DataType[] = [
     varients: "3",
   },
   {
-    key: "2",
+    key: "6",
     image: "/images/keyboard.jpg",
     product_name: "Gaming Keyboard",
     product_description: "Mechanical keyboard with RGB lights.",
@@ -72,7 +72,7 @@ const defaultData: DataType[] = [
     varients: "5",
   },
   {
-    key: "1",
+    key: "7",
     image: "/images/mouse.jpg",
     product_name: "Wireless Mouse",
     product_description: "Ergonomic wireless mouse with long battery life.",
@@ -80,7 +80,7 @@ const defaultData: DataType[] = [
     varients: "3",
   },
   {
-    key: "2",
+    key: "8",
     image: "/images/keyboard.jpg",
     product_name: "Gaming Keyboard",
     product_description: "Mechanical keyboard with RGB lights.",
@@ -98,7 +98,7 @@ interface CustomTableProps {
   isFilterVisible?: boolean;
   showImage?: boolean;
   headerBgColor?: string;
-  selectedRowKeys?: React.Key[];
+  
   setSelectedRowKeys?: (keys: React.Key[]) => void;
   rowHeight?: number;
    onRow?: (record: DataType, index?: number) => React.HTMLAttributes<HTMLElement>;
@@ -110,7 +110,7 @@ const CustomTable: React.FC<CustomTableProps> = ({
   columns: propColumns,
   isModalVisible = false,
   setIsModalVisible = () => { },
-  isFilterVisible = false,
+  // isFilterVisible = false,
   showImage = true,
   headerBgColor,
   selectedRowKeys: parentSelectedRowKeys,
@@ -162,23 +162,36 @@ const CustomTable: React.FC<CustomTableProps> = ({
   contextColumns
     .filter(col => col.visible)
     .map(col => {
-      const isShrinkable = col.key === "product_name" || col.key === "product_description";
+      let width;
+
+      if (col.key === "product_name") {
+        width = 250;
+      } else if (col.key === "product_description") {
+        width = 350;
+      } else {
+        width = 120;
+      }
 
       return {
         title: col.name,
         dataIndex: col.key,
         key: col.key,
         className: "font-normal text-[12px] text-[#2d2b2b]",
-        ellipsis: isShrinkable, 
         render: getColumnRender(col.key),
-        width: isShrinkable ? undefined : 100,
+        width,
+        ellipsis: col.key !== "product_name" && col.key !== "product_description",
         onCell: () => ({
-          style: isShrinkable
-            ? { maxWidth: col.key === "product_name" ? 140 : 150, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }
-            : {},
+          style: width === 120 ? {
+            maxWidth: 120,
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+          } : {}
         }),
       };
     });
+
+    
 
 
   const tableColumns: ColumnsType<DataType> = [
@@ -198,7 +211,7 @@ const CustomTable: React.FC<CustomTableProps> = ({
       ),
       dataIndex: 'key',
       key: 'checkbox',
-      width: 60,
+      width: 30,
       fixed: 'left' as const,
       render: (_, record) => (
         <div className="flex items-center justify-center">
@@ -223,7 +236,7 @@ const CustomTable: React.FC<CustomTableProps> = ({
         width: 60,
         render: (image?: string) =>
           image ? (
-            <img src={image} alt="Product" className="w-8 h-8 object-cover rounded shadow" />
+            <img src={image} alt="Product" className="w-10 h-10 shadow-[2px_3px_5px_0_rgba(56,56,56,1)]"/>
           ) : (
             "-"
           ),
@@ -231,10 +244,9 @@ const CustomTable: React.FC<CustomTableProps> = ({
       : []),
     ...dynamicColumns,
   ];
-  
 
   return (
-    <div className="py-2 w-full overflow-hidden">
+    <div className="py-2 w-full">
       <div className="flex flex-col gap-4 w-full">
         <div className="flex gap-4 w-full">
           <div className={"w-full"}>
