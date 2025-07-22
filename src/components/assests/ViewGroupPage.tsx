@@ -18,10 +18,7 @@ const customColumns = [
           <span>{text}</span>
         </div>
       ),
-    
     dataIndex: "group_name", key: "group_name", width: 200
-
-  
   },
   { title: "CREATED DATE", dataIndex: "created_date", key: "created_date", width: 200 },
   {title:"SIZE", dataIndex:"size", key:"size", width:100}
@@ -35,13 +32,12 @@ const tableData = groups.map((group, index) => ({
   key: index.toString(),
   group_name: group.name,
   created_date: new Date().toLocaleDateString(), 
-  size: `${group.attributes.length} attrs`,
+  size: `${group.attributes.length} assets`,
 }));
   return (
-    <div>
+    <div className=''>
         <AssetsTopbar/>
         <CustomTable columns={customColumns} showImage={false} dataSource={tableData}/>
-      
     </div>
   )
 }

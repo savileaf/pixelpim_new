@@ -1,4 +1,4 @@
-import { FaFileAlt, FaFileExcel, FaFilePdf, FaFileWord, FaSearch, FaShare, FaSortAmountDown } from "react-icons/fa";
+import { FaFileAlt, FaFileExcel, FaFileWord, FaSearch, FaShare, FaSortAmountDown } from "react-icons/fa";
 import { FiDownload, FiEdit2, FiPlus, FiShare, FiTrash2 } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import CustomTable from "../CustomTable";
@@ -60,7 +60,7 @@ const ProductDetailsCategory = () => {
       title: "FILE NAME",
       dataIndex: "file_name",
       key: "file_name",
-      width: 300,
+      width: 250,
      
       render: (text: string) => (
         <div className="flex items-center gap-2">

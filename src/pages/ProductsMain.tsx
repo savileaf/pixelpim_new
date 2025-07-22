@@ -17,36 +17,44 @@ const ProductsMain = () => {
   const { viewMode } = useViewContext();
 
   return (
-    <div className="w-full flex flex-col">
-      <Topbar onCustomizeColumnsClick={openCustomizeColumns} />
+  <div className="w-full flex flex-col">
+  <Topbar onCustomizeColumnsClick={openCustomizeColumns} />
 
-      <div className="flex flex-1 overflow-hidden">
-        <div className="flex-1 overflow-auto">
-          {viewMode === "list" ? (
-            <CustomTable rowHeight={30}/>
-          ) : (
-            <ProductGridView />
-          )}
-        </div>
-        {isFilterVisible && <FilterData />}
-
-      </div>
-
-      {isCustomizeColumnsVisible && (
-        <CustomizeColumnModal
-          visible={isCustomizeColumnsVisible}
-          onCancel={closeCustomizeColumns}
-        />
+  <div className="flex flex-1 w-full overflow-hidden">
+    {/* Left Side - Table or Grid */}
+    <div className="flex-grow min-w-0 overflow-auto relative">
+      {viewMode === "list" ? (
+        <CustomTable rowHeight={30} />
+      ) : (
+        <ProductGridView />
       )}
-      <div className="w-[50px] h-[50px] bg-[#2ecc71] rounded-[50%] absolute bottom-8 right-[4rem] flex items-center justify-center">
-        <Tooltip title="Add Product">
-          <Link to="/add/product">
-        <FaPlus color="#f0ad02" size={30}/>
-          
-          </Link>
-        </Tooltip>
-      </div>
     </div>
+
+    {/* Right Side - Filter Panel */}
+    {isFilterVisible && (
+      <div className="w-[15rem] shrink-0 px-4 py-2 border-l border-gray-200">
+        <FilterData />
+      </div>
+    )}
+  </div>
+
+  {isCustomizeColumnsVisible && (
+    <CustomizeColumnModal
+      visible={isCustomizeColumnsVisible}
+      onCancel={closeCustomizeColumns}
+    />
+  )}
+
+  {/* Floating Add Button */}
+  <div className="w-[50px] h-[50px] bg-[#2ecc71] rounded-full absolute bottom-8 right-[6rem] flex items-center justify-center">
+    <Tooltip title="Add Product">
+      <Link to="/add/product">
+        <FaPlus color="#f0ad02" size={30} />
+      </Link>
+    </Tooltip>
+  </div>
+</div>
+
   );
 };
 

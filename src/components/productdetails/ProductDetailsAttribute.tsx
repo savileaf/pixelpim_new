@@ -1,5 +1,5 @@
-import { FaCross, FaPlus, FaSearch, FaSortAmountDown, FaTags } from 'react-icons/fa';
-import { FiSearch, FiPlus } from 'react-icons/fi';
+import { FaPlus, FaSearch, FaSortAmountDown, FaTags } from 'react-icons/fa';
+import {  FiPlus } from 'react-icons/fi';
 import { MdCancel, MdFormatTextdirectionLToR } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 

@@ -4,8 +4,7 @@ const FilterData =() =>{
       const {  toggleFilter } = useFilterContext();
     
     return(
-        <div className="w-[15rem]">
-            <div className="bg-white border border-gray-300 rounded-md shadow-sm p-4 h-cover space-y-4">
+            <div className="bg-white border border-gray-300 rounded-md shadow-sm p-4 h-full w-full space-y-4">
               <div className="flex items-center justify-between">
                 <h2 className="text-lg font-semibold text-gray-700">Filters</h2>
                 <button
@@ -60,7 +59,6 @@ const FilterData =() =>{
                 </div>
               </div>
             </div>
-          </div>
     )
 }
 export default FilterData;

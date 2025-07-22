@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { FaRegCopy } from "react-icons/fa";
 import { IoCheckmarkDoneCircle } from "react-icons/io5";
 import { WiDirectionUpRight } from "react-icons/wi";
@@ -11,11 +10,8 @@ interface ProductDetailsProps {
   productLink: string;
 }
 const ProductDetails:React.FC<ProductDetailsProps> = ({
-  
     productName,
   sku,
-  variants,
-  status,
   productLink
 }) => {
 

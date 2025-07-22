@@ -17,9 +17,9 @@ const Layout = () => {
   
   
   return (
-    <div className="flex w-full" style={{ minHeight: `${height}px` }}>
+    <div className="flex w-full h-screen">
       <Sidebar />
-      <main className="w-full flex-grow bg-[#f2f0f0] p-6">
+      <main className="flex-grow bg-[#f2f0f0] p-4">
         <Outlet/>
       </main>
     </div>

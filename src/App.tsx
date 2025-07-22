@@ -20,7 +20,6 @@ import ProductDetailsAttribute from "./components/productdetails/ProductDetailsA
 import ProductDetailsAssests from "./components/productdetails/ProductDetailsAssests"
 import ProductDetailsCategories from "./components/productdetails/ProductDetailsCategories"
 import AddProduct from "./components/productdetails/AddProduct"
-import ImportData from "./components/data/ImportData"
 
 const App = () => {
   return (
@@ -30,7 +29,11 @@ const App = () => {
     <Route path="/assets/main" element={<AssetsMain/>}/>
     <Route path="/assets/opengroup" element={<ViewGroupPage/>}/>
     <Route path="/productdetails" element={<ProductDetailsLayout/>}>
-        <Route path="/productdetails/basic-info" element={<ProductDetails/>}/>
+        <Route path="/productdetails/basic-info" element={<ProductDetails productName="Sample Product"
+      sku="SKU12345"
+      variants={3}
+      status="Complete"
+      productLink="https://example.com/product/sample"/>}/>
         <Route path="/productdetails/attributes" element={<ProductDetailsAttribute/>}/>
         <Route path="/productdetails/assets" element={<ProductDetailsAssests/>}/>
         <Route path="/productdetails/categories" element={<ProductDetailsCategories/>} />

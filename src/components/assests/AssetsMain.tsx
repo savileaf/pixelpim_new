@@ -92,6 +92,19 @@ const AssetsMain = () => {
       size: "2mb",
       
     },
+    {
+      key: "7",
+      file_name: "Fashionweek.doc",
+      upload_date: "2025/03/03",
+      size: "2mb",
+      
+    },{
+      key: "8",
+      file_name: "Most viewed products.doc",
+      upload_date: "2025/03/03",
+      size: "2mb",
+      
+    },
   ];
 
   const customColumns = [
@@ -117,7 +130,7 @@ const AssetsMain = () => {
 
       <div className="flex flex-row p-4">
         {viewMode === "list" ? (
-          <CustomTable dataSource={customData} columns={customColumns} showImage={false} />
+          <CustomTable dataSource={customData} columns={customColumns} showImage={false} scroll={{y:390}}/>
         ) : (
           <GridView />
         )}

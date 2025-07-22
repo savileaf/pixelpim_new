@@ -51,7 +51,7 @@ const ProductConfigurationPage = () => {
         </div>
       )}
 
-      <div className="px-4">
+      <div className="">
         <CustomTable
         dataSource={customData}
         columns={customColumns}

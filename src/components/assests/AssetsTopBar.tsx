@@ -1,15 +1,13 @@
+import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import Topbar from "../Topbar";
 import ViewGroupModal from "./ViewGroupModal";
-import CreateGroupModal from "../productconfig/CreateGroupModal";
-import { useGroupModals } from "../../hooks/useGroupModals";
-import { useGroupContext } from "../../context/GroupDataContext";
+import AssetsModal from "./AssetsModal"; // ✅ ensure this path is correct
 
 interface ReusableAssetsTopbarProps {
   customLeftSection?: React.ReactNode;
   searchButtonLabel?: string;
   inputButtonWidth?: number;
-  
 }
 
 const AssetsTopbar = ({
@@ -17,45 +15,26 @@ const AssetsTopbar = ({
   searchButtonLabel = "Search Files",
   inputButtonWidth = 50,
 }: ReusableAssetsTopbarProps) => {
-  const {
-    isGroupModalOpen,
-    isCreateGroupModalOpen,
-    openGroupModal,
-    closeGroupModal,
-    tempGroupName,
-    setTempGroupName,
-    openCreateGroupModal,
-    closeCreateGroupModal,
-  } = useGroupModals();
-
-  const { addGroup } = useGroupContext();
+  const [isGroupModalOpen, setIsGroupModalOpen] = useState(false);
+  const [isAssetsModalOpen, setIsAssetsModalOpen] = useState(false);
+  const [groupName, setGroupName] = useState<string | null>(null);
 
   const handleGroupNameSubmit = (name: string) => {
-    setTempGroupName(name);
-    closeGroupModal();
-    openCreateGroupModal();
+    setGroupName(name);
+    setIsGroupModalOpen(false);
+    setIsAssetsModalOpen(true);
   };
 
-  const handleCreateGroupSave = (data: { attributes: string[] }) => {
-    if (!tempGroupName) return;
-    
-  const groupData = {
-    name: tempGroupName,
-    attributes: data.attributes,
+  const handleAssetsModalClose = () => {
+    setIsAssetsModalOpen(false);
+    setGroupName(null);
   };
 
-  console.log("Saving group data:", groupData);
-    addGroup({
-      name: tempGroupName,
-      attributes: data.attributes,
-    });
-    closeCreateGroupModal();
-    setTempGroupName(null);
-  };
-
-  const handleCreateGroupClose = () => {
-    closeCreateGroupModal();
-    setTempGroupName(null);
+  const handleSaveAssets = (groupName: string, selectedAssets: any[]) => {
+    console.log("Saving assets for group:", groupName);
+    console.log("Selected assets:", selectedAssets);
+    // TODO: Add logic to save group and its assets
+    handleAssetsModalClose();
   };
 
   return (
@@ -70,7 +49,7 @@ const AssetsTopbar = ({
           )
         }
         viewGroupButton={true}
-        onViewGroupClick={openGroupModal}
+        onViewGroupClick={() => setIsGroupModalOpen(true)}
         showCustomizeColumns={false}
         searchButtonLabel={searchButtonLabel}
         inputButtonWidth={inputButtonWidth}
@@ -78,19 +57,20 @@ const AssetsTopbar = ({
 
       {isGroupModalOpen && (
         <ViewGroupModal
-          onClose={closeGroupModal}
+          onClose={() => setIsGroupModalOpen(false)}
           onCreateGroup={handleGroupNameSubmit}
         />
       )}
 
-      <CreateGroupModal
-        open={isCreateGroupModalOpen}
-        onClose={handleCreateGroupClose}
-        onSave={handleCreateGroupSave}
-      />
+      {isAssetsModalOpen && groupName && (
+        <AssetsModal
+          groupName={groupName}
+          onClose={handleAssetsModalClose}
+          onSaveAssets={handleSaveAssets}
+        />
+      )}
     </>
   );
 };
-
 
 export default AssetsTopbar;

@@ -1,5 +1,4 @@
 import {
-  FaDownload,
   FaSearch,
   FaList,
   FaFilter,
@@ -9,7 +8,7 @@ import {
 import { TfiLayoutGrid2 } from "react-icons/tfi";
 import { TfiExport } from "react-icons/tfi";
 import { TfiImport } from "react-icons/tfi";
-import { MdDelete, MdDeleteOutline } from "react-icons/md";
+import {  MdDeleteOutline } from "react-icons/md";
 import { useFilterContext } from "../context/FilterContext";
 import { useViewContext } from "../context/ViewContext";
 import { Tooltip } from "antd";
@@ -73,13 +72,13 @@ const Topbar: React.FC<TopbarProps> = ({
   const { openImportModal } = useImportData();
 
   return (
-    <div className="w-full h-cover">
+    <div className="w-full h-cover overflow-hidden">
       <nav className="flex flex-row w-full mb-[18px]">
         <div className="w-full flex flex-wrap items-center justify-between gap-2">
           {/* Left section */}
           <div className="w-full flex flex-wrap items-center gap-5">
             { customLeftSection ? (customLeftSection) : (
-                <select className="select-family border border-[#C3BECA] px-2 py-[2px] uppercase font-semibold w-[258px] text-[18px] text-[#1B0C31] focus:outline-none">
+                <select className="select-family border border-[#C3BECA] px-2 py-[2px] uppercase font-semibold w-[250px] text-[18px] text-[#1B0C31] focus:outline-none">
                   <option value="">{createSelectLabel}</option>
                   <option value="family1">Family 1</option>
                   <option value="family2">Family 2</option>
@@ -92,7 +91,7 @@ const Topbar: React.FC<TopbarProps> = ({
                 <Link to="/assets/opengroup">
                   <button className="flex items-center gap-2 w-full border border-gray-200 px-3 py-1.5 rounded font-medium text-[12px] text-[#676767] hover:bg-yellow-50">
                     <FaRegFolderOpen className="text-yellow-500" height={5} />
-                    View Group
+                    View Files
                   </button>
                 </Link>
 
@@ -153,7 +152,7 @@ const Topbar: React.FC<TopbarProps> = ({
                 </Tooltip>
               </button>
               <button className={`hover:bg-gray-200 rounded ${viewMode === "grid" ? "text-blue-500" : ""}`} onClick={() => setViewMode("grid")}>
-                <Tooltip title="Grid View">
+                <Tooltip title="Grid View" placement="left">
                   <TfiLayoutGrid2 />
                 </Tooltip>
               </button>

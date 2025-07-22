@@ -10,7 +10,7 @@ const tabs = [
 
 const ProductDetailsLayout = () => {
   const location = useLocation();
-  const [activeTab, setActiveTab] = useState<string>("");
+  const [ , setActiveTab] = useState<string>("");
 
   useEffect(() => {
     const current = tabs.find(tab => location.pathname.includes(tab.path));

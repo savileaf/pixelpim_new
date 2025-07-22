@@ -24,17 +24,17 @@ const Sidebar = () => {
     { name: "Help & Support", icon: <FaQuestionCircle size={12}/> },
   ];
   return (
-    <div className="w-[13rem] bg-[#003F1B] flex flex-col items-between">
+    <div className="w-[13rem] min-w-[13rem] bg-[#003F1B] flex flex-col items-between h-[100vh]">
       <div className="flex flex-col">
         <div className="pixel-box border-b-[6px] border-solid border-[#CC922F] h-[4.4rem]">
           <div className="flex flex-row items-center justify-center gap-4 w-full h-full">
-            <img src="../src/assets/logo.png" alt="logo" className="h-[1.625rem] w-[1.625rem]" />
+            <img src="/images/logo.png" alt="logo" className="h-[1.625rem] w-[1.625rem]" />
             <h2 className="text-[#00c965] text-2xl font-semibold">Pixel<span className="text-[#CC922F]">PIM</span></h2>
           </div>
         </div>
       </div>
 
-      <div className=" text-white w-[13rem] px-3 pt-[14px] text-[14px] flex-grow font-regular flex flex-col justify-between space-y-19">
+      <div className=" text-white w-[13rem] px-3 pt-[14px] text-[14px] font-regular flex flex-col justify-between space-y-16">
         <div className="space-y-2">
           {menuItems.map(({ name, icon, link }) => {
             const isActive = link && location.pathname === link;
@@ -60,7 +60,7 @@ const Sidebar = () => {
         </div>
 
         <div>
-          <div className="sidebar-resources mt-6 text-gray-400 text-xs font-bold uppercase tracking-wide px-2 mb-2">
+          <div className="sidebar-resources mt-4 text-gray-400 text-xs font-bold uppercase tracking-wide px-2 mb-2">
             Resources
           </div>
 

@@ -8,125 +8,127 @@ import { FaEdit, FaExternalLinkAlt } from "react-icons/fa";
 import { ProductCategoryTree } from "./ProductCategoryTree";
 import CreateCategoryModal from "./CreateCategoryModal";
 
+// Define the category node type for your data
+type CategoryNodeType = {
+  name: string;
+  count?: number;
+  children?: CategoryNodeType[];
+};
 
-const categories = [
+// Sample category data with proper typing
+const categories: CategoryNodeType[] = [
   {
-    name: 'Electronics',
+    name: "Electronics",
     children: [
       {
-        name: 'Mobile Phones',
+        name: "Mobile Phones",
         children: [
           {
-            name: 'Android Phones',
+            name: "Android Phones",
             children: [
-              { name: 'Samsung', count: 12 },
-              { name: 'OnePlus', count: 8 },
-              { name: 'Xiaomi', count: 14 },
+              { name: "Samsung", count: 12 },
+              { name: "OnePlus", count: 8 },
+              { name: "Xiaomi", count: 14 },
             ],
           },
           {
-            name: 'Iphones',
-            count: 10
-          }
-        ]
+            name: "Iphones",
+            count: 10,
+          },
+        ],
       },
       {
-        name: 'Laptops',
+        name: "Laptops",
         children: [
-          { name: 'Gaming Laptops', count: 7 },
-          { name: 'Ultrabooks', count: 5 },
-          { name: 'Business Laptops', count: 6 }
-        ]
+          { name: "Gaming Laptops", count: 7 },
+          { name: "Ultrabooks", count: 5 },
+          { name: "Business Laptops", count: 6 },
+        ],
       },
       {
-        name: 'Tablets',
+        name: "Tablets",
         children: [
-          { name: 'Android Tablets', count: 4 },
-          { name: 'iPads', count: 9 }
-        ]
-      }
-    ]
-  },
-  {
-    name: 'Mobile Accessories',
-    children: [
-      { name: 'Chargers', count: 15 },
-      { name: 'Cables', count: 20 },
-      { name: 'Screen Protectors', count: 18 },
-      { name: 'Phone Cases', count: 25 }
-    ]
-  },
-  {
-    name: 'Laptops & Computers',
-    children: [
-      {
-        name: 'Desktops',
-        children: [
-          { name: 'Gaming PCs', count: 6 },
-          { name: 'Workstations', count: 4 }
-        ]
+          { name: "Android Tablets", count: 4 },
+          { name: "iPads", count: 9 },
+        ],
       },
-      {
-        name: 'Monitors',
-        children: [
-          { name: '4K Monitors', count: 5 },
-          { name: 'Curved Monitors', count: 3 }
-        ]
-      },
-      { name: 'Accessories', count: 12 }
-    ]
+      
+    ],
   },
-  {
-    name: 'Home Appliances',
-    children: [
-      { name: 'Refrigerators', count: 10 },
-      { name: 'Microwaves', count: 8 },
-      { name: 'Washing Machines', count: 6 },
-      { name: 'Air Conditioners', count: 5 }
-    ]
-  },
-  {
-    name: "Men's Clothing",
-    children: [
-      { name: 'T-Shirts', count: 30 },
-      { name: 'Jeans', count: 20 },
-      { name: 'Jackets', count: 10 },
-      { name: 'Shoes', count: 18 }
-    ]
-  },
-  {
-    name: "Women's Footwear",
-    children: [
-      { name: 'Flats', count: 12 },
-      { name: 'Heels', count: 10 },
-      { name: 'Sneakers', count: 7 },
-      { name: 'Sandals', count: 9 }
-    ]
-  },
-  {
-    name: 'Beauty & Personal Care',
-    children: [
-      { name: 'Skincare', count: 22 },
-      { name: 'Haircare', count: 15 },
-      { name: 'Makeup', count: 18 },
-      { name: 'Fragrances', count: 11 }
-    ]
-  }
+  
 ];
+
+// Calculate total products recursively with types
+const calculateTotalProducts = (node: CategoryNodeType): number => {
+  if (!node.children || node.children.length === 0) {
+    return node.count || 0;
+  }
+  return node.children.reduce((sum: number, child: CategoryNodeType) => {
+    return sum + calculateTotalProducts(child);
+  }, 0);
+};
+
+// Handler for menu clicks
+const handleMenuClick = (key: string, record: any) => {
+  console.log(`Action: ${key}`, record);
+};
+
+const ProductCategoryMain = () => {
+  const setTopbar = useSetProductTopbar();
+  const resetTopbar = useResetProductTopbar();
+
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [categoriesList, setCategoriesList] = useState<CategoryNodeType[]>(categories);
+
+  useEffect(() => {
+    setTopbar({
+      createButtonLabel: "CREATE CATEGORIES",
+      createButtonWidth: 210,
+      showCreateButton: true,
+      showViewButton: false,
+      showFilter: true,
+      filterOptions: ["Filter Options", "Active", "Archived"],
+      showSearch: true,
+      searchPlaceholder: "Search Family",
+      searchBarWidth: 500,
+      // Removed onCreateClick since your TopbarConfig likely doesn't accept it. 
+      // Instead, you can add a button with onClick logic inside your topbar UI if needed.
+    });
+
+    return () => {
+      resetTopbar();
+    };
+  }, []);
+
+  const handleCreateCategory = (groupName: string) => {
+    const newCategory: CategoryNodeType = {
+      name: groupName,
+      children: [],
+    };
+    setCategoriesList((prev) => [...prev, newCategory]);
+    setIsCreateModalOpen(false);
+  };
+
+  // Prepare data for CustomTable
+  const customData = categoriesList.map((category, index) => ({
+    key: index.toString(),
+    category_name: <ProductCategoryTree data={[category]} />,
+    total_products: calculateTotalProducts(category),
+  }));
+
+  // Table columns with typings
   const customColumns = [
     {
       title: "Category NAME",
       dataIndex: "category_name",
       key: "category_name",
-      width: 330,
-      render: (text:string)=>{
-        return(
-          <div className="flex items-center justify-between">
-          <span>{text}</span>
-          <FaExternalLinkAlt color="blue"/>
+      width: 300,
+      render: (text: React.ReactNode) => (
+        <div className="flex items-center justify-between">
+          {text}
+          <FaExternalLinkAlt color="blue" />
         </div>
-        )
-      }
+      ),
     },
     {
       title: "TOTAL PRODUCTS",
@@ -169,68 +171,9 @@ const categories = [
     },
   ];
 
-  // CREATING CATEGORY OPEN MODAL
-  
-
-  // CALCULATING THE TOTAL NUMBER OF PRODUCTS IN EACH CATEGORY
-  const calculateTotalProducts = (node) => {
-  if (!node.children || node.children.length === 0) {
-    return node.count || 0;
-  }
-
-  return node.children.reduce((sum, child) => {
-    return sum + calculateTotalProducts(child);
-  }, 0);
-};
-   const handleMenuClick = (key: string, record: any) => {
-    console.log(`Action: ${key}`, record);
-  };
-
-
-
-const ProductCategoryMain = () => {
-  const setTopbar = useSetProductTopbar();
-  const resetTopbar = useResetProductTopbar();
-
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false); // Manage modal visibility
-  const [categoriesList, setCategoriesList] = useState(categories);
-  useEffect(() => {
-    setTopbar({
-      createButtonLabel: "CREATE CATEGORIES",
-      createButtonWidth: 210,
-      showCreateButton: true,
-      showViewButton: false,
-      showFilter: true,
-      filterOptions: ["Filter Options", "Active", "Archived"],
-      showSearch: true,
-      searchPlaceholder: "Search Family",
-      searchBarWidth: 500,
-      onCreateClick: () => setIsCreateModalOpen(true), 
-    });
-
-    return () => {
-      resetTopbar();
-    };
-  }, []);
-
-    const handleCreateCategory = (groupName: string) => {
-    const newCategory = {
-      name: groupName,
-      children: [],
-    };
-    setCategoriesList((prev) => [...prev, newCategory]);
-    setIsCreateModalOpen(false);
-  };
-    // DATA SEND TO THE CUSTOM TABLE 
-const customData = categoriesList.map((category, index) => ({
-    key: index.toString(),
-    category_name: <ProductCategoryTree data={[category]} />,
-    total_products: calculateTotalProducts(category),
-  }));
-
   return (
-    <div className="px-4">
-      <CustomTable dataSource={customData} columns={customColumns} showImage={false} />
+    <div className="p-2">
+      <CustomTable dataSource={customData} columns={customColumns} showImage={false} scroll={{y:450}}/>
       {isCreateModalOpen && (
         <CreateCategoryModal
           isOpen={isCreateModalOpen}

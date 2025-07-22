@@ -18,9 +18,9 @@ const ProductFamilies = () => {
   const setTopbar = useSetProductTopbar();
   const resetTopbar = useResetProductTopbar();
   const [search, setSearch] = useState("");
-  const { openModal, addAttribute } = useAttributeModal();
+  const { openModal } = useAttributeModal();
   const [isProductModalOpen, setIsProductModalOpen] = useState(false)
-  const [isAttributeModalOpen, setIsAttributeModalOpen] = useState(false)
+  // const [isAttributeModalOpen, setIsAttributeModalOpen] = useState(false)
   const navigate = useNavigate();
 
 

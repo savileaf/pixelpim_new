@@ -25,11 +25,22 @@ const sections: SectionItem[] = [
 const ProductsSidebar: React.FC = () => {
   const location = useLocation();
 
-  const [openSections, setOpenSections] = useState<Record<string, boolean>>({
-    Product: true,
-    Assets: true,
-    General: true,
-  });
+  // Dynamically initialize which sections should be open based on the route
+  const getInitialOpenSections = (): Record<string, boolean> => {
+    const currentPath = location.pathname.toLowerCase();
+
+    const initialState: Record<string, boolean> = {};
+    sections.forEach(({ title, items }) => {
+      const sectionMatch = items.some((item) =>
+        currentPath.includes(item.toLowerCase().replace(/\s/g, "-"))
+      );
+      initialState[title] = sectionMatch;
+    });
+
+    return initialState;
+  };
+
+  const [openSections, setOpenSections] = useState<Record<string, boolean>>(getInitialOpenSections);
 
   const toggleSection = (section: string) => {
     setOpenSections((prev) => ({
@@ -43,15 +54,15 @@ const ProductsSidebar: React.FC = () => {
   };
 
   return (
-    <aside className="pt-6 px-5 w-[162px] flex-none basis-[162px] min-h-[600px] h-screen bg-[#F1F0F0] text-sm font-medium">
-      <nav className="">
+    <aside className="pt-6 px-5 w-[162px] flex-none basis-[162px] min-h-[560px] h-screen bg-[#F1F0F0] text-sm font-medium">
+      <nav>
         {sections.map(({ title, items }) => (
           <div key={title} className="pb-5">
             <div
               className="flex justify-between items-center cursor-pointer pb-2 text-[#484848] hover:text-black"
               onClick={() => toggleSection(title)}
             >
-              <span className="uppercase text-sm tracking-wide font-semibold setting-sidebar-link ">
+              <span className="uppercase text-sm tracking-wide font-semibold setting-sidebar-link">
                 {title}
               </span>
               <FaChevronDown
@@ -67,9 +78,7 @@ const ProductsSidebar: React.FC = () => {
                 {items.map((item) => (
                   <li key={item} className="pb-1.5">
                     <Link
-                      to={`/${title.toLowerCase()}/${item
-                        .toLowerCase()
-                        .replace(/\s/g, "-")}`}
+                      to={`/${title.toLowerCase()}/${item.toLowerCase().replace(/\s/g, "-")}`}
                       className={`block py-1 px-4 setting-sidebar-link font-medium ${
                         isActive(item)
                           ? "text-[#2ECC71] border-l-2 border-[#2ECC71]"

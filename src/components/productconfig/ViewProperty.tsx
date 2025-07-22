@@ -3,7 +3,7 @@ import CustomTable from "../CustomTable";
 import { Button, Dropdown, Menu } from "antd";
 import { MoreOutlined } from "@ant-design/icons";
 import { FaEdit } from "react-icons/fa";
-import CreateGroupModal from "./CreateGroupModal"; // adjust path as needed
+import CreateGroupModal from "./CreateGroupModal"; 
 import { Link } from "react-router-dom";
 
 // Sample data
@@ -120,6 +120,8 @@ const ViewProperty = () => {
       },
     },
   ];
+
+  
 
   return (
     <div className="mt-2">

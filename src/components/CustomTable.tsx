@@ -3,11 +3,14 @@ import { Table as AntTable, Checkbox, Dropdown, Menu } from "antd";
 import { GoSortDesc } from "react-icons/go";
 import { FaImage } from "react-icons/fa6";
 import TruncateWithTooltip from "./TruncateWithTooltip";
-import FilterData from "./FilterData";
 import CustomiseColumnModal from "./CustomiseColumnModal";
 import { useColumns } from "../context/ColumnContext";
 import type { ColumnsType } from "antd/es/table";
-import {useNavigate} from "react-router-dom";
+
+interface ScrollConfig {
+  x?: number | string | boolean;
+  y?: number | string;
+}
 
 interface DataType {
   key: string;
@@ -22,7 +25,7 @@ interface DataType {
 const defaultData: DataType[] = [
   {
     key: "1",
-    image: "/images/download.png",
+    image: "/images/mouse.jpg",
     product_name: "Wireless Mouse",
     product_description: "Ergonomic wireless mouse with long battery life.",
     sku: "WM123",
@@ -36,6 +39,55 @@ const defaultData: DataType[] = [
     sku: "GK456",
     varients: "5",
   },
+  {
+    key: "1",
+    image: "/images/mouse.jpg",
+    product_name: "Wireless Mouse",
+    product_description: "Ergonomic wireless mouse with long battery life.",
+    sku: "WM123",
+    varients: "3",
+  },
+  {
+    key: "2",
+    image: "/images/keyboard.jpg",
+    product_name: "Gaming Keyboard",
+    product_description: "Mechanical keyboard with RGB lights.",
+    sku: "GK456",
+    varients: "5",
+  },
+  {
+    key: "1",
+    image: "/images/mouse.jpg",
+    product_name: "Wireless Mouse",
+    product_description: "Ergonomic wireless mouse with long battery life.",
+    sku: "WM123",
+    varients: "3",
+  },
+  {
+    key: "2",
+    image: "/images/keyboard.jpg",
+    product_name: "Gaming Keyboard",
+    product_description: "Mechanical keyboard with RGB lights.",
+    sku: "GK456",
+    varients: "5",
+  },
+  {
+    key: "1",
+    image: "/images/mouse.jpg",
+    product_name: "Wireless Mouse",
+    product_description: "Ergonomic wireless mouse with long battery life.",
+    sku: "WM123",
+    varients: "3",
+  },
+  {
+    key: "2",
+    image: "/images/keyboard.jpg",
+    product_name: "Gaming Keyboard",
+    product_description: "Mechanical keyboard with RGB lights.",
+    sku: "GK456",
+    varients: "5",
+  }
+
 ];
 
 interface CustomTableProps {
@@ -50,6 +102,7 @@ interface CustomTableProps {
   setSelectedRowKeys?: (keys: React.Key[]) => void;
   rowHeight?: number;
    onRow?: (record: DataType, index?: number) => React.HTMLAttributes<HTMLElement>;
+   scroll?: ScrollConfig;
 }
 
 const CustomTable: React.FC<CustomTableProps> = ({
@@ -63,13 +116,13 @@ const CustomTable: React.FC<CustomTableProps> = ({
   selectedRowKeys: parentSelectedRowKeys,
   setSelectedRowKeys: parentSetSelectedRowKeys,
   rowHeight,
-  onRow
+  onRow,
+  scroll = { x: 'max-content', y: 400 }
 }) => {
   const { columns: contextColumns } = useColumns();
   const [sortOption, setSortOption] = useState<string>();
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [localSelectedRowKeys, setLocalSelectedRowKeys] = useState<React.Key[]>([]);
-  const navigate = useNavigate();
 
   const selectedKeys = parentSelectedRowKeys ?? localSelectedRowKeys;
   const updateSelectedKeys = parentSetSelectedRowKeys ?? setLocalSelectedRowKeys;
@@ -97,14 +150,7 @@ const CustomTable: React.FC<CustomTableProps> = ({
   const getColumnRender = (key: string) => {
     switch (key) {
       case 'product_name':
-        return (text: string, record: DataType) => (
-        <span
-          className="cursor-pointer"
-          onClick={() => navigate(`/productdetails/basic-info`)} 
-        >
-          <TruncateWithTooltip text={text} maxWidth={200} />
-        </span>
-      );
+        return (text: string) => <TruncateWithTooltip text={text} maxWidth={200} />;
       case 'product_description':
         return (text: string) => <TruncateWithTooltip text={text} maxWidth={300} />;
       default:
@@ -112,17 +158,28 @@ const CustomTable: React.FC<CustomTableProps> = ({
     }
   };
 
-  const dynamicColumns = propColumns ||
-    contextColumns
-      .filter(col => col.visible)
-      .map(col => ({
+ const dynamicColumns = propColumns ||
+  contextColumns
+    .filter(col => col.visible)
+    .map(col => {
+      const isShrinkable = col.key === "product_name" || col.key === "product_description";
+
+      return {
         title: col.name,
         dataIndex: col.key,
         key: col.key,
         className: "font-normal text-[12px] text-[#2d2b2b]",
+        ellipsis: isShrinkable, 
         render: getColumnRender(col.key),
-      
-      }));
+        width: isShrinkable ? undefined : 100,
+        onCell: () => ({
+          style: isShrinkable
+            ? { maxWidth: col.key === "product_name" ? 140 : 150, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }
+            : {},
+        }),
+      };
+    });
+
 
   const tableColumns: ColumnsType<DataType> = [
     {
@@ -142,7 +199,7 @@ const CustomTable: React.FC<CustomTableProps> = ({
       dataIndex: 'key',
       key: 'checkbox',
       width: 60,
-      // fixed: 'left' as const,
+      fixed: 'left' as const,
       render: (_, record) => (
         <div className="flex items-center justify-center">
           <Checkbox
@@ -166,7 +223,7 @@ const CustomTable: React.FC<CustomTableProps> = ({
         width: 60,
         render: (image?: string) =>
           image ? (
-            <img src={image} alt="Product" className="w-full h-8 object-cover rounded shadow" />
+            <img src={image} alt="Product" className="w-8 h-8 object-cover rounded shadow" />
           ) : (
             "-"
           ),
@@ -174,12 +231,13 @@ const CustomTable: React.FC<CustomTableProps> = ({
       : []),
     ...dynamicColumns,
   ];
+  
 
   return (
     <div className="py-2 w-full overflow-hidden">
       <div className="flex flex-col gap-4 w-full">
         <div className="flex gap-4 w-full">
-          <div className={`${isFilterVisible ? "w-[calc(100%-16rem)]" : "w-full"}`}>
+          <div className={"w-full"}>
             <AntTable
               columns={tableColumns}
               dataSource={data}
@@ -187,8 +245,8 @@ const CustomTable: React.FC<CustomTableProps> = ({
               className="w-full custom-table"
               rowClassName={() => "no-select-highlight"}
               rowKey="key"
-              scroll={{y:420 , x:"max-content"}}
               onRow={onRow}
+              scroll ={scroll}
               style={
                 headerBgColor
                   ? ({ "--custom-table-header-bg": headerBgColor } as React.CSSProperties)
@@ -196,7 +254,6 @@ const CustomTable: React.FC<CustomTableProps> = ({
               }
               // ADJUST THE HEIGHT OF THE ROW HEIGHT
               components={{
-                
                 body: {
                   row: (props) => (
                     <tr {...props} style={{ ...props.style, height: `${rowHeight}px` }}>
@@ -206,11 +263,7 @@ const CustomTable: React.FC<CustomTableProps> = ({
                 },
               }}
             />
-            {isFilterVisible && (
-              <div className="mt-12">
-                <FilterData />
-              </div>
-            )}
+            
           </div>
           <CustomiseColumnModal
             visible={isModalVisible}
