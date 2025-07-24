@@ -139,6 +139,8 @@ const ProductFamilies = () => {
   title: "",
   key: "actions",
   width: 10,
+  fixed: "right" as const, 
+  className: "actions-column",
   render: (_: any, record: any) => {
     const isVisible = visibilityState[record.key]; // <-- Get visibility per row
 
@@ -172,7 +174,7 @@ const ProductFamilies = () => {
     );
 
     return (
-      <Dropdown overlay={menu} trigger={["click"]}>
+      <Dropdown overlay={menu} trigger={["click"]} overlayClassName="custom-dropdown-shadow">
         <Button type="text" icon={<MoreOutlined />} />
       </Dropdown>
     );

@@ -9,8 +9,8 @@ const customData = [
 ];
 
 const customColumns = [
-  { title: "Attribute Name", dataIndex: "property_name", key: "property_name", width: 200 },
-  { title: "Attribute Type", dataIndex: "property_type", key: "property_type", width: 200 },
+  { title: "Attribute Name", dataIndex: "property_name", key: "property_name", width: 300 },
+  { title: "Attribute Type", dataIndex: "property_type", key: "property_type", width: 280 },
 ];
 
 const ProductConfigurationPage = () => {

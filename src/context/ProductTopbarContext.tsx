@@ -13,6 +13,8 @@ interface TopbarConfig {
   searchValue?: string;
   onSearchChange?: (val: string) => void;
   searchBarWidth?: number;
+  viewButtonLabel?:string;
+  viewButtonLink?:string;
 }
 
 const defaultTopbarConfig: TopbarConfig = {
@@ -23,6 +25,9 @@ const defaultTopbarConfig: TopbarConfig = {
   filterOptions: ["Filter Options","Option B", "Option B"],
   showSearch: true,
   searchPlaceholder: "Search Attribute",
+  viewButtonLabel:"View Attribute Group",
+  // viewButtonLink:"/product/attribute"
+
 };
 
 const TopbarContext = createContext<TopbarConfig>(defaultTopbarConfig);

@@ -37,7 +37,7 @@ const ProductsMain = () => {
         }}
       />
 
-      <div className="flex flex-1 w-full overflow-hidden justify-between">
+      <div className="flex gap-1 w-full overflow-hidden justify-between">
         <div className="flex-grow min-w-0 overflow-auto relative">
           {viewMode === "list" ? (
             <CustomTable
@@ -51,7 +51,7 @@ const ProductsMain = () => {
         </div>
 
         {isFilterVisible && (
-          <div className="w-[15rem] shrink-0 px-4 py-2 border-l border-gray-200 mr-0">
+          <div className="w-[13rem] shrink-0 py-2 border-l border-gray-200">
             <FilterData />
           </div>
         )}

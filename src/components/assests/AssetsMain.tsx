@@ -91,7 +91,7 @@ const AssetsMain = () => {
         ALL_KEYS={ALL_KEYS}
       />
 
-      <div className="flex flex-row">
+      <div className="flex flex-row gap-2">
         {viewMode === "list" ? (
           <CustomTable
             dataSource={customData}
@@ -105,7 +105,7 @@ const AssetsMain = () => {
           <GridView />
         )}
         {isFilterVisible && (
-          <div className="ml-4">
+          <div className="w-[13rem]  shrink-0 py-2">
             <FilterData />
           </div>
         )}

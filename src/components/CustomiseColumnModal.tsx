@@ -106,7 +106,7 @@ const CustomiseColumnModal: React.FC<CustomiseColumnModalProps> = ({
                   {column.name}
                 </Typography.Text>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
                 {column.key === 'sku' ? (
                   <Typography.Text type="danger" style={{ fontSize: '0.8em', color: '#f5222d' }}>
                     Not Customizable
@@ -140,7 +140,7 @@ const CustomiseColumnModal: React.FC<CustomiseColumnModalProps> = ({
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{
-            marginBottom: '16px',
+            marginBottom: '0px',
             backgroundColor: 'white',
             color: 'black',
             borderColor: '#333',
@@ -171,8 +171,20 @@ const CustomiseColumnModal: React.FC<CustomiseColumnModalProps> = ({
           )}
           style={{ padding: 0 }}
           bordered={false}
-          className="add-attribute-list"
-        />
+          locale={{
+              emptyText: (
+                <div
+                  style={{
+                    color: '#bbb',
+                    fontSize: '12px',
+                    padding: '4px 0',
+                    textAlign: 'center',
+                  }}
+                >
+                  No more attributes available
+                </div>
+              ),
+            }}        />
       </div>
     </Modal>
   );

@@ -133,7 +133,7 @@ const handleMenuClick = (key: string, record: any) => {
       title: "Category NAME",
       dataIndex: "category_name",
       key: "category_name",
-      width: 300,
+      width: 350,
       render: (text: React.ReactNode) => (
         <div className="flex items-center justify-between">
           {text}
@@ -145,12 +145,17 @@ const handleMenuClick = (key: string, record: any) => {
       title: "TOTAL PRODUCTS",
       dataIndex: "total_products",
       key: "total_products",
-      width: 100,
+      width: 150,
+       render: (text: React.ReactNode) => (
+      <div className="mt-1">{text}</div> // Align to top
+    ),
     },
    {
   title: "",
   key: "actions",
   width: 10,
+  fixed: "right" as const,
+  className: "actions-column ",
   render: (_: any, record: any) => {
     const isVisible = visibilityState[record.key]; // <-- Get visibility per row
 
@@ -184,9 +189,11 @@ const handleMenuClick = (key: string, record: any) => {
     );
 
     return (
-      <Dropdown overlay={menu} trigger={["click"]}>
-        <Button type="text" icon={<MoreOutlined />} />
-      </Dropdown>
+       <div className="mt-1"> {/* Align to top */}
+          <Dropdown overlay={menu} trigger={["click"]}>
+            <Button type="text" icon={<MoreOutlined />} />
+          </Dropdown>
+        </div>
     );
   },
 }
@@ -194,8 +201,8 @@ const handleMenuClick = (key: string, record: any) => {
   ];
 
   return (
-    <div className="p-2">
-      <CustomTable dataSource={customData} columns={customColumns} showImage={false} scroll={{y:450 , x:"max-content"}}/>
+    <div className="w-full mt-2">
+      <CustomTable dataSource={customData} columns={customColumns} showImage={false} scroll={{y:400, x:"max-content"}}/>
       {isCreateModalOpen && (
         <CreateCategoryModal
           isOpen={isCreateModalOpen}

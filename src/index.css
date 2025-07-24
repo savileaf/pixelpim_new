@@ -57,9 +57,24 @@
   white-space: nowrap;
 }
 
+.ant-table-container {
+  border-radius: 0 !important;
+  overflow: hidden !important; /* hides any excess white corners */
+  background-color: inherit;   /* avoids any default white background */
+}
+
+.ant-table {
+  border-radius: 0 !important;
+}
+
+.ant-table-content > table {
+  border-radius: 0 !important;
+}
+
 .custom-table .ant-table-thead > tr > th {
   background-color: #e8e5e5;
 }
+
 
 .ant-modal-content{
   padding:0 !important;
@@ -102,3 +117,16 @@
 .custom-table-row:hover > td {
   background-color: #fafafa !important;
 }
+
+.actions-column{
+  padding-right: 6px;
+  width: 20px;
+  max-width: 20px;
+}
+
+.custom-dropdown-shadow {
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  background-color: white;
+}
+

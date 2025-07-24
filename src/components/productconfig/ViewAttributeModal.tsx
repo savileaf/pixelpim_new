@@ -1,7 +1,7 @@
 import React from 'react';
-import { Modal, Table, Button } from 'antd';
+import { Modal, Table} from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import { CloseOutlined, DeleteOutlined } from '@ant-design/icons';
+import { CloseOutlined} from '@ant-design/icons';
 import { useAttributeModal } from '../../context/AttributeContext';
 
 interface ProductRow {
@@ -10,7 +10,7 @@ interface ProductRow {
 }
 
 const ViewAttributeModal: React.FC = () => {
-  const { isOpen, data, closeModal, deleteAttribute } = useAttributeModal();
+  const { isOpen, data, closeModal} = useAttributeModal();
 
   const columns: ColumnsType<ProductRow> = [
     {
@@ -18,26 +18,14 @@ const ViewAttributeModal: React.FC = () => {
       dataIndex: 'attributeName',
       key: 'attributeName',
       render: (text: string) => <span>{text}</span>,
-    },
-    {
-      title: 'ACTION',
-      key: 'action',
-      render: (_, record) => (
-        <Button
-          danger
-          icon={<DeleteOutlined />}
-          onClick={() => deleteAttribute(record.key)}
-          size="small"
-        />
-      ),
-    },
+    }
   ];
 
   return (
     <Modal
       open={isOpen}
       width={400}
-      style={{ top: "20%" , left:"10%" }}
+      style={{ top: "20%" , left:"10%"  }}
       footer={null}
       onCancel={closeModal}
       closable={true}

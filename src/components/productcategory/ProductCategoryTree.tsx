@@ -1,23 +1,30 @@
 import { useState } from 'react';
 import { BiSolidChevronDownSquare, BiSolidChevronRightSquare } from 'react-icons/bi';
 
-// ✅ 1. Define the type for a category node
 type CategoryNodeType = {
   name: string;
   count?: number;
   children?: CategoryNodeType[];
 };
 
-// ✅ 2. CategoryNode component
-const CategoryNode: React.FC<{ node: CategoryNodeType }> = ({ node }) => {
+// ✅ Fixed: Added level to props type
+interface CategoryNodeProps {
+  node: CategoryNodeType;
+  level: number;
+}
+
+const CategoryNode: React.FC<CategoryNodeProps> = ({ node, level }) => {
   const [open, setOpen] = useState(false);
   const hasChildren = node.children && node.children.length > 0;
+  const isRoot = level === 0;
 
   return (
     <div className="ml-2">
       <button
         onClick={() => hasChildren && setOpen(!open)}
-        className="flex items-center gap-2 rounded text-left"
+        className={`flex items-center gap-2 rounded text-left ${
+          isRoot ? "font-semibold" : ""
+        }`}
       >
         <span>
           {hasChildren ? (
@@ -33,16 +40,14 @@ const CategoryNode: React.FC<{ node: CategoryNodeType }> = ({ node }) => {
         <span className="bg-gray-200 text-sm px-2 py-1 rounded">{node.name}</span>
       </button>
 
-      {/* Render children if open */}
       {open && hasChildren && (
         <div className="ml-2 mt-1 flex flex-col gap-1">
           {node.children!.map((child, index) => (
-            <CategoryNode key={index} node={child} />
+            <CategoryNode key={index} node={child} level={level + 1} />
           ))}
         </div>
       )}
 
-      {/* Product count */}
       {node.count !== undefined && (
         <div className="text-xs text-gray-500 ml-8 mt-1">{node.count} Products</div>
       )}
@@ -50,12 +55,19 @@ const CategoryNode: React.FC<{ node: CategoryNodeType }> = ({ node }) => {
   );
 };
 
-// ✅ 3. ProductCategoryTree component
-export const ProductCategoryTree: React.FC<{ data: CategoryNodeType[] }> = ({ data }) => {
+interface ProductCategoryTreeProps {
+  data: CategoryNodeType[];
+  level?: number;
+}
+
+export const ProductCategoryTree: React.FC<ProductCategoryTreeProps> = ({
+  data,
+  level = 0,
+}) => {
   return (
     <div className="text-sm flex flex-col gap-2">
       {data.map((node, index) => (
-        <CategoryNode key={index} node={node} />
+        <CategoryNode key={index} node={node} level={level} />
       ))}
     </div>
   );

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Table as AntTable, Checkbox, Dropdown, Menu } from "antd";
+import { Table as AntTable, Checkbox, Dropdown, Menu, ConfigProvider } from "antd";
 import { GoSortDesc } from "react-icons/go";
 import { FaImage } from "react-icons/fa6";
 import TruncateWithTooltip from "./TruncateWithTooltip";
@@ -8,7 +8,7 @@ import { useColumns } from "../context/ColumnContext";
 import type { ColumnsType } from "antd/es/table";
 
 interface ScrollConfig {
-  x?: number | string ;
+  x?: number | string;
   y?: number | string;
 }
 
@@ -98,14 +98,14 @@ interface CustomTableProps {
   isFilterVisible?: boolean;
   showImage?: boolean;
   headerBgColor?: string;
-  
+
   selectedRowKeys?: React.Key[];
-  setSelectedRowKeys?: React.Dispatch<React.SetStateAction<React.Key[]>>; 
+  setSelectedRowKeys?: React.Dispatch<React.SetStateAction<React.Key[]>>;
 
 
   rowHeight?: number;
-   onRow?: (record: DataType, index?: number) => React.HTMLAttributes<HTMLElement>;
-   scroll?: ScrollConfig;
+  onRow?: (record: DataType, index?: number) => React.HTMLAttributes<HTMLElement>;
+  scroll?: ScrollConfig;
 }
 
 const CustomTable: React.FC<CustomTableProps> = ({
@@ -161,40 +161,40 @@ const CustomTable: React.FC<CustomTableProps> = ({
     }
   };
 
- const dynamicColumns = propColumns ||
-  contextColumns
-    .filter(col => col.visible)
-    .map(col => {
-      let width;
+  const dynamicColumns = propColumns ||
+    contextColumns
+      .filter(col => col.visible)
+      .map(col => {
+        let width;
 
-      if (col.key === "product_name") {
-        width = 250;
-      } else if (col.key === "product_description") {
-        width = 350;
-      } else {
-        width = 120;
-      }
+        if (col.key === "product_name") {
+          width = 250;
+        } else if (col.key === "product_description") {
+          width = 350;
+        } else {
+          width = 120;
+        }
 
-      return {
-        title: col.name,
-        dataIndex: col.key,
-        key: col.key,
-        className: "font-normal text-[12px] text-[#2d2b2b]",
-        render: getColumnRender(col.key),
-        width,
-        ellipsis: col.key !== "product_name" && col.key !== "product_description",
-        onCell: () => ({
-          style: width === 120 ? {
-            maxWidth: 120,
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            whiteSpace: 'nowrap',
-          } : {}
-        }),
-      };
-    });
+        return {
+          title: col.name,
+          dataIndex: col.key,
+          key: col.key,
+          className: "font-normal text-[12px] text-[#2d2b2b]",
+          render: getColumnRender(col.key),
+          width,
+          ellipsis: col.key !== "product_name" && col.key !== "product_description",
+          onCell: () => ({
+            style: width === 120 ? {
+              maxWidth: 120,
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+            } : {}
+          }),
+        };
+      });
 
-    
+
 
 
   const tableColumns: ColumnsType<DataType> = [
@@ -206,7 +206,7 @@ const CustomTable: React.FC<CustomTableProps> = ({
           open={dropdownVisible}
           onOpenChange={setDropdownVisible}
         >
-          <div className="flex items-center justify-center cursor-pointer" onClick={handleSortClick}>
+          <div className="flex items-center justify-center cursor-pointer" onClick={handleSortClick} style={{width: 20 , maxWidth:20}}>
             <GoSortDesc size={20} />
             {dropdownVisible && <span className="ml-1 text-xs">{sortOption}</span>}
           </div>
@@ -239,7 +239,7 @@ const CustomTable: React.FC<CustomTableProps> = ({
         width: 60,
         render: (image?: string) =>
           image ? (
-            <img src={image} alt="Product" className="w-10 h-10 shadow-[2px_3px_5px_0_rgba(56,56,56,1)]"/>
+            <img src={image} alt="Product" className="w-10 h-10 shadow-[2px_3px_5px_0_rgba(56,56,56,1)]" />
           ) : (
             "-"
           ),
@@ -248,42 +248,60 @@ const CustomTable: React.FC<CustomTableProps> = ({
     ...dynamicColumns,
   ];
 
+  const rowLimitBeforeScroll = 6;
+const shouldScrollY = data.length > rowLimitBeforeScroll;
+
+const resolvedScroll: ScrollConfig = {
+  x: scroll?.x ?? 'max-content',
+  y: shouldScrollY ? scroll?.y ?? 400 : undefined, // Only apply y-scroll if needed
+};
+
   return (
     <div className="py-2 w-full">
       <div className="flex flex-col gap-4 w-full">
         <div className="flex gap-4 w-full">
-          <div className={"w-full"}>
-            <AntTable
-              columns={tableColumns}
-              dataSource={data}
-              pagination={false}
-              className="w-full custom-table"
-              rowClassName={() => "no-select-highlight"}
-              rowKey="key"
-              onRow={onRow}
-              scroll ={scroll}
-              style={
-                headerBgColor
-                  ? ({ "--custom-table-header-bg": headerBgColor } as React.CSSProperties)
-                  : undefined
-              }
-              // ADJUST THE HEIGHT OF THE ROW HEIGHT
-              components={{
-                body: {
-                  row: (props) => (
-                    <tr {...props} style={{ ...props.style, height: `${rowHeight}px` }}>
-                      {props.children}
-                    </tr>
-                  ),
+          <div className={"w-full rounded-none"}>
+            <ConfigProvider
+              theme={{
+                token: {
+                  borderRadius: 0,
                 },
               }}
-            />
-            
+            >
+              <AntTable
+                columns={tableColumns}
+                dataSource={data}
+                pagination={false}
+                className="w-full custom-table"
+                rowClassName={() => "no-select-highlight"}
+                rowKey="key"
+                onRow={onRow}
+                scroll={resolvedScroll}
+                style={
+                  headerBgColor
+                    ? ({ "--custom-table-header-bg": headerBgColor } as React.CSSProperties)
+                    : undefined
+                }
+                // ADJUST THE HEIGHT OF THE ROW HEIGHT
+                components={{
+                  body: {
+                    row: (props) => (
+                      <tr {...props} style={{ ...props.style, height: `${rowHeight}px` }}>
+                        {props.children}
+                      </tr>
+                    ),
+                  },
+                }}
+              />
+            </ConfigProvider>
+          <p className="text-[12px] ms-1 text-[#7c7387] mt-1"> <span className="font-semibold"> {data.length}</span> Products</p>
           </div>
-          <CustomiseColumnModal
-            visible={isModalVisible}
-            onCancel={() => setIsModalVisible(false)}
-          />
+          <div className="py-2">
+            <CustomiseColumnModal
+              visible={isModalVisible}
+              onCancel={() => setIsModalVisible(false)}
+            />
+          </div>
         </div>
       </div>
     </div>
