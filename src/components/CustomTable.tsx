@@ -8,7 +8,7 @@ import { useColumns } from "../context/ColumnContext";
 import type { ColumnsType } from "antd/es/table";
 
 interface ScrollConfig {
-  x?: number | string | boolean;
+  x?: number | string ;
   y?: number | string;
 }
 
@@ -99,7 +99,10 @@ interface CustomTableProps {
   showImage?: boolean;
   headerBgColor?: string;
   
-  setSelectedRowKeys?: (keys: React.Key[]) => void;
+  selectedRowKeys?: React.Key[];
+  setSelectedRowKeys?: React.Dispatch<React.SetStateAction<React.Key[]>>; 
+
+
   rowHeight?: number;
    onRow?: (record: DataType, index?: number) => React.HTMLAttributes<HTMLElement>;
    scroll?: ScrollConfig;
@@ -113,7 +116,7 @@ const CustomTable: React.FC<CustomTableProps> = ({
   // isFilterVisible = false,
   showImage = true,
   headerBgColor,
-  selectedRowKeys: parentSelectedRowKeys,
+  selectedRowKeys,
   setSelectedRowKeys: parentSetSelectedRowKeys,
   rowHeight,
   onRow,
@@ -124,7 +127,7 @@ const CustomTable: React.FC<CustomTableProps> = ({
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [localSelectedRowKeys, setLocalSelectedRowKeys] = useState<React.Key[]>([]);
 
-  const selectedKeys = parentSelectedRowKeys ?? localSelectedRowKeys;
+  const selectedKeys = selectedRowKeys ?? localSelectedRowKeys;
   const updateSelectedKeys = parentSetSelectedRowKeys ?? setLocalSelectedRowKeys;
 
   const data = dataSource ?? defaultData;

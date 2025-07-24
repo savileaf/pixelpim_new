@@ -16,7 +16,7 @@ import { Link } from "react-router-dom";
 import { useImportData } from "../context/ImportDataContext";
 
 interface TopbarProps {
-   selectedRowKeys?: [];
+   selectedRowKeys?: React.Key[];
   showselectButton?: boolean;
   onSelectClick?: () => void;
   createSelectLabel?: string;
@@ -41,8 +41,8 @@ interface TopbarProps {
   showCustomizeColumns?: boolean;
   inputButtonWidth?: number;
   onSelectAllClick?: (checked: boolean) => void;
-  onToggleSelectAll: () => void;
-  ALL_KEYS:string[]
+  onToggleSelectAll?: () => void;
+  ALL_KEYS?:string[]
 }
 
 

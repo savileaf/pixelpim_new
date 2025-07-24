@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Topbar from "../components/Topbar";
 import FilterData from "../components/FilterData";
 import CustomTable from "../components/CustomTable";
@@ -21,11 +21,7 @@ const ProductsMain = () => {
 
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
-  const handleToggleSelectAll = () => {
-    setSelectedRowKeys((prev) =>
-      prev.length === ALL_KEYS.length ? [] : [...ALL_KEYS]
-    );
-  };
+ 
 
   return (
     <div className="w-full flex flex-col">

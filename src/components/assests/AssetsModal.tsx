@@ -34,9 +34,9 @@ const getFileIcon = (fileName: string) => {
 };
 
 const AssetsModal = ({ groupName, onClose, onSaveAssets }: AssetsModalProps) => {
-  const [hoveredRowKey, setHoveredRowKey] = useState<string | null>(null);
+  const [, setHoveredRowKey] = useState<string | null>(null);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const [data, setData] = useState([
+  const [data,] = useState([
     { key: "1", file_name: "Vintage SweatShirt.pdf", size: "2mb" },
     { key: "2", file_name: "Vintage SweatShirt.xls", size: "2mb" },
     { key: "3", file_name: "Vintage SweatShirt.png", size: "2mb" },

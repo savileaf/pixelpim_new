@@ -4,7 +4,7 @@ import Sidebar from './Sidebar';
 
 const Layout = () => {
   
-  const [height, setHeight] = useState(window.innerHeight - 10);
+  const [, setHeight] = useState(window.innerHeight - 10);
 
   useEffect(() => {
     const handleResize = () => {

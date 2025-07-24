@@ -8,9 +8,9 @@ interface ReusableAssetsTopbarProps {
   customLeftSection?: React.ReactNode;
   searchButtonLabel?: string;
   inputButtonWidth?: number;
-  selectedRowKeys: string[];
-  onToggleSelectAll: () => void;
-  ALL_KEYS: string[];
+  selectedRowKeys?: React.Key[];
+  onToggleSelectAll?: () => void;
+  ALL_KEYS?: string[];
 }
 
 const AssetsTopbar = ({

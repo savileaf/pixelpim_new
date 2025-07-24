@@ -71,11 +71,11 @@ const AssetsMain = () => {
 
   const ALL_KEYS = customData.map((item) => item.key);
 
-  const handleToggleSelectAll = () => {
-    setSelectedRowKeys((prev) =>
-      prev.length === ALL_KEYS.length ? [] : ALL_KEYS
-    );
-  };
+  // const handleToggleSelectAll = () => {
+  //   setSelectedRowKeys((prev) =>
+  //     prev.length === ALL_KEYS.length ? [] : ALL_KEYS
+  //   );
+  // };
 
   return (
     <div>

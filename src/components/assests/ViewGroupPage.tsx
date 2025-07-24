@@ -36,7 +36,7 @@ const tableData = groups.map((group, index) => ({
 }));
   return (
     <div className=''>
-        <AssetsTopbar/>
+        <AssetsTopbar />
         <CustomTable columns={customColumns} showImage={false} dataSource={tableData}/>
     </div>
   )
