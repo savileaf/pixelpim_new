@@ -30,6 +30,7 @@ const ViewAttributeModal: React.FC = () => {
       onCancel={closeModal}
       closable={true}
       closeIcon={<CloseOutlined style={{ color: 'black', fontSize: 16 }} />}
+      className="h-[50rem]"
     >
       <Table
         columns={columns}

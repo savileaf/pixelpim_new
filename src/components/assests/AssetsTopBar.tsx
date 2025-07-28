@@ -33,7 +33,7 @@ const navigate = useNavigate();
 const isOnViewGroupPage = location.pathname === "/assets/opengroup"; // adjust this path if different
 
 const toggleViewPage = () => {
-  navigate(isOnViewGroupPage ? "/assets/main" : "/assets/opengroup"); // or your actual asset page path
+  navigate(isOnViewGroupPage ? "/assets" : "/assets/opengroup"); // or your actual asset page path
 };
 
   const handleGroupNameSubmit = (name: string) => {

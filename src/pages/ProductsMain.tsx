@@ -24,7 +24,7 @@ const ProductsMain = () => {
  
 
   return (
-    <div className="w-full flex flex-col">
+    <div className="w-full flex flex-col product-main">
       <Topbar
         selectedRowKeys={selectedRowKeys}
         onCustomizeColumnsClick={openCustomizeColumns}

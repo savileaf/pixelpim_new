@@ -19,7 +19,7 @@ const Layout = () => {
   return (
     <div className="flex w-full h-screen">
       <Sidebar />
-      <main className="flex-grow bg-[#f2f0f0] p-4">
+      <main className="flex-grow bg-[#f2f0f0] p-4 overflow-hidden">
         <Outlet/>
       </main>
     </div>

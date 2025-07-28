@@ -141,18 +141,19 @@ const ProductDetailsCategory = () => {
               Add Attribute
             </div>
 
-            <div className="h-[1.9rem] flex items-center border border-gray-400 rounded overflow-hidden w-[13rem]">
-              <div className="bg-[#676767] text-white p-[8.6px]">
-                <FaSearch size={14} />
-              </div>
-              <input
-                type="text"
-                placeholder="Search Attribute Name"
-                className={`px-3 text-sm outline-none font-normal text-[12px] text-[#9d9d9d]`}
-              />
-            </div>
+            <div className="flex items-center border border-gray-400 h-[30px] rounded w-[13rem] overflow-hidden">
+  <div className="bg-[#676767] text-white h-full w-[2.5rem] flex items-center justify-center">
+    <FaSearch size={14} />
+  </div>
+  <input
+    type="text"
+    placeholder="Search Attribute Name"
+    className="px-3 text-sm outline-none font-normal text-[12px] text-[#9d9d9d] w-full h-full"
+  />
+</div>
 
-            <div className='h-[1.9rem] flex items-center justify-center gap-4 px-4 border border-gray-400 rounded overflow-hidden'>
+
+            <div className='h-[1.8rem] flex items-center justify-center gap-4 px-4 border border-gray-400 rounded overflow-hidden'>
               <span className='text-[#9d9d9d]'>Sort by</span>
               <FaSortAmountDown size={16} />
             </div>
@@ -183,7 +184,7 @@ const ProductDetailsCategory = () => {
   </div>
 )}
 
-          <div>
+          <div className="w-[33rem]">
             <CustomTable dataSource={data} columns={customColumns} showImage={false}
               onRow={(record) => ({
                 onMouseEnter: () => setHoveredRowKey(record.key),

@@ -88,7 +88,7 @@ const Topbar: React.FC<TopbarProps> = ({
           {/* Left section */}
           <div className="w-full flex flex-wrap items-center gap-5">
             {customLeftSection ? (customLeftSection) : (
-              <select className="select-family border border-[#C3BECA] px-2 py-[2px] uppercase font-semibold w-[250px] text-[18px] text-[#1B0C31] focus:outline-none">
+              <select className="select-family border border-[#C3BECA] h-[2rem] px-2 py-[2px] uppercase font-semibold w-[250px] text-[18px] text-[#1B0C31] focus:outline-none">
                 <option value="">{createSelectLabel}</option>
                 <option value="family1">Family 1</option>
                 <option value="family2">Family 2</option>
@@ -100,7 +100,7 @@ const Topbar: React.FC<TopbarProps> = ({
             {viewGroupButton && (
               <div>
                 <button
-                  className="flex items-center gap-2 w-full border border-[#e8e5e5] px-3 py-1.5 rounded font-medium text-[12px] text-[#676767] hover:bg-yellow-50"
+                  className="flex items-center gap-2 w-full h-[2rem] border border-[#e8e5e5] px-3 py-1.5 font-medium text-[12px] text-[#676767] hover:bg-yellow-50"
                   onClick={onOpenGroupClick}
                 >
                   <FaRegFolderOpen className="text-yellow-500" />
@@ -111,7 +111,7 @@ const Topbar: React.FC<TopbarProps> = ({
 
             {viewGroupButton && (
               <div>
-                <button className="flex items-center gap-2 w-full border border-[#e8e5e5] px-3 py-1.5 rounded font-medium text-[12px] text-[#676767] hover:bg-yellow-50" onClick={onViewGroupClick}>
+                <button className="flex items-center gap-2 h-[2rem] w-full border border-[#e8e5e5] px-3 py-1.5 font-medium text-[12px] text-[#676767] hover:bg-yellow-50" onClick={onViewGroupClick}>
                   <FaRegFolderOpen className="text-yellow-500" />
                   Group Files
                 </button>
@@ -121,14 +121,14 @@ const Topbar: React.FC<TopbarProps> = ({
             }
 
             <div className="w-fit bg-[#f1f0f0]">
-              <button className="flex items-center gap-3 w-full border border-[#d9d9d9] pr-[18px] pl-[16px] py-1.5 font-medium text-[12px] text-[#676767] hover:bg-yellow-50" onClick={openImportModal}>
+              <button className="flex items-center gap-3 w-full h-[2rem] border border-[#d9d9d9] pr-[18px] pl-[16px] py-1.5 font-medium text-[12px] text-[#676767] hover:bg-yellow-50" onClick={openImportModal}>
                 <TfiImport className="text-[#FFC562]" size={13} />
                 Import Data
               </button>
             </div>
 
             <div className="w-fit bg-[#f1f0f0]">
-              <button className="flex items-center w-full gap-3 border border-[#d9d9d9] pr-[18px] pl-[16px] py-1.5 font-medium text-[12px] text-[#676767] hover:bg-yellow-50">
+              <button className="flex items-center w-full h-[2rem] gap-3 border border-[#d9d9d9] pr-[18px] pl-[16px] py-1.5 font-medium text-[12px] text-[#676767] hover:bg-yellow-50">
                 <TfiExport className="text-[#FFC562]" size={12} />
                 Export Data
               </button>
@@ -136,7 +136,7 @@ const Topbar: React.FC<TopbarProps> = ({
 
             {/* Search */}
             <div className="flex items-center border border-[#C3BECA] overflow-hidden flex-grow h-8">
-              <div className="bg-[#676767] text-white h-full w-[30px] flex justify-center items-center">
+              <div className="bg-[#676767] text-white h-full w-[2rem] flex justify-center items-center">
                 <FaSearch height={5} />
               </div>
               <input
@@ -149,7 +149,7 @@ const Topbar: React.FC<TopbarProps> = ({
             {/* Customize Columns */}
             {
               showCustomizeColumns && onCustomizeColumnsClick && (
-                <button className="flex items-center gap-3 border border-[#C3BECA] px-4 h-8 font-medium text-[12px] text-[#676767] hover:bg-yellow-50" onClick={onCustomizeColumnsClick}>
+                <button className="flex items-center gap-3 h-[2rem] border border-[#C3BECA] px-4 h-8 font-medium text-[12px] text-[#676767] hover:bg-yellow-50" onClick={onCustomizeColumnsClick}>
                   <FaSlidersH className="text-[#FFC562]" height={13} />
                   Customize Columns
                 </button>
@@ -157,12 +157,12 @@ const Topbar: React.FC<TopbarProps> = ({
             }
 
             <div className="flex text-gray-600 ml-1">
-              <button className={`mr-[10px] hover:bg-gray-200 rounded ${viewMode === "list" ? "text-blue-500" : ""}`} onClick={() => setViewMode("list")}>
+              <button className={`mr-[10px]  hover:bg-gray-200 ${viewMode === "list" ? "text-blue-500" : ""}`} onClick={() => setViewMode("list")}>
                 <Tooltip title="List View">
                   <FaList />
                 </Tooltip>
               </button>
-              <button className={`hover:bg-gray-200 rounded ${viewMode === "grid" ? "text-blue-500" : ""}`} onClick={() => setViewMode("grid")}>
+              <button className={`hover:bg-gray-200 ${viewMode === "grid" ? "text-blue-500" : ""}`} onClick={() => setViewMode("grid")}>
                 <Tooltip title="Grid View" placement="left">
                   <TfiLayoutGrid2 />
                 </Tooltip>

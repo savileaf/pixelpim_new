@@ -15,7 +15,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter> 
      <ImportDataProvider>
-
     <FilterProvider>
       <ColumnProvider>
        <ViewProvider>
@@ -23,7 +22,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <ModalProvider>
           <AttributeModalProvider>
       <App />
-
           </AttributeModalProvider>
         </ModalProvider>
           </GroupProvider>
@@ -31,7 +29,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       </ColumnProvider>
       </FilterProvider>
      </ImportDataProvider>
-
     </BrowserRouter>
   </React.StrictMode>
 );

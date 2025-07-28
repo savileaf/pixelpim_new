@@ -6,6 +6,7 @@ import TruncateWithTooltip from "./TruncateWithTooltip";
 import CustomiseColumnModal from "./CustomiseColumnModal";
 import { useColumns } from "../context/ColumnContext";
 import type { ColumnsType } from "antd/es/table";
+import { Link } from "react-router-dom";
 
 interface ScrollConfig {
   x?: number | string;
@@ -98,10 +99,10 @@ interface CustomTableProps {
   isFilterVisible?: boolean;
   showImage?: boolean;
   headerBgColor?: string;
-
+  showCheckbox?: boolean;
   selectedRowKeys?: React.Key[];
   setSelectedRowKeys?: React.Dispatch<React.SetStateAction<React.Key[]>>;
-
+imageColumnWidth?: number;
 
   rowHeight?: number;
   onRow?: (record: DataType, index?: number) => React.HTMLAttributes<HTMLElement>;
@@ -112,6 +113,7 @@ const CustomTable: React.FC<CustomTableProps> = ({
   dataSource,
   columns: propColumns,
   isModalVisible = false,
+  showCheckbox = true,
   setIsModalVisible = () => { },
   // isFilterVisible = false,
   showImage = true,
@@ -120,6 +122,7 @@ const CustomTable: React.FC<CustomTableProps> = ({
   setSelectedRowKeys: parentSetSelectedRowKeys,
   rowHeight,
   onRow,
+  imageColumnWidth,
   scroll = { x: 'max-content', y: 400 }
 }) => {
   const { columns: contextColumns } = useColumns();
@@ -153,7 +156,11 @@ const CustomTable: React.FC<CustomTableProps> = ({
   const getColumnRender = (key: string) => {
     switch (key) {
       case 'product_name':
-        return (text: string) => <TruncateWithTooltip text={text} maxWidth={200} />;
+        return (text: string) => (
+          <Link to="/productdetails/basic-info" style={{ color: "black" }}>
+        <TruncateWithTooltip text={text} maxWidth={200}/>
+          </Link>
+        )
       case 'product_description':
         return (text: string) => <TruncateWithTooltip text={text} maxWidth={300} />;
       default:
@@ -198,48 +205,61 @@ const CustomTable: React.FC<CustomTableProps> = ({
 
 
   const tableColumns: ColumnsType<DataType> = [
-    {
-      title: (
-        <Dropdown
-          overlay={sortMenu}
-          trigger={["click"]}
-          open={dropdownVisible}
-          onOpenChange={setDropdownVisible}
-        >
-          <div className="flex items-center justify-center cursor-pointer" onClick={handleSortClick} style={{width: 20 , maxWidth:20}}>
-            <GoSortDesc size={20} />
-            {dropdownVisible && <span className="ml-1 text-xs">{sortOption}</span>}
+    ...(showCheckbox
+    ? [{
+        title: (
+          <Dropdown
+            overlay={sortMenu}
+            trigger={["click"]}
+            open={dropdownVisible}
+            onOpenChange={setDropdownVisible}
+          >
+            <div
+              className="flex items-center justify-center cursor-pointer"
+              onClick={handleSortClick}
+              style={{ width: 30, maxWidth: 30 }}
+            >
+              <GoSortDesc size={20} />
+              {dropdownVisible && <span className="ml-1 text-xs">{sortOption}</span>}
+            </div>
+          </Dropdown>
+        ),
+        dataIndex: 'key',
+        key: 'checkbox',
+        width: 30,
+        className: "checkbox-col",
+        render: (_: any, record: DataType) => (
+          <div className="flex items-center justify-center" style={{ width: "30px" }}>
+            <Checkbox
+              checked={selectedKeys.includes(record.key)}
+              onChange={(e) => {
+                if (e.target.checked) {
+                  updateSelectedKeys([...selectedKeys, record.key]);
+                } else {
+                  updateSelectedKeys(selectedKeys.filter((k) => k !== record.key));
+                }
+              }}
+            />
           </div>
-        </Dropdown>
-      ),
-      dataIndex: 'key',
-      key: 'checkbox',
-      width: 30,
-      fixed: 'left' as const,
-      render: (_, record) => (
-        <div className="flex items-center justify-center">
-          <Checkbox
-            checked={selectedKeys.includes(record.key)}
-            onChange={(e) => {
-              if (e.target.checked) {
-                updateSelectedKeys([...selectedKeys, record.key]);
-              } else {
-                updateSelectedKeys(selectedKeys.filter((k) => k !== record.key));
-              }
-            }}
-          />
-        </div>
-      ),
-    },
+        ),
+      }]
+    : []),
     ...(showImage
       ? [{
-        title: <FaImage size={18} />,
+        title:(
+          <div className="flex items-center justify-center w-full">
+             <FaImage size={18} />
+          </div>
+        ),
         dataIndex: 'image',
         key: 'image',
-        width: 60,
+        width:imageColumnWidth ?? 80,
+        // fixed: 'center' as const,
         render: (image?: string) =>
           image ? (
-            <img src={image} alt="Product" className="w-10 h-10 shadow-[2px_3px_5px_0_rgba(56,56,56,1)]" />
+            <div className="flex items-center justify-center">
+              <img src={image} alt="Product" className="!w-10 !h-10 shadow-[2px_3px_5px_0_rgba(56,56,56,1)] bg-[#e3e3e3]" />
+            </div>
           ) : (
             "-"
           ),
@@ -277,6 +297,7 @@ const resolvedScroll: ScrollConfig = {
                 rowKey="key"
                 onRow={onRow}
                 scroll={resolvedScroll}
+                tableLayout="fixed"
                 style={
                   headerBgColor
                     ? ({ "--custom-table-header-bg": headerBgColor } as React.CSSProperties)

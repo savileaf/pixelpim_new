@@ -130,7 +130,7 @@ const ViewProperty = () => {
                 label: (
                   <Link to="/productfamily/edit" className="flex items-center gap-2">
                     <FaEdit />
-                    <span>Edit Family</span>
+                    <span>Edit Attributes</span>
                   </Link>
                 ),
               },

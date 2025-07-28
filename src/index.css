@@ -3,8 +3,15 @@
 *{
   font-family: 'Inter', sans-serif;
   box-sizing: border-box;
-  max-height: 100vh;
-  overflow: hidden;
+  /* max-height: 100vh; */
+  /* overflow: hidden; */
+}
+
+.product-main{
+  box-sizing: border-box;
+  height:100vh;
+   max-height: 100vh; 
+   overflow: hidden; 
 }
 
 :root{
@@ -97,7 +104,10 @@
 
 .create-group-modal{
   background-color: #AEACAC !important;
+  height: 30.7rem;
 }
+
+
 .custom-product-table .ant-table-thead > tr > th {
   background-color: #eeeeee;
   font-weight: 600;
@@ -130,3 +140,13 @@
   background-color: white;
 }
 
+/* .ant-table .checkbox-col {
+  width: 60px !important;
+  min-width: 50px !important;
+  max-width: 50px !important;
+}
+
+.ant-table .checkbox-col .ant-table-cell {
+  padding: 0 !important;
+  text-align: center;
+} */

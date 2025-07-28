@@ -72,12 +72,12 @@ const CreateGroupModal: React.FC<CreateGroupModalProps> = ({ open, onClose, onSa
       className="create-group-modal"
     >
       <div className="relative p-6">
-        <button onClick={onClose} className="absolute top-3 right-4">
+        <button onClick={onClose} className="absolute top-6 right-4">
           <IoCloseOutline className="h-5 w-5" />
         </button>
 
         {/* Search */}
-        <div className="mb-4">
+        <div className="mb-4 mt-6">
           <Input
             placeholder="Search Property Name"
             value={searchTerm}
@@ -87,7 +87,7 @@ const CreateGroupModal: React.FC<CreateGroupModalProps> = ({ open, onClose, onSa
         </div>
 
         {/* Attribute List Header */}
-        <div className="mb-2 pl-6">
+        <div className="mb-2">
           <h3 className="text-sm font-semibold uppercase tracking-wider">
             ATTRIBUTE NAME
             {selectedCount > 0 && (

@@ -12,7 +12,7 @@ const ProductsConfigLayout = () => {
         <Sidebar />
         <ProductsSidebar />
       </div>
-      <div className="flex-1 flex flex-col p-5">
+      <div className="flex-1 flex flex-col px-4 py-2 w-full">
         <div className="w-full">
           <ProductconfigTopbar {...topbarConfig} />
 

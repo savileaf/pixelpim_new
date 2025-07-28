@@ -55,7 +55,7 @@ const AssetsMain = () => {
       title: "FILE NAME",
       dataIndex: "file_name",
       key: "file_name",
-      width: 300,
+      width: 350,
       render: (text: string) => (
         <div className="flex items-center gap-2">
           {getFileIcon(text)}
@@ -63,8 +63,8 @@ const AssetsMain = () => {
         </div>
       ),
     },
-    { title: "UPLOAD DATE", dataIndex: "upload_date", key: "upload_date", width: 200 },
-    { title: "SIZE", dataIndex: "size", key: "size", width: 100 },
+    { title: "UPLOAD DATE", dataIndex: "upload_date", key: "upload_date", width: 250 },
+    { title: "SIZE", dataIndex: "size", key: "size", width: 150 },
   ];
 
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);

@@ -26,7 +26,7 @@ const App = () => {
     <Routes>
     <Route element={<Layout/>}>
     <Route path="/" element={<ProductsMain/>}/>
-    <Route path="/assets/main" element={<AssetsMain/>}/>
+    <Route path="/assets" element={<AssetsMain/>}/>
     <Route path="/assets/opengroup" element={<ViewGroupPage/>}/>
     <Route path="/productdetails" element={<ProductDetailsLayout/>}>
         <Route path="/productdetails/basic-info" element={<ProductDetails productName="Sample Product"
@@ -49,12 +49,12 @@ const App = () => {
   }>
   
     <Route path="/product/attribute" element={<ProductConfigurationPage/>}/>
-    <Route path="/product/viewproperty" element={<ViewProperty/>}/>
+    <Route path="/product/attribute/viewproperty" element={<ViewProperty/>}/>
     <Route path="/product/families" element={<ProductFamilies/>}/>
     <Route path="/product/categories" element={<ProductCategoryMain/>}/>
     </Route>
 
-    <Route path="/category/edit" element={<EditGroup/>}/>
+    <Route path="/category/edit" element={<EditCategory/>}/>
     <Route path="/group/edit" element={<EditGroup/>}/>
     <Route path="/productfamily/edit" element={<EditProductFamily/>}/>
     <Route path="/edit/product/category" element={<EditCategory/>}/>

@@ -12,11 +12,11 @@ import { Link, useLocation } from "react-router-dom";
 const Sidebar = () => {
   const location = useLocation();
   const menuItems = [
-    { name: "Products", icon: <BiBox />, link: "/" },
-    { name: "Digital Assets", icon: <FaRegFileAlt />, link: "/assets/main" },
-    { name: "Brand Portals", icon: <MdOutlineDesktopWindows />, link:"#" },
-    { name: "Channels", icon: <BsGlobe size={12}/>, link:"#" },
-    { name: "Product Configuration", icon: <MdOutlineSettings />, link: "/product/attribute" },
+    { name: "Products", icon: <BiBox />, link: "/", matchPath: "/" },
+  { name: "Digital Assets", icon: <FaRegFileAlt />, link: "/assets", matchPath: "/assets" },
+  { name: "Brand Portals", icon: <MdOutlineDesktopWindows />, link: "#", matchPath: "/brand-portals" },
+  { name: "Channels", icon: <BsGlobe size={12} />, link: "#", matchPath: "/channels" },
+  { name: "Product Configuration", icon: <MdOutlineSettings />, link: "/product/attribute", matchPath: "/product" },
   ];
 
   const resources = [
@@ -24,7 +24,7 @@ const Sidebar = () => {
     { name: "Help & Support", icon: <FaQuestionCircle size={12}/> },
   ];
   return (
-    <div className="w-[13rem] min-w-[13rem] bg-[#003F1B] flex flex-col items-between h-[100vh]">
+    <div className="w-[13rem] min-w-[13rem] bg-[#003F1B] flex flex-col items-between h-[100vh] max-h-[100vh]">
       <div className="flex flex-col">
         <div className="pixel-box border-b-[6px] border-solid border-[#CC922F] h-[4.4rem]">
           <div className="flex flex-row items-center justify-center gap-4 w-full h-full">
@@ -36,26 +36,32 @@ const Sidebar = () => {
 
       <div className=" text-white w-[13rem] px-3 pt-[14px] text-[14px] font-regular flex flex-col justify-between space-y-16">
         <div className="space-y-2">
-          {menuItems.map(({ name, icon, link }) => {
-            const isActive = link && location.pathname === link;
-            const content = (
-              <div
-                className={`flex items-center gap-2 px-2 py-[6px] mb-[6px] rounded ${isActive ? "bg-[#2ECC71]" : "hover:bg-[#064f2c]"
-                  }`}
-              >
-                <span className="text-[14px] w-4">{icon}</span>
-                <span className="text-white sidebar-link">{name}</span>
-              </div>
-            );
+          {menuItems.map(({ name, icon, matchPath, link }) => {
+  const isActive =
+    link === "/"
+      ? location.pathname === "/"
+      : location.pathname.startsWith(matchPath);
 
-            return link ? (
-              <Link key={name} to={link}>
-                {content}
-              </Link>
-            ) : (
-              <div key={name}>{content}</div>
-            );
-          })}
+  const content = (
+    <div
+      className={`flex items-center gap-2 px-2 py-[6px] mb-[6px] rounded ${
+        isActive ? "bg-[#2ECC71]" : "hover:bg-[#064f2c]"
+      }`}
+    >
+      <span className="text-[14px] w-4">{icon}</span>
+      <span className="text-white sidebar-link">{name}</span>
+    </div>
+  );
+
+  return link ? (
+    <Link key={name} to={link}>
+      {content}
+    </Link>
+  ) : (
+    <div key={name}>{content}</div>
+  );
+})}
+
 
         </div>
 

@@ -3,6 +3,9 @@ import { RxCross1 } from 'react-icons/rx';
 import { GoSortDesc } from 'react-icons/go';
 import './editproductfamily.css';
 import { Link } from 'react-router-dom';
+import { FaChevronDown, FaExternalLinkAlt } from 'react-icons/fa';
+import CustomTable from '../CustomTable';
+import { IoCheckmarkDoneCircle } from 'react-icons/io5';
 
 interface Attribute {
     id: number;
@@ -25,7 +28,92 @@ const allAttributesList: Attribute[] = [
     { id: 10, name: 'Manufacture Process' },
 ];
 
+const columns = [
+    {
+        title: (
+            <span className="font-semibold text-[11px] text-[#7b7089]">
+                PRODUCT NAME
+            </span>
+        ),
+        dataIndex: "product_name",
+        key: "product_name",
+        width: 170,
+        render: (text: string) => (
+            <div className="flex items-center justify-between">
+                <span className='font-normal text-[12px] text-[#1b0c31]'>{text}</span>
+                      <FaExternalLinkAlt color="blue" />
+            
+            </div>
+        ),
+    },
+    {
+        title: (
+            <span className="font-semibold text-[11px] text-[#7b7089]">SKU</span>
+        ), 
+        dataIndex: "sku", key: "sku", width: 80,
+        render: (text: string) => (
+            <div className="flex items-center gap-2">
+                <span className='font-normal text-[12px] text-[#1b0c31]'>{text}</span>
+            </div>
+        )
+    },
+    {
+        title: (
+        <span className="font-semibold text-[11px] text-[#7b7089]">COMPLETENESS</span>
+        )
+        , dataIndex: "completeness", key: "completeness", width: 70,
+         render: (value: boolean) => (
+    <div className="flex items-center gap-2">
+      {value ? (
+        <>
+          <IoCheckmarkDoneCircle  className="text-green-600 text-sm" />
+          <span className="text-green-600 text-[12px] font-medium">Completed</span>
+        </>
+      ) : (
+        <>
+          <span className="text-[#1b0c31] text-[12px] font-medium">Not Completed</span>
+        </>
+      )}
+    </div>
+  ),
+    },
+]
+
+const data = [
+    {
+        key: "1",
+        product_name: "Vintage SweatShirt.doc",
+        image:"/images/jeans.png",
+        sku: "VS123",
+        completeness: false,
+    },
+    {
+        key: "2",
+        product_name: "Lookbook.xlsx",
+        image:"/images/jeans.png",
+        sku: "LB456",
+        completeness: true,
+    },
+    {
+        key: "3",
+        product_name: "product-image.jpg",
+        image:"/images/jeans.png",
+        sku: "PI789",
+        completeness: false,
+    },
+    {
+        key: "4",
+        product_name: "Product Details.pdf",
+        image:"/images/jeans.png",
+        sku: "PD321",
+        completeness: true,
+    },
+];
+
 const EditProductFamily: React.FC = () => {
+    const [selected, setSelected] = useState("");
+
+    const options = ["Ascending", "Descending", "Newest", "Oldest"];
     const [groupName, setGroupName] = useState('Accessories');
     const [requiredAttributes, setRequiredAttributes] = useState<Attribute[]>([
         { id: 1, name: 'Color' },
@@ -160,7 +248,7 @@ const EditProductFamily: React.FC = () => {
             <header>
                 <p className="page-name">Edit Product Family</p>
                 <Link to="/product/families">
-                <button className="cancel-btn2">Cancel</button>
+                    <button className="cancel-btn2">Cancel</button>
                 </Link>
             </header>
 
@@ -171,8 +259,47 @@ const EditProductFamily: React.FC = () => {
                     <input type="text" value={groupName} onChange={e => setGroupName(e.target.value)} />
                 </div>
 
+                {/* TABLE SHOWING THE PRODUCTS */}
+                <div className='w-full mb-2'>
+                    <p className='font-normal text-[14px] text-[#302e2e] mb-2'>Used In Products</p>
+                    <div className='w-full border border-solid border-[#929292] p-4'>
+                        <div className='flex items-center justify-evenly'>
+                            <div className="w-[360px] h-7 bg-white border border-solid border-[#929292] rounded-sm">
+                                <input type="text" placeholder='Search by SKU or Product' className=" px-4  font-medium text-[12px] text-[#a2a1a1] " />
+                            </div>
+
+                            <div className="relative w-[225px] h-7 bg-white">
+                                <select
+                                    value={selected}
+                                    onChange={(e) => setSelected(e.target.value)}
+                                    className="w-full appearance-none border border-[#929292]  rounded-sm px-3 font-medium text-[12px] text-[#a2a1a1] focus:outline-none h-7"
+                                >
+                                    <option value="" disabled>
+                                        Sort By
+                                    </option>
+                                    {options.map((option) => (
+                                        <option key={option} value={option} className="text-black">
+                                            {option}
+                                        </option>
+                                    ))}
+                                </select>
+
+                                <div className="pointer-events-none absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 text-xs">
+                                    <FaChevronDown />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className='w-full mt-2'>
+                            <CustomTable showImage={true} columns={columns} showCheckbox={false} dataSource={data} imageColumnWidth={20} />
+
+                        </div>
+                    </div>
+
+                </div>
+
                 {/* Attribute Boxes */}
-                <div className="attributes-box">
+                <div className="attributes-box mt-4">
                     {/* Required Attributes */}
                     <div className="attributes-box-left">
                         <p className="attributes-box-left-title">Required Attributes</p>
@@ -336,7 +463,7 @@ const EditProductFamily: React.FC = () => {
                         value={searchAll}
                         onChange={e => setSearchAll(e.target.value)}
                     />
-                    <div className='sort-clear' style={{position:"relative"}}>
+                    <div className='sort-clear' style={{ position: "relative" }}>
                         <GoSortDesc
                             onClick={() => setPopupVisible(prev => ({ ...prev, all: !prev.all }))}
                             style={{ cursor: 'pointer' }}
@@ -344,34 +471,34 @@ const EditProductFamily: React.FC = () => {
                             color='#5a5a5a'
                         />
                         {popupVisible.all && (
-                        <div className="sortpopup">
-                            <p className="sortpopup-title">Sort By</p>
-                            <p className='sortpopup-ascending' onClick={() => setSortAll('asc')}>Ascending</p>
-                            <p className='sortpopup-desceding' onClick={() => setSortAll('desc')}>Descending</p>
-                        </div>
+                            <div className="sortpopup">
+                                <p className="sortpopup-title">Sort By</p>
+                                <p className='sortpopup-ascending' onClick={() => setSortAll('asc')}>Ascending</p>
+                                <p className='sortpopup-desceding' onClick={() => setSortAll('desc')}>Descending</p>
+                            </div>
                         )}
 
-                         {assignments.size > 0 && (
-                        <div className='selection-count' style={{ display: 'flex', gap: '1rem' }}>
-                            {Array.from(assignments.entries()).filter(([_, val]) => val === 'required').length > 0 && (
-                                <span>
-                                    {Array.from(assignments.entries()).filter(([_, val]) => val === 'required').length} required selected
-                                </span>
-                            )}
-                            {Array.from(assignments.entries()).filter(([_, val]) => val === 'other').length > 0 && (
-                                <span>
-                                    {Array.from(assignments.entries()).filter(([_, val]) => val === 'other').length} other selected
-                                </span>
-                            )}
-                        </div>
+                        {assignments.size > 0 && (
+                            <div className='selection-count' style={{ display: 'flex', gap: '1rem' }}>
+                                {Array.from(assignments.entries()).filter(([_, val]) => val === 'required').length > 0 && (
+                                    <span>
+                                        {Array.from(assignments.entries()).filter(([_, val]) => val === 'required').length} required selected
+                                    </span>
+                                )}
+                                {Array.from(assignments.entries()).filter(([_, val]) => val === 'other').length > 0 && (
+                                    <span>
+                                        {Array.from(assignments.entries()).filter(([_, val]) => val === 'other').length} other selected
+                                    </span>
+                                )}
+                            </div>
                         )}
                         {assignments.size > 0 && (
                             <button onClick={() => setAssignments(new Map())}>
                                 Clear All Selection
                             </button>
                         )}
-                    </div>                    
-                   
+                    </div>
+
 
                     {sortAndFilter(availableAttributes, searchAll, sortAll).map(attr => (
                         <div key={attr.id} className="attribute-item">

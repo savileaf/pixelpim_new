@@ -30,7 +30,7 @@ const ProductconfigTopbar: FC<ProductconfigTopbarProps> = ({
 
   showViewButton = true,
   viewButtonLabel = "View Attribute Group",
-  viewButtonLink = "/product/viewproperty",
+  viewButtonLink = "/product/attribute/viewproperty",
 
   showFilter = true,
   filterOptions = ["Filter Options","Option 1","Option 1","Option 1", "Option A", "Option B"],

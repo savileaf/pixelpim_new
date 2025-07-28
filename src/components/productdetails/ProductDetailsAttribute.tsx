@@ -6,10 +6,9 @@ import { Link } from 'react-router-dom';
 
 // Define types for the AttributeInputBox component props
 interface AttributeInputBoxProps {
-  content: string; // Content is expected to be a string for the input field
+  content: string; 
 }
 
-// AttributeInputBox component (now only contains the input field with no background/border)
 const AttributeInputBox: React.FC<AttributeInputBoxProps> = ({ content }) => {
   return (
     <div className=""> 
@@ -25,7 +24,7 @@ const AttributeInputBox: React.FC<AttributeInputBoxProps> = ({ content }) => {
 
 const ProductDetailsAttribute = () => {
   return (
-    <div className="p-2 w-full">
+    <div className="p-1 w-full">
         <div className='ms-2'>
                 <Link to="/">
                   <button
@@ -38,7 +37,7 @@ const ProductDetailsAttribute = () => {
                   </button>
                 </Link>
               </div>
-        <div className='flex gap-4'>
+        <div className='flex gap-2'>
         <div className="p-2 flex items-center justify-center w-[18rem] max-w-[18rem]">
       <div className=" overflow-hidden w-full flex flex-col gap-3">
         <div className="">
@@ -99,25 +98,26 @@ const ProductDetailsAttribute = () => {
     {/* FORM SECTION */}
        <div className="w-[33rem] flex flex-col gap-4 p-2">
         <div className="flex gap-3">
-            <div className='py-1 w-[9rem] bg-white border border-gray-200 flex items-center justify-center gap-2 font-semibold text-[#9d9d9d]'>
+            <div className='py-1 w-[9rem] h-[2rem] bg-white border border-gray-200 flex items-center justify-center gap-2 font-semibold text-[#9d9d9d]'>
                     <FiPlus size={22} color='#2ecc71'/>
                     Add Attribute
             </div>
             
-             <div className="flex items-center border border-gray-400 rounded overflow-hidden w-[13rem]">
-                          <div className="bg-[#676767] text-white p-[7px]">
-                            <FaSearch size={18} />
-                          </div>
-                          <input
-                            type="text"
-                            placeholder="Search Attribute Name"
-                            className={`px-3 text-sm outline-none font-normal text-[12px] text-[#9d9d9d]`}
-                          />
-        </div>
+             <div className="flex items-center border border-gray-400 h-[30px] rounded w-[13rem] overflow-hidden">
+  <div className="bg-[#676767] text-white h-full w-[2.5rem] flex items-center justify-center">
+    <FaSearch size={14} />
+  </div>
+  <input
+    type="text"
+    placeholder="Search Attribute Name"
+    className="px-3 text-sm outline-none font-normal text-[12px] text-[#9d9d9d] w-full h-full"
+  />
+</div>
 
-        <div className=' flex items-center justify-center gap-4 px-4 py-1 border border-gray-400 rounded overflow-hidden'>
+
+        <div className=' flex items-center justify-center gap-4 px-4 border border-gray-400 rounded overflow-hidden h-[30px]'>
             <span className='text-[#9d9d9d]'>Sort by</span>
-            <FaSortAmountDown size={18} />
+            <FaSortAmountDown size={14} />
         </div>
         </div>
  {/* ATRRIBUTES FORM SECTION */}
