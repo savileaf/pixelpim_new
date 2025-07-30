@@ -1,18 +1,29 @@
 import React, { useState } from "react";
 import { RxCross1 } from "react-icons/rx";
-import { AiOutlineProduct } from "react-icons/ai";
+import { AiOutlineDelete, AiOutlineProduct } from "react-icons/ai";
 import { TbCategoryPlus } from "react-icons/tb";
-import { MdArrowForwardIos } from "react-icons/md";
+import { MdArrowForwardIos, MdCancel } from "react-icons/md";
 import { AiOutlinePlus } from "react-icons/ai";
 import { IoMdArrowDropright } from "react-icons/io";
 import "./editcategory.css";
 import MirrorInput from "./MirrorInput";
+import CategoryProductModal from "./CategoryProductModal";
+import { Dropdown, Menu, Tooltip } from "antd";
+import { TfiImport } from "react-icons/tfi";
+import { FiMoreVertical } from "react-icons/fi";
 
 // Types
+interface Products {
+  id: number;
+  name: string;
+  sku: string;
+  image: string;
+}
 interface Subcategory {
   id: number;
   name: string;
   subcategories?: Subcategory[];
+  products: Products[];
 }
 
 interface Category {
@@ -20,8 +31,81 @@ interface Category {
   name: string;
   subcategories: Subcategory[];
 }
+const findAndUpdateSubcategory = (
+  subs: Subcategory[],
+  subId: number,
+  callback: (subs: Subcategory[], index: number) => void
+): Subcategory[] => {
+  return subs
+    .map((sub, index) => {
+      if (sub.id === subId) {
+        callback(subs, index);
+        return null; // remove it
+      } else if (sub.subcategories) {
+        return {
+          ...sub,
+          subcategories: findAndUpdateSubcategory(sub.subcategories, subId, callback),
+        };
+      }
+      return sub;
+    })
+    .filter(Boolean) as Subcategory[];
+};
+
 
 const EditCategory: React.FC = () => {
+  const [subcategoryToMove, setSubcategoryToMove] = useState<Subcategory | null>(null);
+
+  const deleteSubcategoryById = (subId: number) => {
+    setCategories((prev) =>
+      prev.map((cat) => {
+        const updated = findAndUpdateSubcategory([...cat.subcategories], subId, (subs, idx) => {
+          subs.splice(idx, 1);
+        });
+        return { ...cat, subcategories: updated };
+      })
+    );
+  };
+
+  const prepareMoveSubcategory = (sub: Subcategory) => {
+    setSubcategoryToMove(sub);
+  };
+
+  const pasteSubcategory = (targetSubId: number) => {
+    if (!subcategoryToMove) return;
+
+    setCategories((prev) =>
+      prev.map((cat) => {
+        let subcat: Subcategory | null = null;
+
+        const cleaned = findAndUpdateSubcategory([...cat.subcategories], subcategoryToMove.id, (subs, idx) => {
+          subcat = subs[idx];
+          subs.splice(idx, 1);
+        });
+
+        const addToSub = (subs: Subcategory[]): Subcategory[] =>
+          subs.map((sub) => {
+            if (sub.id === targetSubId && subcat) {
+              return {
+                ...sub,
+                subcategories: [...(sub.subcategories || []), subcat],
+              };
+            }
+            return {
+              ...sub,
+              subcategories: sub.subcategories ? addToSub(sub.subcategories) : [],
+            };
+          });
+
+        return {
+          ...cat,
+          subcategories: addToSub(cleaned),
+        };
+      })
+    );
+    setSubcategoryToMove(null);
+  };
+
   const [categories, setCategories] = useState<Category[]>([
     {
       id: 1,
@@ -30,12 +114,96 @@ const EditCategory: React.FC = () => {
         {
           id: 2,
           name: "Phones",
+          products: [],
           subcategories: [
-            { id: 3, name: "Smartphones", subcategories: [] },
-            { id: 4, name: "Feature Phones", subcategories: [] },
+            {
+              id: 3,
+              name: "Smartphones",
+              products: [
+                { id: 101, name: "iPhone 14", sku: "APL14", image: "" },
+                { id: 102, name: "Pixel 7", sku: "GGLP7", image: "" },
+              ],
+              subcategories: [],
+            },
+            {
+              id: 4,
+              name: "Feature Phones",
+              products: [
+                { id: 103, name: "Nokia 3310", sku: "NOK3310", image: "" },
+              ],
+              subcategories: [],
+            },
           ],
         },
-        { id: 5, name: "Laptops", subcategories: [] },
+        {
+          id: 5,
+          name: "Laptops",
+          products: [],
+          subcategories: [
+            {
+              id: 6,
+              name: "Gaming Laptops",
+              products: [
+                { id: 104, name: "Alienware X15", sku: "AWX15", image: "" },
+                { id: 105, name: "Razer Blade 17", sku: "RB17", image: "" },
+              ],
+              subcategories: [],
+            },
+            {
+              id: 7,
+              name: "Ultrabooks",
+              products: [
+                { id: 106, name: "Dell XPS 13", sku: "DX13", image: "" },
+              ],
+              subcategories: [],
+            },
+          ],
+        },
+      ],
+    },
+    {
+      id: 8,
+      name: "Home Appliances",
+      subcategories: [
+        {
+          id: 9,
+          name: "Kitchen",
+          products: [],
+          subcategories: [
+            {
+              id: 10,
+              name: "Microwaves",
+              products: [
+                { id: 107, name: "LG Microwave", sku: "LG-MW", image: "" },
+              ],
+              subcategories: [],
+            },
+            {
+              id: 11,
+              name: "Blenders",
+              products: [
+                { id: 108, name: "NutriBullet Pro", sku: "NB-PRO", image: "" },
+                { id: 109, name: "Vitamix E310", sku: "VMX310", image: "" },
+              ],
+              subcategories: [],
+            },
+          ],
+        },
+        {
+          id: 12,
+          name: "Laundry",
+          products: [],
+          subcategories: [
+            {
+              id: 13,
+              name: "Washing Machines",
+              products: [
+                { id: 110, name: "Samsung EcoBubble", sku: "SMG-EB", image: "" },
+              ],
+              subcategories: [],
+            },
+          ],
+        },
       ],
     },
   ]);
@@ -48,28 +216,28 @@ const EditCategory: React.FC = () => {
   const [activeCategoryId] = useState<number | null>(1);
   const [activeSubcategoryId, setActiveSubcategoryId] = useState<number | null>(null);
   const [activeSubcategoryName, setActiveSubcategoryName] = useState<string | null>("Electronics");
+  const [showProductModal, setShowProductModal] = useState(false);
+  const [selectedProducts, setSelectedProducts] = useState<Products[]>([]);
+  const [selectedSubcategoryName, setSelectedSubcategoryName] = useState<string | null>(null);
+  const [selectedKeys, setSelectedKeys] = useState<React.Key[]>([]);
 
-  // Toggle collapse for individual subcategory
+
   const toggleCollapseSubcategory = (subId: number) => {
     setCollapsedSubcategories((prev) => {
       const newSet = new Set(prev);
-      if (newSet.has(subId)) newSet.delete(subId);
-      else newSet.add(subId);
+      newSet.has(subId) ? newSet.delete(subId) : newSet.add(subId);
       return newSet;
     });
   };
 
-  // Toggle collapse for the main category (Electronics)
   const toggleCollapseCategory = (categoryId: number) => {
     setCollapsedCategories((prev) => {
       const newSet = new Set(prev);
-      if (newSet.has(categoryId)) newSet.delete(categoryId);
-      else newSet.add(categoryId);
+      newSet.has(categoryId) ? newSet.delete(categoryId) : newSet.add(categoryId);
       return newSet;
     });
   };
 
-  // Add Subcategory (Insert at the top)
   const confirmAddSubcategory = () => {
     if (!newSubcategoryName.trim()) return;
 
@@ -77,15 +245,13 @@ const EditCategory: React.FC = () => {
       id: Date.now(),
       name: newSubcategoryName.trim(),
       subcategories: [],
+      products: [],
     };
 
     setCategories((prev) =>
       prev.map((cat) => {
         if (cat.id === activeCategoryId && activeSubcategoryId === null) {
-          return {
-            ...cat,
-            subcategories: [newSub, ...cat.subcategories], // Insert at the top
-          };
+          return { ...cat, subcategories: [newSub, ...cat.subcategories] };
         }
 
         const updateSubs = (subs: Subcategory[]): Subcategory[] =>
@@ -93,7 +259,7 @@ const EditCategory: React.FC = () => {
             if (sub.id === activeSubcategoryId) {
               return {
                 ...sub,
-                subcategories: [newSub, ...(sub.subcategories || [])], // Insert at the top
+                subcategories: [newSub, ...(sub.subcategories || [])],
               };
             }
             return {
@@ -102,10 +268,7 @@ const EditCategory: React.FC = () => {
             };
           });
 
-        return {
-          ...cat,
-          subcategories: updateSubs(cat.subcategories),
-        };
+        return { ...cat, subcategories: updateSubs(cat.subcategories) };
       })
     );
 
@@ -115,7 +278,6 @@ const EditCategory: React.FC = () => {
     setActiveSubcategoryName(null);
   };
 
-  // Update subcategory name
   const updateSubcategoryName = (subId: number, name: string) => {
     const update = (subs: Subcategory[]): Subcategory[] =>
       subs.map((sub) => {
@@ -127,99 +289,92 @@ const EditCategory: React.FC = () => {
       });
 
     setCategories((prev) =>
-      prev.map((cat) => ({
-        ...cat,
-        subcategories: update(cat.subcategories),
-      }))
+      prev.map((cat) => ({ ...cat, subcategories: update(cat.subcategories) }))
     );
   };
 
+  const getProductCount = (sub: Subcategory): number => {
+    let count = sub.products?.length || 0;
+    if (sub.subcategories) {
+      sub.subcategories.forEach((nested) => {
+        count += getProductCount(nested);
+      });
+    }
+    return count;
+  };
 
-  // Recursive render for subcategories
-  // const renderSubcategories = (subs: Subcategory[], level: number = 1) =>
-  //   subs.map((sub) => {
-  //     const isCollapsed = collapsedSubcategories.has(sub.id);
-  //     const hasSubcategories = sub.subcategories && sub.subcategories.length > 0;  // Check if it has subcategories
+  const handleViewProducts = (subcategory: Subcategory) => {
+    setSelectedProducts(subcategory.products || []);
+    setSelectedSubcategoryName(subcategory.name);
+    setShowProductModal(true);
+  };
 
-  //     return (
-  //       <div key={sub.id} style={{ marginLeft: `1.5rem`, marginTop: "1rem" }}>
-  //         <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-  //           {/* Always show the icon, but rotate only if there are subcategories */}
-  //           <MdArrowForwardIos
-  //             size={12}
-  //             style={{
-  //               cursor: hasSubcategories ? "pointer" : "default",  // Only clickable if it has subcategories
-  //               transform: hasSubcategories && isCollapsed ? "rotate(90deg)" : "rotate(0deg)",  // Rotate only if has subcategories
-  //               transition: "transform 0.2s",
-  //             }}
-  //             onClick={() => hasSubcategories && toggleCollapseSubcategory(sub.id)}  // Only toggle if it has subcategories
-  //           />
-  //           <input
-  //             className="subcategory-input"
-  //             type="text"
-  //             value={sub.name}
-  //             onChange={(e) => updateSubcategoryName(sub.id, e.target.value)}
-  //           />
-  //           <input
-  //             className="subcategory-input"
-  //             type="text"
-  //             value={sub.name}
-  //             onChange={(e) => updateSubcategoryName(sub.id, e.target.value)}
-  //             // Replacing this input with the MirrorInput
-  //             renderInput={(inputProps) => (
-  //               <MirrorInput {...inputProps} />
-  //             )}
-  //           />
-  //           <AiOutlinePlus onClick={() => openAddSubPopup(sub.id, sub.name)} />
-  //         </div>
-  //         {/* Only render subcategories if they're not collapsed */}
-  //         {!isCollapsed && sub.subcategories && renderSubcategories(sub.subcategories, level + 1)}
-  //       </div>
-  //     );
-  // });
+  const renderSubcategories = (subs: Subcategory[], level: number = 1) =>
+    subs.map((sub) => {
+      const isCollapsed = collapsedSubcategories.has(sub.id);
+      const hasSubcategories = sub.subcategories && sub.subcategories.length > 0;
+      const productCount = getProductCount(sub);
 
-
-const renderSubcategories = (subs: Subcategory[], level: number = 1) =>
-  subs.map((sub) => {
-    const isCollapsed = collapsedSubcategories.has(sub.id);
-    const hasSubcategories = sub.subcategories && sub.subcategories.length > 0;
-
-    return (
-      <div key={sub.id} className="mt-4 ml-6">
-        <div className="flex items-center gap-3">
-          <MdArrowForwardIos
-            size={12}
-            style={{
-              cursor: hasSubcategories ? "pointer" : "default",
-              transform: hasSubcategories && isCollapsed ? "rotate(90deg)" : "rotate(0deg)",
-              transition: "transform 0.2s",
-            }}
-            onClick={() => hasSubcategories && toggleCollapseSubcategory(sub.id)}
-          />
-          {/* <input
-              className="subcategory-input"
-              type="text"
+      return (
+        <div key={sub.id} className="mt-4 ml-6">
+          <div className="flex items-center gap-3">
+            <MdArrowForwardIos
+              size={12}
+              style={{
+                cursor: hasSubcategories ? "pointer" : "default",
+                transform: hasSubcategories && isCollapsed ? "rotate(90deg)" : "rotate(0deg)",
+                transition: "transform 0.2s",
+              }}
+              onClick={() => hasSubcategories && toggleCollapseSubcategory(sub.id)}
+            />
+            <MirrorInput
               value={sub.name}
               onChange={(e) => updateSubcategoryName(sub.id, e.target.value)}
-            /> */}
+            />
+            <AiOutlinePlus onClick={() => openAddSubPopup(sub.id, sub.name)} />
+            <Dropdown
+              trigger={["click"]}
+              placement="bottomLeft"
+              overlay={
+                <Menu>
+                  <Menu.Item key="move" onClick={() => prepareMoveSubcategory(sub)}>
+                    Move
+                  </Menu.Item>
+                  <Menu.Item
+                    key="paste"
+                    disabled={!subcategoryToMove || subcategoryToMove.id === sub.id}
+                    onClick={() => pasteSubcategory(sub.id)}
+                  >
+                    Paste Here
+                  </Menu.Item>
+                  <Menu.Item key="delete" danger onClick={() => deleteSubcategoryById(sub.id)}>
+                    Delete
+                  </Menu.Item>
+                </Menu>
+              }
+            >
+              <div className="cursor-pointer px-2 py-1">
+                <FiMoreVertical size={16} />
+              </div>
+            </Dropdown>
+          </div>
 
-          {/* Use MirrorInput here to adjust width */}
-          <MirrorInput
-            value={sub.name}
-            onChange={(e) => updateSubcategoryName(sub.id, e.target.value)}
-          />
-          <AiOutlinePlus onClick={() => openAddSubPopup(sub.id, sub.name)} />
+          {productCount > 0 && (
+            <div className="ml-6">
+              <span
+                className="font-normal text-[10px] underline text-[#1b0c31] cursor-pointer"
+                onClick={() => handleViewProducts(sub)}
+              >
+                View Products {productCount}
+              </span>
+            </div>
+          )}
+
+          {!isCollapsed && sub.subcategories && renderSubcategories(sub.subcategories, level + 1)}
         </div>
+      );
+    });
 
-        {/* Render nested subcategories if not collapsed */}
-        {!isCollapsed && sub.subcategories && renderSubcategories(sub.subcategories, level + 1)}
-      </div>
-    );
-  });
-
-
-
-  // Open Add Subcategory Popup
   const openAddSubPopup = (subId: number | null, name: string | null) => {
     setActiveSubcategoryId(subId);
     setActiveSubcategoryName(name);
@@ -232,52 +387,97 @@ const renderSubcategories = (subs: Subcategory[], level: number = 1) =>
         <p className="page-name">Edit Category</p>
         <button className="cancel-btn2">Cancel</button>
       </header>
-      <div className="edit-box">
-        <div className="category-name">
-          <label>Category Name</label>
-          <input
-            autoFocus
-            type="text"
-            value={activeSubcategoryName ?? ""} 
-            onChange={(e) => setActiveSubcategoryName(e.target.value)}
-          />
-        </div>
-        <div className="category-tree">
-          <p className="category-tree-title">Products in {activeSubcategoryName}</p>
-          <div className="category-tree-wrapper" style={{ padding: "1.2rem" }}>
+      <div className={`w-full ${showProductModal ? "flex gap-4 justify-center" : "flex items-center justify-center"}`}>
+        <div className="edit-box ">
+          <div className="category-name">
+            <label>Category Name</label>
             <input
-              className="search-category-product"
+              autoFocus
               type="text"
-              placeholder="Search by SKU or by Product Name"
+              value={activeSubcategoryName ?? ""}
+              onChange={(e) => setActiveSubcategoryName(e.target.value)}
             />
-            <div className="category-title">
-              <span className="dropdown">
-                <IoMdArrowDropright height={"10px"} color="#fff" 
-                 style={{
-                  transition: "transform 0.2s",
-                  transform: collapsedCategories.has(1) ? "rotate(0deg)" : "rotate(90deg)", // Rotate the icon
-                }}
-                onClick={() => toggleCollapseCategory(1)} // Passing category id for collapse
-                />
-              </span>
-              <p>{activeSubcategoryName}</p>
-              <AiOutlinePlus onClick={() => openAddSubPopup(null, "Electronics")} />
+          </div>
+          <div className="category-tree">
+            <p className="category-tree-title">Products in {activeSubcategoryName}</p>
+            <div className="category-tree-wrapper" style={{ padding: "1.2rem" }}>
+              <input
+                className="search-category-product"
+                type="text"
+                placeholder="Search by SKU or by Product Name"
+              />
+              <div className="category-title">
+                <span className="dropdown">
+
+                  <IoMdArrowDropright
+                    height={"10px"}
+                    color="#fff"
+                    style={{
+                      transition: "transform 0.2s",
+                      transform: collapsedCategories.has(1)
+                        ? "rotate(0deg)"
+                        : "rotate(90deg)",
+                    }}
+                    onClick={() => toggleCollapseCategory(1)}
+                  />
+                </span>
+                <p>{activeSubcategoryName}</p>
+                <AiOutlinePlus onClick={() => openAddSubPopup(null, "Electronics")} />
+              </div>
+
+              {categories.map((cat) => (
+                <div key={cat.id} style={{ marginTop: "1rem", marginRight: "1rem" }}>
+                  <div>
+                    {!collapsedCategories.has(cat.id) && renderSubcategories(cat.subcategories)}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <button type="submit" className="save-changes-button">
+            Save Changes
+          </button>
+        </div>
+
+        {showProductModal && (
+          <div className="h-cover mt-8 p-2 px-4 bg-[#f2f2f2] flex flex-col items-center relative">
+            {/* ✅ Cancel Button Top Right */}
+            <div className="absolute top-4 right-4">
+              <MdCancel onClick={() => setShowProductModal(false)} />
             </div>
 
-            {categories.map((cat) => (
-              <div key={cat.id} style={{ marginTop: "1rem", marginRight:"1rem" }}>
-                <div>
-                  {!collapsedCategories.has(cat.id) && renderSubcategories(cat.subcategories)}
+            <div className="mt-3">
+              <span className="font-normal text-[14px] text-[#302e2e]">
+                Mobile Phones Products/ Categories not selected, Clicked
+              </span>
+
+              {selectedProducts && selectedProducts.length > 0 && (
+                <div className="flex flex-row">
+                  <div className="flex flex-row items-center gap-3">
+                    <Tooltip title="Download">
+                      <TfiImport />
+                    </Tooltip>
+                    <Tooltip title="Delete">
+                      <AiOutlineDelete size={20} />
+                    </Tooltip>
+                  </div>
+                  <p>{selectedKeys.length} items selected </p>
                 </div>
-              </div>
-            ))}
+              )
+              }
+
+              <CategoryProductModal
+                subcategoryName={selectedSubcategoryName}
+                products={selectedProducts}
+                onClose={() => setShowProductModal(false)}
+              />
+            </div>
           </div>
-        </div>
-        {/* <button className="submit" >Save Changes</button> */}
-        <button type="submit" className="save-changes-button">Save Changes</button>
+        )}
+
       </div>
 
-      {/* Add Subcategory Popup */}
+
       {showAddPopup && (
         <div className="popup-overlay">
           <div className="addsubcategory">
@@ -309,7 +509,6 @@ const renderSubcategories = (subs: Subcategory[], level: number = 1) =>
         </div>
       )}
 
-      {/* Subcategory Popup */}
       {showSubcategoryPopup && (
         <div className="popup-overlay">
           <div className="addsubcategory-confirm">
@@ -334,8 +533,12 @@ const renderSubcategories = (subs: Subcategory[], level: number = 1) =>
           </div>
         </div>
       )}
+
+
     </section>
   );
 };
 
 export default EditCategory;
+
+

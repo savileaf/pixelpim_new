@@ -43,9 +43,7 @@ header button {
     padding: 32px 32px 0;
     margin: 32px 0 56px;
     width: 720px;
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
+   
 }
 .addsubcategory, .addsubcategory-confirm{
 	background: #575657;

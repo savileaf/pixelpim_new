@@ -107,6 +107,8 @@ imageColumnWidth?: number;
   rowHeight?: number;
   onRow?: (record: DataType, index?: number) => React.HTMLAttributes<HTMLElement>;
   scroll?: ScrollConfig;
+  placeSortButton?:boolean;
+  rowSelection?:any;
 }
 
 const CustomTable: React.FC<CustomTableProps> = ({
@@ -123,7 +125,8 @@ const CustomTable: React.FC<CustomTableProps> = ({
   rowHeight,
   onRow,
   imageColumnWidth,
-  scroll = { x: 'max-content', y: 400 }
+  scroll = { x: 'max-content', y: 400 },
+  placeSortButton ,
 }) => {
   const { columns: contextColumns } = useColumns();
   const [sortOption, setSortOption] = useState<string>();
@@ -206,44 +209,61 @@ const CustomTable: React.FC<CustomTableProps> = ({
 
   const tableColumns: ColumnsType<DataType> = [
     ...(showCheckbox
-    ? [{
-        title: (
-          <Dropdown
-            overlay={sortMenu}
-            trigger={["click"]}
-            open={dropdownVisible}
-            onOpenChange={setDropdownVisible}
+  ? [{
+      title: placeSortButton ? (
+        <Dropdown
+          overlay={sortMenu}
+          trigger={["click"]}
+          open={dropdownVisible}
+          onOpenChange={setDropdownVisible}
+        >
+          <div
+            className="flex items-center justify-center cursor-pointer"
+            onClick={handleSortClick}
+            style={{ width: 30, maxWidth: 30 }}
           >
-            <div
-              className="flex items-center justify-center cursor-pointer"
-              onClick={handleSortClick}
-              style={{ width: 30, maxWidth: 30 }}
-            >
-              <GoSortDesc size={20} />
-              {dropdownVisible && <span className="ml-1 text-xs">{sortOption}</span>}
-            </div>
-          </Dropdown>
-        ),
-        dataIndex: 'key',
-        key: 'checkbox',
-        width: 30,
-        className: "checkbox-col",
-        render: (_: any, record: DataType) => (
-          <div className="flex items-center justify-center" style={{ width: "30px" }}>
-            <Checkbox
-              checked={selectedKeys.includes(record.key)}
-              onChange={(e) => {
-                if (e.target.checked) {
-                  updateSelectedKeys([...selectedKeys, record.key]);
-                } else {
-                  updateSelectedKeys(selectedKeys.filter((k) => k !== record.key));
-                }
-              }}
-            />
+            <GoSortDesc size={20} />
+            {dropdownVisible && <span className="ml-1 text-xs">{sortOption}</span>}
           </div>
-        ),
-      }]
-    : []),
+        </Dropdown>
+      ) : (
+        <div className="flex items-center justify-center" style={{ width: 30 }}>
+        <Checkbox
+  checked={selectedKeys.length === data.length && data.length > 0}
+  indeterminate={
+    selectedKeys.length > 0 && selectedKeys.length < data.length
+  }
+  onChange={(e) => {
+    if (e.target.checked) {
+      updateSelectedKeys(data.map((item) => item.key)); // Select all
+    } else {
+      updateSelectedKeys([]); // Deselect all
+    }
+  }}
+/>
+        </div>
+      ),
+      dataIndex: 'key',
+      key: 'checkbox',
+      width: 30,
+      className: "checkbox-col",
+      render: (_: any, record: DataType) => (
+        <div className="flex items-center justify-center" style={{ width: "30px" }}>
+          <Checkbox
+            checked={selectedKeys.includes(record.key)}
+            onChange={(e) => {
+              if (e.target.checked) {
+                updateSelectedKeys([...selectedKeys, record.key]);
+              } else {
+                updateSelectedKeys(selectedKeys.filter((k) => k !== record.key));
+              }
+            }}
+          />
+        </div>
+      ),
+    }]
+  : []),
+
     ...(showImage
       ? [{
         title:(
@@ -258,7 +278,8 @@ const CustomTable: React.FC<CustomTableProps> = ({
         render: (image?: string) =>
           image ? (
             <div className="flex items-center justify-center">
-              <img src={image} alt="Product" className="!w-10 !h-10 shadow-[2px_3px_5px_0_rgba(56,56,56,1)] bg-[#e3e3e3]" />
+              <img src={image} alt="Product" className="!w-10 !h-10 shadow-[2px_3px_5px_0_#8b8b8b]
+ bg-[#e3e3e3]" />
             </div>
           ) : (
             "-"
@@ -280,7 +301,7 @@ const resolvedScroll: ScrollConfig = {
     <div className="py-2 w-full">
       <div className="flex flex-col gap-4 w-full">
         <div className="flex gap-4 w-full">
-          <div className={"w-full rounded-none"}>
+          <div className={"w-full rounded-none w-full"}>
             <ConfigProvider
               theme={{
                 token: {

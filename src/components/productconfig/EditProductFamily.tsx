@@ -37,7 +37,7 @@ const columns = [
         ),
         dataIndex: "product_name",
         key: "product_name",
-        width: 170,
+        width: 190,
         render: (text: string) => (
             <div className="flex items-center justify-between">
                 <span className='font-normal text-[12px] text-[#1b0c31]'>{text}</span>
@@ -50,7 +50,7 @@ const columns = [
         title: (
             <span className="font-semibold text-[11px] text-[#7b7089]">SKU</span>
         ), 
-        dataIndex: "sku", key: "sku", width: 80,
+        dataIndex: "sku", key: "sku", width: 90,
         render: (text: string) => (
             <div className="flex items-center gap-2">
                 <span className='font-normal text-[12px] text-[#1b0c31]'>{text}</span>
@@ -61,7 +61,7 @@ const columns = [
         title: (
         <span className="font-semibold text-[11px] text-[#7b7089]">COMPLETENESS</span>
         )
-        , dataIndex: "completeness", key: "completeness", width: 70,
+        , dataIndex: "completeness", key: "completeness", width: 90,
          render: (value: boolean) => (
     <div className="flex items-center gap-2">
       {value ? (
