@@ -20,12 +20,15 @@ import ProductDetailsAttribute from "./components/productdetails/ProductDetailsA
 import ProductDetailsAssests from "./components/productdetails/ProductDetailsAssests"
 import ProductDetailsCategories from "./components/productdetails/ProductDetailsCategories"
 import AddProduct from "./components/productdetails/AddProduct"
+import VarientsPage from "./components/VarientsPage"
 
 const App = () => {
   return (
     <Routes>
     <Route element={<Layout/>}>
     <Route path="/" element={<ProductsMain/>}/>
+    <Route path="/varients" element={<VarientsPage/>}/>
+
     <Route path="/assets" element={<AssetsMain/>}/>
     <Route path="/assets/opengroup" element={<ViewGroupPage/>}/>
     <Route path="/productdetails" element={<ProductDetailsLayout/>}>

@@ -219,7 +219,7 @@ const EditCategory: React.FC = () => {
   const [showProductModal, setShowProductModal] = useState(false);
   const [selectedProducts, setSelectedProducts] = useState<Products[]>([]);
   const [selectedSubcategoryName, setSelectedSubcategoryName] = useState<string | null>(null);
-  const [selectedKeys, setSelectedKeys] = useState<React.Key[]>([]);
+  const [selectedKeys,] = useState<React.Key[]>([]);
 
 
   const toggleCollapseSubcategory = (subId: number) => {

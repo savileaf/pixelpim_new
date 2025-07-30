@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import CustomTable from "../CustomTable";
-import { IoCheckmarkDoneCircle } from "react-icons/io5";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { BsThreeDotsVertical } from "react-icons/bs";
 
@@ -19,12 +18,12 @@ interface ProductModalProps {
 }
 
 const CategoryProductModal: React.FC<ProductModalProps> = ({
-  subcategoryName,
-  products,
-  onClose,
-  onSelect,
+  // subcategoryName,
+  // products,
+  // onClose,
+  // onSelect,
 }) => {
-  const [selectedRowKeys, setSelectedRowKeys] = useState<string[]>([]);
+  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
   const columns = [
     {

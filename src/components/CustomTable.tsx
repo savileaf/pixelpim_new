@@ -130,7 +130,7 @@ const CustomTable: React.FC<CustomTableProps> = ({
   imageColumnWidth,
   scroll = { x: 'max-content', y: 400 },
   placeSortButton = true,
-  showVarients
+//   showVarients
 }) => {
   const { columns: contextColumns } = useColumns();
   const [sortOption, setSortOption] = useState<string>();
@@ -174,7 +174,8 @@ const CustomTable: React.FC<CustomTableProps> = ({
             <span className="flex-grow text-center">{text}</span>
             <div className="w-[22px] h-full flex items-center justify-center border-l border-solid border-[#d9d9d9] cursor-pointer">
               <Link to="/varients">
-              <RiArrowRightUpLine size={16} />
+              <RiArrowRightUpLine size={16} className="text-gray-400" />
+
                </Link>
             </div>
           </div>

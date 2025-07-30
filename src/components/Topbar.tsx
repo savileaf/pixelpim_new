@@ -13,6 +13,7 @@ import { useViewContext } from "../context/ViewContext";
 import { Tooltip } from "antd";
 import { useImportData } from "../context/ImportDataContext";
 import { AiOutlineDelete } from "react-icons/ai";
+import { FaUnlink } from "react-icons/fa";
 
 interface TopbarProps {
   selectedRowKeys?: React.Key[];
@@ -46,6 +47,14 @@ interface TopbarProps {
   ALL_KEYS?: string[],
   // To add another button in the place of import button
   customImportButton?: React.ReactNode;
+    // Function to call when filter button is clicked
+  onToggleFilter?: () => void;
+  // To control if the filter button itself is shown
+  showFilterButton?: boolean;
+  allKeys?: React.Key[];
+
+  // UNLINK VARIENTS BUTTON
+  unLinkVarient?: boolean;
 }
 
 
@@ -71,6 +80,7 @@ const Topbar: React.FC<TopbarProps> = ({
   viewGroupButtonLabel,
   onOpenGroupClick,
   customImportButton, 
+  unLinkVarient = false,
 
 }) => {
   const { isFilterVisible, toggleFilter } = useFilterContext();
@@ -198,9 +208,19 @@ const Topbar: React.FC<TopbarProps> = ({
               <Tooltip title="Delete">
                 <AiOutlineDelete size={20} />
               </Tooltip>
+              {
+                unLinkVarient && (
+                                <div className="w-fit"> 
+                                  <button className="flex flex-row font-normal text-[11px] text-[#7b7089] items-center justify-center gap-1 w-[122px] h-[20px] border-2 border-solid border-gray-400">
+                                    <FaUnlink />
+                                    Unlink Varients</button>
+                                </div>
+                )
+
+              }
             </div>
 
-            <p className="text-[12px] "> {selectedRowKeys.length} Selected</p>
+            <p className="text-[12px] ">( {selectedRowKeys.length} Selected )</p>
 
           </div>
         ) : (
