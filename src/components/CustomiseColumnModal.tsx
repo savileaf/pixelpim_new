@@ -20,6 +20,7 @@ const CustomiseColumnModal: React.FC<CustomiseColumnModalProps> = ({
   const predefinedAttributes = [
     { key: 'price', name: 'Price' },
     { key: 'currency', name: 'Currency' },
+    {key:"varients",name:"Varients"},
     { key: 'availableStock', name: 'Available Stock' },
     { key: 'launchDate', name: 'Launch Date' },
     { key: 'is_active', name: 'Is Active' },

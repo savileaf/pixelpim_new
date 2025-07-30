@@ -44,7 +44,8 @@ interface TopbarProps {
   onSelectAllClick?: (checked: boolean) => void;
   onToggleSelectAll?: () => void;
   ALL_KEYS?: string[],
-
+  // To add another button in the place of import button
+  customImportButton?: React.ReactNode;
 }
 
 
@@ -68,8 +69,8 @@ const Topbar: React.FC<TopbarProps> = ({
   onToggleSelectAll,
   ALL_KEYS = [],
   viewGroupButtonLabel,
-  onOpenGroupClick
-
+  onOpenGroupClick,
+  customImportButton, 
 
 }) => {
   const { isFilterVisible, toggleFilter } = useFilterContext();
@@ -120,12 +121,18 @@ const Topbar: React.FC<TopbarProps> = ({
             )
             }
 
-            <div className="w-fit bg-[#f1f0f0]">
+            {
+              customImportButton ? (
+                customImportButton
+              ):(
+                <div className="w-fit bg-[#f1f0f0]">
               <button className="flex items-center gap-3 w-full h-[2rem] border border-[#d9d9d9] pr-[18px] pl-[16px] py-1.5 font-medium text-[12px] text-[#676767] hover:bg-yellow-50" onClick={openImportModal}>
                 <TfiImport className="text-[#FFC562]" size={13} />
                 Import Data
               </button>
             </div>
+              )
+            }
 
             <div className="w-fit bg-[#f1f0f0]">
               <button className="flex items-center w-full h-[2rem] gap-3 border border-[#d9d9d9] pr-[18px] pl-[16px] py-1.5 font-medium text-[12px] text-[#676767] hover:bg-yellow-50">

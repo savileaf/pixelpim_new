@@ -21,7 +21,7 @@ const initialColumns: ColumnConfig[] = [
   { key: 'product_name', name: 'Product Name', visible: true, order: 1, customizable: false },
   { key: 'product_description', name: 'Description', visible: true, order: 2, customizable: false },
   { key: 'sku', name: 'SKU', visible: true, order: 3, customizable: false },
-  { key: 'varients', name: 'Variants', visible: true, order: 4 },
+  { key: 'varients', name: 'Varients', visible: true, order: 4 , customizable:true },
   { key: 'price', name: 'Price', visible: true, order: 5 , customizable:true},
   { key: 'currency', name: 'Currency', visible: true, order: 6 , customizable:true},
 
