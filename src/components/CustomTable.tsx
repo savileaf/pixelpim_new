@@ -130,7 +130,6 @@ const CustomTable: React.FC<CustomTableProps> = ({
   imageColumnWidth,
   scroll = { x: 'max-content', y: 400 },
   placeSortButton = true,
-//   showVarients
 }) => {
   const { columns: contextColumns } = useColumns();
   const [sortOption, setSortOption] = useState<string>();
@@ -196,7 +195,7 @@ const CustomTable: React.FC<CustomTableProps> = ({
         } else if (col.key === "product_description") {
           width = 350;
         } else if (col.key === "varients") {
-            width = 100; // Adjusted width slightly to better fit the new design
+            width = 100; 
         }
         else {
           width = 120;
