@@ -219,6 +219,12 @@ const CustomTable: React.FC<CustomTableProps> = ({
           }),
         };
       });
+// PLACE VARIENTS COLUMN IN THE THIRD COLUMN
+const varientsIndex = dynamicColumns.findIndex(col => col.key === "varients");
+if (varientsIndex !== -1 && varientsIndex !== 2) {
+  const [varientsCol] = dynamicColumns.splice(varientsIndex, 1);
+  dynamicColumns.splice(2, 0, varientsCol);
+}
 
   const tableColumns: ColumnsType<DataType> = [
     ...(showCheckbox

@@ -7,6 +7,7 @@ import { Tooltip } from "antd";
 import { BiSolidFilePdf } from "react-icons/bi";
 import { IoMdImage } from "react-icons/io";
 import { MdTextSnippet } from "react-icons/md";
+import AddProductsAssetModal from "../AddProductsAssetModal";
 
 const getFileIcon = (fileName: string) => {
   const ext = fileName.split(".").pop()?.toLowerCase();
@@ -35,6 +36,7 @@ const getFileIcon = (fileName: string) => {
 const ProductDetailsCategory = () => {
   const [hoveredRowKey, setHoveredRowKey] = useState<string | null>(null);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [data,setData] = useState(
   [
   {
@@ -60,7 +62,6 @@ const ProductDetailsCategory = () => {
       title: "FILE NAME",
       dataIndex: "file_name",
       key: "file_name",
-      width: 250,
      
       render: (text: string) => (
         <div className="flex items-center gap-2">
@@ -106,6 +107,21 @@ const ProductDetailsCategory = () => {
     },
   ];
 
+  const modalColumn =[
+    ...customColumns,
+    {
+      title:"Upload Date",
+      dataIndex:"upload_date",
+      key:"upload_date",
+      width:"auto"
+    }
+  ]
+
+  const modalData = data.map((item)=>({
+    ...item,
+    upload_date : "2025/06/13",
+
+  }))
 
   return (
     <div className="w-full h-screen bg-[#f2f0f0] px-4 py-2">
@@ -136,9 +152,9 @@ const ProductDetailsCategory = () => {
         {/* form section */}
         <div className="w-[33rem] min-w-[33rem] p-2 space-y-4">
           <div className="flex gap-2">
-            <div className='py-[1.5] px-2 w-[10rem] bg-white border border-gray-200 flex items-center justify-center gap-2 font-semibold text-[#9d9d9d]'>
+            <div className='py-[1.5] px-2 w-[10rem] bg-white border border-gray-200 flex items-center justify-center gap-2 font-semibold text-[#9d9d9d] cursor-pointer' onClick={()=> setIsModalOpen(true)}>
               <FiPlus size={20} color='#2ecc71' />
-              Add Attribute
+              Add Assets
             </div>
 
             <div className="flex items-center border border-gray-400 h-[30px] rounded w-[13rem] overflow-hidden">
@@ -194,6 +210,20 @@ const ProductDetailsCategory = () => {
                 setSelectedRowKeys={setSelectedRowKeys}
             />
           </div>
+
+           {isModalOpen && (
+        <div className="fixed top-0 left-0 w-full h-full bg-black/30 flex justify-center items-center z-50">
+          <div className="relative bg-white rounded-lg shadow-xl">
+            <button
+              className="absolute top-4 right-6 text-sm text-gray-600 hover:text-black"
+              onClick={() => setIsModalOpen(false)}
+            >
+              ✕
+            </button>
+            <AddProductsAssetModal data={modalData} columns={modalColumn} buttonTitle="Add Assets" showImage={false} addViewButton={true}/>
+          </div>
+        </div>
+      )}
         </div>
       </div>
     </div>

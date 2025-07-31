@@ -1,11 +1,12 @@
 import { FaFolder, FaPlus } from 'react-icons/fa';
 import CustomTable from '../CustomTable'
 import AssetsTopbar from './AssetsTopBar'
-
+import { Tooltip } from 'antd';
 
 
 const customColumns = [
-  { title:(
+  { 
+    title:(
       <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
         <FaFolder size={18} color='orange'/>
         <span>GROUP NAME</span>
@@ -13,7 +14,10 @@ const customColumns = [
     ),
     render: (text: string) => (
         <div className="flex items-center gap-2">
-         <FaPlus color='#ada7a7' size={16}/>
+       <Tooltip title="Add Files to this Group" placement='left'>   
+        <FaPlus color='#ada7a7' size={16}/> 
+       </Tooltip>
+          
           <span>{text}</span>
         </div>
       ),
@@ -35,7 +39,15 @@ const data =[
 
 
 
+
 const ViewGroupPage = () => {
+// const {groups} = useGroupContext()
+// const tableData = groups.map((group, index) => ({
+//   key: index.toString(),
+//   group_name: group.name,
+//   created_date: new Date().toLocaleDateString(), 
+//   size: `${group.attributes.length} assets`,
+// }));
   return (
     <div className=''>
         <AssetsTopbar />
